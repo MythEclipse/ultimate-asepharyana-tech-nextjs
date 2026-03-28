@@ -1,65 +1,68 @@
-import Image from "next/image";
+import { Hero } from "@/components/home/hero"
+import { Arsenal } from "@/components/home/arsenal"
+import { GlitchText } from "@/components/ui/glitch-text"
+import { GitHub, Instagram, LinkedIn } from "@/components/home/social-icons"
 
 export default function Home() {
+  const visualsUrl = process.env.VISUALS_URL || "https://visuals.asepharyana.tech/"
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="relative z-10 w-full overflow-hidden">
+        <Hero visualsUrl={visualsUrl} />
+        <Arsenal />
+
+        {/* Connection Section */}
+        <section className="py-24 md:py-40 lg:py-56 px-6 overflow-hidden relative">
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+            </div>
+
+            <div className="max-w-7xl mx-auto rounded-[3rem] md:rounded-[5rem] p-8 md:p-32 relative overflow-hidden glass border border-border/10 shadow-[0_80px_160px_rgba(0,0,0,0.2)] dark:shadow-[0_120px_250px_rgba(0,0,0,0.6)]">
+                <div className="absolute -right-60 -top-60 w-[50rem] h-[50rem] bg-primary/10 rounded-full blur-[180px] animate-tilt-slow opacity-60" />
+                <div className="absolute -left-60 -bottom-60 w-[50rem] h-[50rem] bg-accent/10 rounded-full blur-[180px] animate-tilt-reverse-slow opacity-40" />
+
+                <div className="relative z-10 flex flex-col items-center text-center space-y-20 md:space-y-24">
+                    <div className="space-y-10 md:space-y-14">
+                        <div className="space-y-8">
+                            <span className="px-6 md:py-2.5 rounded-full glass-subtle text-[11px] font-black uppercase tracking-[0.6em] text-primary shadow-xl">
+                                Communication
+                            </span>
+                            <h2 className="text-5xl md:text-9xl font-black italic tracking-tighter leading-none uppercase">
+                                Get In <br/> <GlitchText text="Touch" className="text-primary" />
+                            </h2>
+                            <p className="text-lg md:text-3xl text-muted-foreground leading-relaxed max-w-2xl mx-auto font-medium italic tracking-tight">
+                                I am always open to discussing new projects, creative ideas or professional opportunities.
+                            </p>
+                        </div>
+
+                        <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
+                            <SocialLink href="https://github.com/MythEclipse" icon={<GitHub/>} label="GitHub" />
+                            <SocialLink href="https://www.linkedin.com/in/asep-haryana-saputra-2014a5294/" icon={<LinkedIn/>} label="LinkedIn" />
+                            <SocialLink href="https://www.instagram.com/asepharyana18/" icon={<Instagram/>} label="Instagram" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  );
+  )
+}
+
+function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
+  return (
+    <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group relative p-5 md:p-6 rounded-[1.5rem] md:rounded-3xl glass border border-border/10 hover:bg-muted font-display transition-all hover:scale-110 active:scale-95 shadow-xl"
+    >
+        <div className="absolute inset-0 bg-primary/10 rounded-3xl scale-0 group-hover:scale-110 transition-transform blur-xl" />
+        <div className="relative z-10 w-6 h-6 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-500">
+            {icon}
+        </div>
+        <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-3 py-1 rounded-lg bg-primary text-[8px] font-black uppercase tracking-widest text-white opacity-0 group-hover:opacity-100 transition-all pointer-events-none">
+            {label}
+        </span>
+    </a>
+  )
 }
