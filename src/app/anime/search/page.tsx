@@ -2,9 +2,9 @@
 
 import { use, Suspense } from "react"
 import { useQuery } from "@tanstack/react-query"
-import Image from "next/image"
 import Link from "next/link"
 import { searchAnime1, type SearchAnimeItem } from "@/lib/api/anime"
+import { CachedImage } from "@/components/ui/cached-image"
 
 // UI
 import { Heading } from "@/components/ui/heading"
@@ -34,18 +34,18 @@ function SearchHeader({ query, count }: { query: string, count: number }) {
   )
 }
 
-function AnimeSearchCard({ item, source }: { item: SearchAnimeItem, source: 1 | 2 }) {
+function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, source: 1 | 2, index: number }) {
   const prefix = source === 2 ? "anime2" : "anime"
   
   return (
     <Link href={`/${prefix}/detail/${item.slug}`} className="group relative block h-full animate-slide-up">
       <Card className="relative p-0 overflow-hidden aspect-[3/4.2] border-border/10 group-hover:border-primary/50 transition-all duration-500 shadow-2xl">
-        <Image 
-          src={item.poster} 
-          alt={item.title} 
+        <CachedImage
+          src={item.poster}
+          alt={item.title}
           fill
-          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[10%] group-hover:grayscale-0" 
+          loading={index === 0 ? "eager" : "lazy"}
+          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[10%] group-hover:grayscale-0"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
         
@@ -95,7 +95,7 @@ function SearchResults({ query, source }: { query: string, source: 1 | 2 }) {
       <SearchHeader query={query} count={data.length} />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {data.map((item, i) => (
-          <AnimeSearchCard key={item.slug || i} item={item} source={source} />
+          <AnimeSearchCard key={item.slug || i} item={item} source={source} index={i} />
         ))}
       </div>
     </div>

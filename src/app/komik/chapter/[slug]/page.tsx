@@ -3,10 +3,10 @@
 import { use, useState, useEffect } from "react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import Image from "next/image"
 import { fetchChapter, type ChapterData } from "@/lib/api/komik"
 import { Heading } from "@/components/ui/heading"
 import { Button } from "@/components/ui/button"
+import { CachedImage } from "@/components/ui/cached-image"
 
 function KomikChapterView({ data }: { data: ChapterData }) {
   let listSlug = data.list_chapter
@@ -64,15 +64,13 @@ function KomikChapterView({ data }: { data: ChapterData }) {
       {/* Infinite Scroll Image Render */}
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center bg-card/10 min-h-screen shadow-2xl transition-colors">
           {data.images?.map((src, idx) => (
-             <Image 
+             <CachedImage
                key={idx}
                src={src}
                alt={`Page ${idx + 1}`}
-               width={0}
-               height={0}
-               sizes="100vw"
-               unoptimized
+               loading="lazy"
                className="w-full h-auto block select-none px-0"
+               retryEnabled
              />
           ))}
 

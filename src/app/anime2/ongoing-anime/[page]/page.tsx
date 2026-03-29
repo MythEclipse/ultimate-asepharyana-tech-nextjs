@@ -2,11 +2,11 @@
 
 import { use, Suspense } from "react"
 import { useQuery } from "@tanstack/react-query"
-import Image from "next/image"
 import Link from "next/link"
 import { fetchAnime2Ongoing, type Anime2OngoingItem } from "@/lib/api/anime"
 import { type Pagination } from "@/lib/api/types"
 import { cn } from "@/lib/utils/index"
+import { CachedImage } from "@/components/ui/cached-image"
 
 // UI Components
 import { Heading } from "@/components/ui/heading"
@@ -61,12 +61,12 @@ function OngoingAnimeCard({ item }: { item: Anime2OngoingItem }) {
   return (
     <Link href={`/anime2/detail/${item.slug}`} className="group relative block h-full animate-slide-up">
        <Card className="relative p-0 overflow-hidden aspect-[3/4.2] border-white/5 group-hover:border-primary/50 transition-all duration-500 shadow-2xl">
-        <Image 
-          src={item.poster} 
-          alt={item.title} 
+        <CachedImage
+          src={item.poster}
+          alt={item.title}
           fill
-          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0" 
+          loading="lazy"
+          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
         

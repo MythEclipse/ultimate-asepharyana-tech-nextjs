@@ -1,10 +1,10 @@
 "use client"
 
 import { Suspense } from "react"
-import Image from "next/image"
 import Link from "next/link"
 import { useQuery } from "@tanstack/react-query"
 import { cn } from "@/lib/utils/index"
+import { CachedImage } from "@/components/ui/cached-image"
 
 // API & UI
 import { fetchManga, fetchManhwa, fetchManhua, type MangaItem } from "@/lib/api/komik"
@@ -40,12 +40,12 @@ function KomikCard({ item }: { item: MangaItem }) {
   return (
     <Link href={`/komik/detail/${item.slug}`} className="group relative block h-full">
        <Card className="relative p-0 overflow-hidden aspect-[3/4.2] border-white/5 group-hover:border-orange-500/50 transition-all duration-500">
-        <Image 
-          src={item.poster} 
-          alt={item.title} 
+        <CachedImage
+          src={item.poster}
+          alt={item.title}
           fill
-          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0" 
+          loading="lazy"
+          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
         

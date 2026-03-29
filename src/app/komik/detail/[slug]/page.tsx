@@ -2,10 +2,10 @@
 
 import { use } from "react"
 import { useQuery } from "@tanstack/react-query"
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { fetchKomikDetail, type KomikDetailData } from "@/lib/api/komik"
+import { CachedImage } from "@/components/ui/cached-image"
 
 // UI components
 import { Badge } from "@/components/ui/badge"
@@ -55,12 +55,11 @@ function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
             <div className="w-full lg:w-1/3 xl:w-80 shrink-0 flex flex-col gap-8">
               <Card className="relative p-0 overflow-hidden aspect-[3/4.2] border-white/10 group shadow-2xl">
-                <Image 
-                  src={data.poster} 
+                <CachedImage
+                  src={data.poster}
                   alt={data.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, 30vw"
-                  priority
+                  eager
                   className="object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
               </Card>
@@ -142,14 +141,24 @@ function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
 export default function KomikDetailRoute({ 
   params 
 }: { 
-  params: Promise<{ slug: string }> 
+  params: Promise<{ slug: string }>
 }) {
   const { slug } = use(params)
-  
-  const { data, isLoading } = useQuery<KomikDetailData>({
-    queryKey: ["komik-detail", slug],
-    queryFn: () => fetchKomikDetail(slug)
+  const normalizedSlug = slug?.trim() || ""
+
+  if (!normalizedSlug) {
+    notFound()
+  }
+
+  const { data, isLoading, error } = useQuery<KomikDetailData>({
+    queryKey: ["komik-detail", normalizedSlug],
+    queryFn: () => fetchKomikDetail(normalizedSlug),
+    enabled: Boolean(normalizedSlug),
   })
+
+  if (error) {
+    notFound()
+  }
 
   if (isLoading) {
     return (

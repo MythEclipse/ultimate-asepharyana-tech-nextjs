@@ -79,10 +79,15 @@ export async function fetchManhua(page: number): Promise<MangaResponse> {
 }
 
 export async function fetchKomikDetail(komikId: string): Promise<KomikDetailData> {
-  const res = await fetchApi<KomikDetailData>(`/komik/detail?komik_id=${komikId}`, {
+  const res = await fetchApi<KomikDetailResponse>(`/komik/detail?komik_id=${komikId}`, {
       next: { revalidate: REVALIDATE_TIME / 2 }
   });
-  return res;
+
+  if (!res || res.status !== true || !res.data) {
+    throw new Error("Komik detail payload invalid")
+  }
+
+  return res.data;
 }
 
 export async function fetchChapter(slug: string): Promise<ChapterData> {

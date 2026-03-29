@@ -2,10 +2,10 @@
 
 import { use } from "react"
 import { useQuery } from "@tanstack/react-query"
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { fetchAnime1Detail, fetchAnime2Detail, type AnimeDetailData } from "@/lib/api/anime"
+import { CachedImage } from "@/components/ui/cached-image"
 
 // UI components
 import { Badge } from "@/components/ui/badge"
@@ -58,12 +58,11 @@ function AnimeDetailContent({ data, source }: { data: AnimeDetailData, source: 1
             {/* Sidebar Portion */}
             <div className="w-full lg:w-1/3 xl:w-80 shrink-0 flex flex-col gap-8">
               <Card className="relative p-0 overflow-hidden aspect-[3/4.2] border-white/10 group shadow-2xl transition-transform duration-500">
-                <Image 
-                  src={data.poster} 
+                <CachedImage
+                  src={data.poster}
                   alt={data.title}
                   fill
-                  sizes="(max-width: 768px) 100vw, 30vw"
-                  priority
+                  eager
                   className="object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
               </Card>
