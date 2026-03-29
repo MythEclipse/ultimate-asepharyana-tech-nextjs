@@ -102,8 +102,6 @@ function KomikChapterView({ data }: { data: ChapterData }) {
   )
 }
 
-// --- Page Component ---
-
 export default function KomikChapterRoute({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params)
   const [data, setData] = useState<ChapterData | null>(null)

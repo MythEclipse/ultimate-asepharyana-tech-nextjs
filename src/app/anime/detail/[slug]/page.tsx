@@ -21,8 +21,6 @@ import {
   IconClock
 } from "@tabler/icons-react"
 
-// --- Internal Helper Components ---
-
 function DetailInfo({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value?: string }) {
   if (!value || value === "Unknown") return null;
   return (
@@ -143,8 +141,6 @@ function AnimeDetailContent({ data, source }: { data: AnimeDetailData, source: 1
     </div>
   )
 }
-
-// --- Route Component ---
 
 export default function AnimeDetailRoute({ 
   params, 

@@ -12,8 +12,6 @@ import { Section } from "@/components/ui/section"
 import { Button } from "@/components/ui/button"
 import { type AnimeFullData, fetchAnime1Stream, fetchAnime2Stream } from "@/lib/api/anime"
 
-// --- Internal View Component (Inlined) ---
-
 function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 }) {
   const prefix = source === 2 ? "anime2" : "anime"
 
@@ -79,6 +77,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
             <button disabled className="flex items-center justify-center gap-3 px-4 py-5 glass border border-border/10 rounded-2xl opacity-50 cursor-not-allowed font-black uppercase tracking-widest text-xs md:text-sm text-muted-foreground shadow-inner">
               <span className="text-muted-foreground/50">←</span> 
               <span className="hidden sm:inline">Previous Episode</span>
+              <span className="sm:hidden">Prev</span>
             </button>
           )}
 
@@ -133,9 +132,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
   )
 }
 
-// --- Route Wrapper ---
-
-export default function AnimeWatchRoute({ 
+export default function AnimeWatchPage({ 
   params, 
   source = 1 
 }: { 

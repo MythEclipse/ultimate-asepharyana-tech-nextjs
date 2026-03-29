@@ -22,13 +22,27 @@ export const TracingBeam = ({
   });
 
   const contentRef = useRef<HTMLDivElement>(null);
-  const [svgHeight, setSvgHeight] = useState(0);
+  const [state, setState] = useState({
+    mounted: false,
+    svgHeight: 0,
+  });
 
   useEffect(() => {
-    if (contentRef.current) {
-      setSvgHeight(contentRef.current.offsetHeight);
-    }
+    const update = () => {
+      if (contentRef.current) {
+        setState({
+          mounted: true,
+          svgHeight: contentRef.current.offsetHeight,
+        });
+      }
+    };
+
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
+
+  const { mounted, svgHeight } = state;
 
   const y1 = useSpring(
     useTransform(scrollYProgress, [0, 0.8], [5, svgHeight]),
@@ -58,7 +72,7 @@ export const TracingBeam = ({
           }}
           animate={{
             boxShadow:
-              scrollYProgress.get() > 0
+              mounted && scrollYProgress.get() > 0
                 ? "none"
                 : "rgba(0, 0, 0, 0.24) 0px 3px 8px",
           }}
@@ -71,9 +85,9 @@ export const TracingBeam = ({
             }}
             animate={{
               backgroundColor:
-                scrollYProgress.get() > 0 ? "#ffffff" : "#10b981",
+                mounted && scrollYProgress.get() > 0 ? "#ffffff" : "#10b981",
               borderColor:
-                scrollYProgress.get() > 0 ? "#ffffff" : "#059669",
+                mounted && scrollYProgress.get() > 0 ? "#ffffff" : "#059669",
             }}
             className="h-2 w-2 rounded-full border border-neutral-300 dark:border-neutral-800 bg-white"
           />

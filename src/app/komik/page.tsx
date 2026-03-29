@@ -86,7 +86,7 @@ function KomikIndexContent() {
         <section id="manga">
           <SectionHeader title="Manga &bull; JP" icon={IconBook} color="bg-orange-600" link="/komik/manga/1" />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {manga.data.slice(0, 10).map((item, i) => (
+            {manga.data.slice(0, 10).map((item: MangaItem, i: number) => (
               <KomikCard key={item.slug || i} item={item} />
             ))}
           </div>
@@ -95,7 +95,7 @@ function KomikIndexContent() {
         <section id="manhwa">
           <SectionHeader title="Manhwa &bull; KR" icon={IconDiamond} color="bg-blue-600" link="/komik/manhwa/1" />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {manhwa.data.slice(0, 10).map((item, i) => (
+            {manhwa.data.slice(0, 10).map((item: MangaItem, i: number) => (
               <KomikCard key={item.slug || i} item={item} />
             ))}
           </div>
@@ -104,7 +104,7 @@ function KomikIndexContent() {
         <section id="manhua">
           <SectionHeader title="Manhua &bull; CN" icon={IconBarbell} color="bg-emerald-600" link="/komik/manhua/1" />
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {manhua.data.slice(0, 10).map((item, i) => (
+            {manhua.data.slice(0, 10).map((item: MangaItem, i: number) => (
               <KomikCard key={item.slug || i} item={item} />
             ))}
           </div>

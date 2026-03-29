@@ -22,8 +22,6 @@ import {
   IconPlayerPlay
 } from "@tabler/icons-react"
 
-// --- Internal Helper Components ---
-
 function DetailInfo({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value?: string }) {
   if (!value || value === "Unknown") return null;
   return (
@@ -135,8 +133,6 @@ function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
     </div>
   )
 }
-
-// --- Route Component ---
 
 export default function KomikDetailRoute({ 
   params 
