@@ -1,7 +1,7 @@
-import { AnimeHub } from "@/components/anime/anime-hub"
+import { AnimeHubLoader } from "@/components/anime/anime-hub-loader"
 
 export const dynamic = "force-dynamic"
 
 export default function Page() {
-  return <AnimeHub source={1} />
+  return <AnimeHubLoader source={1} />
 }
