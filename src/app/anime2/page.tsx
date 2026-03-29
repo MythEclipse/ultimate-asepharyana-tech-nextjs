@@ -1,5 +1,7 @@
-import AnimePage from "../anime/page"
+import { AnimeHub } from "@/components/anime/anime-hub"
+
+export const dynamic = "force-dynamic"
 
 export default function Page() {
-  return <AnimePage source={2} />
+  return <AnimeHub source={2} />
 }
