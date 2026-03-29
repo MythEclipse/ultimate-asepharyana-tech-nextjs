@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import { cn } from "@/lib/utils/index";
 import Link from "next/link";
+import { Button } from "./button";
 
 export const FloatingNav = ({
   navItems,
@@ -21,15 +22,14 @@ export const FloatingNav = ({
   className?: string;
 }) => {
   const { scrollYProgress } = useScroll();
-
   const [visible, setVisible] = useState(false);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
-    // Check if current is not undefined and is a number
     if (typeof current === "number") {
-      const direction = current - scrollYProgress.getPrevious()!;
+      const prev = scrollYProgress.getPrevious() ?? 0;
+      const direction = current - prev;
 
-      if (scrollYProgress.get() < 0.05) {
+      if (current < 0.02) {
         setVisible(false);
       } else {
         if (direction < 0) {
@@ -44,38 +44,58 @@ export const FloatingNav = ({
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        initial={{
-          opacity: 1,
-          y: -100,
-        }}
+        initial={{ opacity: 0, y: -100, scale: 0.95 }}
         animate={{
           y: visible ? 0 : -100,
           opacity: visible ? 1 : 0,
+          scale: visible ? 1 : 0.95,
         }}
         transition={{
-          duration: 0.2,
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
         }}
         className={cn(
-          "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-border/40 rounded-full bg-background/80 backdrop-blur-md shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] pr-2 pl-8 py-2 items-center justify-center space-x-4 transition-colors duration-500",
+          "flex max-w-fit fixed top-6 inset-x-0 mx-auto z-[5000] p-1.5 items-center justify-center space-x-2 glass rounded-full border-hairline",
           className
         )}
       >
-        {navItems.map((navItem, idx: number) => (
-          <Link
-            key={`link=${idx}`}
-            href={navItem.link}
-            className={cn(
-              "relative items-center flex space-x-1 text-muted-foreground hover:text-foreground transition-colors"
-            )}
-          >
-            <span className="block sm:hidden">{navItem.icon}</span>
-            <span className="hidden sm:block text-sm transition-colors">{navItem.name}</span>
-          </Link>
-        ))}
-        <button className="border text-sm font-medium relative border-border/50 text-foreground px-4 py-2 rounded-full hover:bg-muted transition-all">
-          <span>Login</span>
-          <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-primary to-transparent h-px" />
-        </button>
+        <div className="flex items-center space-x-1 px-4">
+          {navItems.map((navItem, idx: number) => (
+            <motion.div
+              key={`link=${idx}`}
+              whileHover={{ 
+                scale: 1.15,
+                y: -2,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 400,
+                damping: 10
+              }}
+            >
+              <Link
+                href={navItem.link}
+                className="relative p-2 flex items-center justify-center text-muted-foreground hover:text-primary transition-colors group"
+              >
+                <span className="block">{navItem.icon}</span>
+                <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 glass rounded-md text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                  {navItem.name}
+                </span>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+        
+        <div className="h-6 w-[1px] bg-foreground/10 mx-2" />
+
+        <Button 
+          variant="shiny" 
+          size="sm" 
+          className="rounded-full px-5 font-bold h-8 text-[11px] uppercase tracking-wider"
+        >
+          Login
+        </Button>
       </motion.div>
     </AnimatePresence>
   );

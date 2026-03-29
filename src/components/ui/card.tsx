@@ -1,20 +1,59 @@
+"use client";
+
 import * as React from "react"
+import { motion, useMotionTemplate, useMotionValue, HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils/index"
 
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { interactive?: boolean }
->(({ className, interactive = true, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn(
-      "rounded-3xl border border-border/10 bg-card/60 text-card-foreground shadow-2xl backdrop-blur-xl transition-all duration-500",
-      interactive && "hover:border-primary/50 hover:bg-card/80 hover:scale-[1.01] hover:shadow-primary/5",
-      className
-    )}
-    {...props}
-  />
-))
+interface CardProps extends Omit<HTMLMotionProps<"div">, "children"> {
+  interactive?: boolean;
+  children?: React.ReactNode;
+}
+
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, interactive = true, children, ...props }, ref) => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  function handleMouseMove({
+    currentTarget,
+    clientX,
+    clientY,
+  }: React.MouseEvent) {
+    if (!interactive) return;
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      className={cn(
+        "group relative rounded-3xl overflow-hidden glass transition-all duration-300",
+        interactive && "hover:border-primary/40 hover:shadow-2xl hover:scale-[1.01]",
+        className
+      )}
+      {...props}
+    >
+      {interactive && (
+        <motion.div
+          className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-300 group-hover:opacity-100"
+          style={{
+            background: useMotionTemplate`
+              radial-gradient(
+                650px circle at ${mouseX}px ${mouseY}px,
+                hsla(var(--primary), 0.15),
+                transparent 80%
+              )
+            `,
+          }}
+        />
+      )}
+      <div className="relative z-10">{children}</div>
+    </motion.div>
+  );
+})
 Card.displayName = "Card"
 
 const CardHeader = React.forwardRef<

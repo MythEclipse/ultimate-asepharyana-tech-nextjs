@@ -13,16 +13,22 @@ export async function GET() {
     return NextResponse.json(data, {
       status: 200,
       headers: {
-        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=1800",
+        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=43200",
       },
     })
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to fetch GitHub stats"
     console.error("API Route Error (GitHub Stats):", error)
     
+    // Return a 200 with an error field so the UI can handle it gracefully
     return NextResponse.json(
-      { error: message },
-      { status: 500 }
+      { 
+        contributions: [], 
+        totalContributions: 0, 
+        languages: [], 
+        error: message 
+      },
+      { status: 200 }
     )
   }
 }

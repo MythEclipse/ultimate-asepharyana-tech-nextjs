@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import * as d3 from "d3"
 import { gsap, ScrollTrigger } from "@/lib/gsap/gsap-init"
-import { SKILL_RADAR_DATA, type SkillMetric } from "@/lib/data/skill-metrics"
+import { type SkillMetric } from "@/lib/data/skill-metrics"
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -15,6 +15,7 @@ function polarToCartesian(angle: number, r: number): [number, number] {
 
 function buildPolygonPath(metrics: SkillMetric[], radius: number): string {
   const n = metrics.length
+  if (n === 0) return "M0,0Z"
   const points = metrics.map((m, i) => {
     const angle = (i / n) * 2 * Math.PI
     const [x, y] = polarToCartesian(angle, m.value * radius)
@@ -23,13 +24,13 @@ function buildPolygonPath(metrics: SkillMetric[], radius: number): string {
   return `M${points.join("L")}Z`
 }
 
-export function SkillsRadarChart({ data = SKILL_RADAR_DATA }: { data?: SkillMetric[] }) {
+export function SkillsRadarChart({ data = [] }: { data?: SkillMetric[] }) {
   const svgRef = useRef<SVGSVGElement>(null)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [animated, setAnimated] = useState(false)
 
   useEffect(() => {
-    if (!svgRef.current || !wrapperRef.current) return
+    if (!svgRef.current || !wrapperRef.current || data.length === 0) return
 
     const wrapper = wrapperRef.current
     const svg = d3.select(svgRef.current)
@@ -42,6 +43,8 @@ export function SkillsRadarChart({ data = SKILL_RADAR_DATA }: { data?: SkillMetr
       const cx = size / 2
       const cy = size / 2
       const n = data.length
+
+      if (n === 0) return
 
       const g = svg.append("g").attr("transform", `translate(${cx},${cy})`)
 
@@ -58,7 +61,7 @@ export function SkillsRadarChart({ data = SKILL_RADAR_DATA }: { data?: SkillMetr
       }
 
       // ── Axis lines ──────────────────────────────────────────────────
-      SKILL_RADAR_DATA.forEach((_, i) => {
+      data.forEach((_, i) => {
         const angle = (i / n) * 2 * Math.PI
         const [x, y] = polarToCartesian(angle, radius)
         g.append("line")
@@ -72,7 +75,7 @@ export function SkillsRadarChart({ data = SKILL_RADAR_DATA }: { data?: SkillMetr
       })
 
       // ── Filled polygon (animated) ───────────────────────────────────
-      const polygonPath = buildPolygonPath(SKILL_RADAR_DATA, radius)
+      const polygonPath = buildPolygonPath(data, radius)
 
       // Ghost polygon (full) - defines total path length for stroke-dasharray
       const polygon = g.append("path")
@@ -95,7 +98,7 @@ export function SkillsRadarChart({ data = SKILL_RADAR_DATA }: { data?: SkillMetr
 
       // ── Vertex dots ─────────────────────────────────────────────────
       const dots = g.selectAll("circle.vertex")
-        .data(SKILL_RADAR_DATA)
+        .data(data)
         .join("circle")
         .attr("class", "vertex")
         .attr("cx", (d, i) => polarToCartesian((i / n) * 2 * Math.PI, d.value * radius)[0])
@@ -109,7 +112,7 @@ export function SkillsRadarChart({ data = SKILL_RADAR_DATA }: { data?: SkillMetr
       // ── Labels ──────────────────────────────────────────────────────
       const labelRadius = radius + margin * 0.55
 
-      SKILL_RADAR_DATA.forEach((d, i) => {
+      data.forEach((d, i) => {
         const angle = (i / n) * 2 * Math.PI
         const [lx, ly] = polarToCartesian(angle, labelRadius)
         const [vx, vy] = polarToCartesian(angle, d.value * radius)
@@ -229,7 +232,7 @@ export function SkillsRadarChart({ data = SKILL_RADAR_DATA }: { data?: SkillMetr
         if (t.vars.trigger === wrapper) t.kill()
       })
     }
-  }, [animated])
+  }, [animated, data])
 
   return (
     <div ref={wrapperRef} className="w-full flex items-center justify-center max-w-[480px] mx-auto">

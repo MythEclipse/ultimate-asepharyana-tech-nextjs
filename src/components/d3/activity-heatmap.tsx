@@ -31,8 +31,8 @@ export function ActivityHeatmap({ data = [] }: { data?: GitHubContribution[] }) 
     const colorScale = d3.scaleSequential()
       .domain([0, maxCount])
       .interpolator(t => {
-        const alpha = t === 0 ? 0.05 : 0.12 + t * 0.85
-        return `hsla(262, 83%, 63%, ${alpha})`
+        const alpha = t === 0 ? 0.05 : 0.15 + t * 0.85
+        return `hsla(var(--primary), ${alpha})`
       })
 
     // Build week groups
@@ -65,8 +65,8 @@ export function ActivityHeatmap({ data = [] }: { data?: GitHubContribution[] }) 
       .attr("height", CELL_SIZE)
       .attr("rx", 2)
       .attr("ry", 2)
-      .attr("fill", "hsla(262, 83%, 63%, 0.06)")
-      .attr("stroke", "hsla(262, 83%, 63%, 0.04)")
+      .attr("fill", "hsla(var(--primary), 0.04)")
+      .attr("stroke", "hsla(var(--foreground), 0.05)")
       .attr("stroke-width", 0.5)
 
     cells
