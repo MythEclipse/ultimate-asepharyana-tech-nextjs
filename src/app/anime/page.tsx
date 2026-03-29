@@ -149,6 +149,8 @@ function AnimeIndexContent({ source }: { source: 1 | 2 }) {
   )
 }
 
+export const dynamic = "force-dynamic"
+
 export default function AnimePage({ source = 1 }: { source?: 1 | 2 }) {
   const sourceTitle = source === 2 ? "Mirror Source" : "Primary Source"
   
