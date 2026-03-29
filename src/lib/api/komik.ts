@@ -79,18 +79,15 @@ export async function fetchManhua(page: number): Promise<MangaResponse> {
 }
 
 export async function fetchKomikDetail(komikId: string): Promise<KomikDetailData> {
-  const res = await fetchApi<KomikDetailResponse>(`/komik/detail?komik_id=${komikId}`, {
-      next: { revalidate: REVALIDATE_TIME / 2 } // Half-hour cache for latest chapters updates
+  const res = await fetchApi<KomikDetailData>(`/komik/detail?komik_id=${komikId}`, {
+      next: { revalidate: REVALIDATE_TIME / 2 }
   });
-  if (res.status) {
-      return res.data;
-  }
-  throw new Error("Backend reported failure");
+  return res;
 }
 
 export async function fetchChapter(slug: string): Promise<ChapterData> {
   const res = await fetchApi<ChapterResponse>(`/komik/chapter?chapter_url=${encodeURIComponent(slug)}`, {
-      next: { revalidate: REVALIDATE_TIME * 24 } // 1 day validity for static chapter images
+      next: { revalidate: REVALIDATE_TIME * 24 }
   });
   if (res.data) {
       return res.data;

@@ -34,19 +34,19 @@ export function PageLoadingOverlay({
 
   return (
     <div className="lo-overlay fixed inset-0 z-[9998] flex flex-col items-center justify-center overflow-hidden font-mono transition-colors duration-300">
-      {/* Ambient orbs */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] rounded-full blur-[150px] pointer-events-none bg-indigo-500/[0.12]" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full blur-[100px] pointer-events-none bg-purple-500/10 animate-pulse-slow" />
+      {/* Ambient orbs - Optimized */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] rounded-full blur-[80px] pointer-events-none bg-indigo-500/[0.12] will-change-opacity" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] rounded-full blur-[60px] pointer-events-none bg-purple-500/10 animate-pulse-slow will-change-opacity" />
 
       {/* Holographic grid */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[linear-gradient(rgba(99,102,241,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.25)_1px,transparent_1px)] bg-[length:40px_40px] [transform:perspective(500px)_rotateX(60deg)_translateY(-100px)_scale(2)]" />
+      <div className="absolute inset-0 pointer-events-none opacity-[0.04] bg-[linear-gradient(rgba(99,102,241,0.25)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.25)_1px,transparent_1px)] bg-[length:40px_40px] [transform:perspective(500px)_rotateX(60deg)_translateY(-100px)_scale(2)] will-change-transform" />
 
       <div className="relative z-10 flex flex-col items-center gap-10 w-full max-w-2xl px-6">
         {/* Triple concentric rings + counter */}
         <div className="relative flex items-center justify-center w-64 h-64 md:w-80 md:h-80">
-          <div className="absolute inset-0 rounded-full border border-indigo-500/20 border-t-indigo-500 shadow-[0_0_40px_rgba(99,102,241,0.35)] animate-[spin_4s_linear_infinite]" />
-          <div className="absolute inset-[1.5rem] rounded-full border border-purple-500/25 border-b-purple-400 border-l-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.25)] animate-[spin_3s_linear_infinite_reverse]" />
-          <div className="absolute inset-[3rem] rounded-full border border-dashed border-blue-400/35 animate-[spin_8s_linear_infinite]" />
+          <div className="absolute inset-0 rounded-full border border-indigo-500/20 border-t-indigo-500 shadow-[0_0_40px_rgba(99,102,241,0.35)] animate-[spin_4s_linear_infinite] will-change-transform" />
+          <div className="absolute inset-[1.5rem] rounded-full border border-purple-500/25 border-b-purple-400 border-l-purple-400 shadow-[0_0_20px_rgba(168,85,247,0.25)] animate-[spin_3s_linear_infinite_reverse] will-change-transform" />
+          <div className="absolute inset-[3rem] rounded-full border border-dashed border-blue-400/35 animate-[spin_8s_linear_infinite] will-change-transform" />
           <div className="absolute inset-[5.5rem] rounded-full bg-indigo-500/10 blur-md animate-pulse" />
 
           {/* Centre — animated percentage counter */}

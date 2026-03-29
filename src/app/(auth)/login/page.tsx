@@ -42,11 +42,11 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-black/20">
-      {/* Cinematic Background Infrastructure */}
+    <main className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-background">
+      {/* Cinematic Background Infrastructure - Optimized */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[50rem] h-[50rem] bg-indigo-500/10 rounded-full blur-[120px] animate-tilt" />
-        <div className="absolute bottom-[-15%] right-[-5%] w-[45rem] h-[45rem] bg-blue-500/10 rounded-full blur-[120px] animate-tilt-reverse" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50rem] h-[50rem] bg-indigo-500/10 rounded-full blur-[80px] animate-tilt will-change-[transform,opacity]" />
+        <div className="absolute bottom-[-15%] right-[-5%] w-[45rem] h-[45rem] bg-blue-500/10 rounded-full blur-[80px] animate-tilt-reverse will-change-[transform,opacity]" />
       </div>
 
       <div className="w-full max-w-[480px] relative z-10 animate-fade-in group/main">
@@ -91,7 +91,7 @@ export default function LoginPage() {
                     <input
                       type="email"
                       placeholder="your@email.com"
-                      className="w-full bg-white/2 border border-white/5 rounded-2xl py-5 pl-16 pr-6 focus:outline-none focus:border-blue-500/30 transition-all text-sm font-medium tracking-tight placeholder:text-muted-foreground/10"
+                      className="w-full bg-muted/5 border border-border/10 rounded-2xl py-5 pl-16 pr-6 focus:outline-none focus:border-blue-500/30 transition-all text-sm font-medium tracking-tight placeholder:text-muted-foreground/10 text-foreground"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -109,7 +109,7 @@ export default function LoginPage() {
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="••••••••"
-                      className="w-full bg-white/2 border border-white/5 rounded-2xl py-5 pl-16 pr-20 focus:outline-none focus:border-blue-500/30 transition-all text-sm font-medium tracking-tight placeholder:text-muted-foreground/10 relative z-20"
+                      className="w-full bg-muted/5 border border-border/10 rounded-2xl py-5 pl-16 pr-20 focus:outline-none focus:border-blue-500/30 transition-all text-sm font-medium tracking-tight placeholder:text-muted-foreground/10 relative z-20 text-foreground"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />

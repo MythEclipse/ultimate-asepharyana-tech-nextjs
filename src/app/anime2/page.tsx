@@ -1,9 +1,5 @@
-import AnimeIndexPage from "@/components/anime/anime-index";
+import AnimePage from "../anime/page"
 
-export const metadata = {
-  title: "Anime Source 2 | Media Hub",
-};
-
-export default function Anime2Page() {
-  return <AnimeIndexPage source={2} />;
+export default function Page() {
+  return <AnimePage source={2} />
 }

@@ -38,7 +38,7 @@ export interface Anime2Data {
 export interface Genre {
   name: string;
   slug: string;
-  anime_url: string;
+  url: string;
 }
 
 export interface EpisodeList {
@@ -50,6 +50,8 @@ export interface Recommendation {
   title: string;
   slug: string;
   poster: string;
+  status?: string | null;
+  type?: string | null;
 }
 
 export interface DownloadLinkItem {
@@ -66,16 +68,20 @@ export interface AnimeDetailData {
   title: string;
   alternative_title: string;
   poster: string;
-  type?: string;
-  status?: string;
+  type: string | null;
+  status: string | null;
   release_date: string;
   studio: string;
-  genres: Genre[];
   synopsis: string;
+  producers?: string[];
+  genres: Genre[];
   episode_lists: EpisodeList[];
   batch: EpisodeList[];
   recommendations: Recommendation[];
-  downloads: DownloadGroup[];
+  // Extended fields for UI compatibility, kept as optional
+  score?: string;
+  duration?: string;
+  downloads?: DownloadGroup[];
 }
 
 export interface SearchAnimeItem {
