@@ -3,7 +3,7 @@
 import { use, Suspense } from "react"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
-import { fetchAnime1Complete, type Anime1CompleteItem } from "@/lib/api/anime"
+import { fetchAnime1Complete, type Anime2CompleteItem } from "@/lib/api/anime"
 import { type Pagination } from "@/lib/api/types"
 import { cn } from "@/lib/utils/index"
 import { CachedImage } from "@/components/ui/cached-image"
