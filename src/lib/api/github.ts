@@ -13,8 +13,11 @@ export interface GitHubStatsResponse {
 }
 
 interface GitHubRepo {
+  name: string
+  full_name: string
   language: string | null
   size: number
+  languages_url: string
 }
 
 /**
@@ -28,19 +31,29 @@ export async function fetchGitHubStats(username: string): Promise<GitHubStatsRes
       fetchPublicContributions(username)
     ])
 
-    const langMap = new Map<string, number>();
-    let totalBytes = 0;
+    const repositoryList = repos as GitHubRepo[]
 
-    const repositoryList = repos as GitHubRepo[];
-    repositoryList.forEach((repo) => {
-      if (repo.language) {
-        // Public API only gives 'language' easily per repo info.
-        // We use repo size as weight to approximate language distribution.
-        const size = repo.size || 100
-        langMap.set(repo.language, (langMap.get(repo.language) || 0) + size)
-        totalBytes += size
-      }
-    })
+    const langMap = new Map<string, number>()
+    let totalBytes = 0
+
+    // Prefer per-repo /languages endpoint to get accurate byte counts.
+    // Fall back to the repo.language heuristics when GitHub rate limiting occurs.
+    try {
+      const languageDetails = await fetchRepoLanguages(repositoryList)
+      languageDetails.forEach((bytes, lang) => {
+        langMap.set(lang, (langMap.get(lang) || 0) + bytes)
+        totalBytes += bytes
+      })
+    } catch (error) {
+      console.warn("Repo language details unavailable, falling back to topology estimate", error)
+      repositoryList.forEach((repo) => {
+        if (repo.language) {
+          const size = repo.size || 100
+          langMap.set(repo.language, (langMap.get(repo.language) || 0) + size)
+          totalBytes += size
+        }
+      })
+    }
 
     return {
       contributions: contributions.data,
@@ -66,6 +79,31 @@ async function fetchPublicRepos(username: string) {
     throw new Error(`Public Repo API error: ${response.status}`)
   }
   return await response.json()
+}
+
+async function fetchRepoLanguages(repos: GitHubRepo[]): Promise<Map<string, number>> {
+  const langMap = new Map<string, number>()
+
+  const requests = repos.map(async (repo) => {
+    if (!repo.languages_url) return
+
+    try {
+      const resp = await fetch(repo.languages_url, { next: { revalidate: 86400 } })
+      if (!resp.ok) {
+        return
+      }
+
+      const obj = (await resp.json()) as Record<string, number>
+      Object.entries(obj).forEach(([lang, bytes]) => {
+        langMap.set(lang, (langMap.get(lang) || 0) + bytes)
+      })
+    } catch (error) {
+      console.warn(`Failed fetching language details for repo ${repo.full_name}`, error)
+    }
+  })
+
+  await Promise.all(requests)
+  return langMap
 }
 
 /**

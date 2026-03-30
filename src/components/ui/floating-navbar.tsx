@@ -25,21 +25,21 @@ export const FloatingNav = ({
   const [visible, setVisible] = useState(false);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
-    if (typeof current === "number") {
-      const prev = scrollYProgress.getPrevious() ?? 0;
-      const direction = current - prev;
+    if (typeof current !== "number") return
 
-      if (current < 0.02) {
-        setVisible(false);
-      } else {
-        if (direction < 0) {
-          setVisible(true);
-        } else {
-          setVisible(false);
-        }
-      }
+    const prev = scrollYProgress.getPrevious() ?? 0
+    const direction = current - prev
+
+    if (current < 0.02) {
+      if (visible) setVisible(false)
+      return
     }
-  });
+
+    const shouldShow = direction < 0
+    if (shouldShow !== visible) {
+      setVisible(shouldShow)
+    }
+  })
 
   return (
     <AnimatePresence mode="wait">

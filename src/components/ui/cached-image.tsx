@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { cn } from "@/lib/utils"
 import { API_BASE_URL } from "@/lib/api/config"
 
@@ -10,6 +10,7 @@ interface CachedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   eager?: boolean
   fill?: boolean
   retryEnabled?: boolean
+  maxAttempts?: number
 }
 
 const FALLBACK_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900' viewBox='0 0 1200 900'%3E%3Crect width='1200' height='900' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%236b7280' font-family='Arial,Helvetica,sans-serif' font-size='42'%3EImage unavailable%3C/text%3E%3C/svg%3E"
@@ -24,15 +25,23 @@ export function CachedImage({
   eager = false,
   fill = false,
   retryEnabled = true,
+  maxAttempts = 2,
   ...props
 }: CachedImageProps) {
-  const [error, setError] = useState(false)
-  const [loaded, setLoaded] = useState(false)
+  const normalizedSrc = !src || String(src).trim().length === 0 ? fallbackSrc : String(src)
+
+  const [resolvedSrc, setResolvedSrc] = useState(normalizedSrc)
+  const [loadState, setLoadState] = useState<"idle" | "loading" | "loaded" | "error">("loading")
   const [attempt, setAttempt] = useState(0)
   const [isAuditing, setIsAuditing] = useState(false)
 
-  const normalizedSrc = !src || String(src).trim().length === 0 ? fallbackSrc : String(src)
-  const imageSrc = error ? fallbackSrc : normalizedSrc
+  useEffect(() => {
+    setResolvedSrc(normalizedSrc)
+    setLoadState("loading")
+    setAttempt(0)
+  }, [normalizedSrc])
+
+  const imageSrc = loadState === "error" ? fallbackSrc : resolvedSrc
 
   const fallbackCls = fallbackClassName || "bg-muted animate-pulse"
 
@@ -42,6 +51,7 @@ export function CachedImage({
   )
 
   const effectiveLoading = eager ? "eager" : loading
+  const isFallback = imageSrc === fallbackSrc
 
   async function auditImage(srcUrl: string) {
     if (!srcUrl || srcUrl === fallbackSrc) return
@@ -63,12 +73,9 @@ export function CachedImage({
       console.debug("Image cache audit result", result)
 
       if (result?.success && result?.cdn_url) {
-        setLoaded(false)
-        setError(false)
+        setResolvedSrc(result.cdn_url)
+        setLoadState("loading")
         setAttempt(0)
-        // Replace src to try with CDN from audit
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ;(imageSrc as any) = result.cdn_url
       }
     } catch (auditErr) {
       console.warn("Audit image cache failed", auditErr)
@@ -77,26 +84,40 @@ export function CachedImage({
     }
   }
 
+  const imgStyles = useMemo(
+    () =>
+      cn(
+        className,
+        "transition-opacity duration-500 ease-out transform-gpu",
+        loadState !== "loaded" ? "opacity-0 scale-105 blur-sm" : "opacity-100 scale-100 blur-0",
+        loadState === "error" ? "grayscale" : ""
+      ),
+    [className, loadState]
+  )
+
+  const handleRetry = () => {
+    setLoadState("loading")
+    setAttempt((prev) => prev + 1)
+    setResolvedSrc(normalizedSrc)
+  }
+
   return (
     <div className={wrapperClass}>
-      {!loaded && !error && (
+      {loadState !== "loaded" && loadState !== "error" && (
         <div className={cn("absolute inset-0", fallbackCls)} />
       )}
 
-      {error && retryEnabled && (
+      {loadState === "error" && retryEnabled && (
         <div className={cn("absolute inset-0 flex flex-col items-center justify-center gap-2 text-center", fallbackCls)}>
           <span className="text-2xl opacity-40">🛠️</span>
-          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40">
-            Failed to load
-          </p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/40">Failed to load</p>
           <button
             className="px-3 py-1 rounded-md text-xs font-black uppercase border border-primary/30 bg-primary/10 hover:bg-primary/20"
             onClick={(e) => {
               e.preventDefault()
-              setError(false)
-              setLoaded(false)
-              setAttempt((prev) => prev + 1)
+              handleRetry()
             }}
+            aria-label="Retry loading image"
           >
             Retry
           </button>
@@ -110,29 +131,31 @@ export function CachedImage({
           src={imageSrc}
           alt={alt || "Image"}
           loading={effectiveLoading}
-          className={cn(
-            className,
-            "transition-opacity duration-500 ease-out transform-gpu",
-            !loaded || error ? "opacity-0 scale-105 blur-sm" : "opacity-100 scale-100 blur-0",
-            error ? "grayscale" : ""
-          )}
-          onLoad={() => setLoaded(true)}
+          className={imgStyles}
+          onLoad={() => setLoadState("loaded")}
           onError={async () => {
-            if (attempt < 2) {
+            if (attempt < maxAttempts) {
               setAttempt((prev) => prev + 1)
-              setLoaded(false)
-              setError(false)
+              setLoadState("loading")
+              setResolvedSrc(normalizedSrc)
             } else {
-              setError(true)
-              setLoaded(false)
-              if (!isAuditing) {
-                await auditImage(normalizedSrc)
+              setLoadState("error")
+
+              if (!isAuditing && !isFallback) {
+                await auditImage(resolvedSrc)
               }
             }
           }}
           {...props}
         />
       )}
+
+      {isAuditing && (
+        <div className="absolute inset-0 flex items-center justify-center text-xs text-muted-foreground">
+          Optimizing image source...
+        </div>
+      )}
     </div>
   )
 }
+

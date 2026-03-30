@@ -5,7 +5,7 @@ import Link from "next/link"
 import { cn } from "@/lib/utils/index"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-95 hover-lift",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-95 hover-lift",
   {
     variants: {
       variant: {
@@ -45,22 +45,38 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, href, ...props }, ref) => {
+  ({ className, variant, size, asChild = false, href, disabled, ...props }, ref) => {
+    const classes = cn(buttonVariants({ variant, size }), className)
+
     if (href) {
+      if (asChild) {
+        console.warn("Button: 'asChild' is ignored when 'href' is provided")
+      }
+
+      if (disabled) {
+        return (
+          <span className={cn(classes, "cursor-not-allowed opacity-60")}
+            aria-disabled="true"
+          >
+            {props.children}
+          </span>
+        )
+      }
+
       return (
-        <Link 
-          href={href} 
-          className={cn(buttonVariants({ variant, size, className }))}
-        >
+        <Link href={href} className={classes} aria-disabled={disabled ? "true" : undefined}>
           {props.children}
         </Link>
       )
     }
+
     const Comp = asChild ? Slot : "button"
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={classes}
         ref={ref}
+        disabled={disabled}
+        aria-disabled={disabled ? "true" : undefined}
         {...props}
       />
     )

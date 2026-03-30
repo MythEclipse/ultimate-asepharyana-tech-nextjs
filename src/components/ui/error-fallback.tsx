@@ -11,25 +11,33 @@ export function ErrorFallback({ error, reset }: { error: Error; reset?: () => vo
   const isApiError = ["fetch", "network", "http", "api", "cors", "timeout", "failed to fetch"].some(k => errText.includes(k))
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    let isMounted = true
+    const tick = () => {
       setCountdown((c) => {
         if (c <= 1) {
-          if (reset) {
-            reset()
-          } else {
-            router.refresh()
+          if (isMounted) {
+            if (reset) {
+              reset()
+            } else {
+              router.refresh()
+            }
           }
           return 0
         }
         return c - 1
       })
-    }, 1000)
+    }
 
-    return () => clearInterval(timer)
+    const schedule = setInterval(tick, 1000)
+
+    return () => {
+      isMounted = false
+      clearInterval(schedule)
+    }
   }, [reset, router])
 
   return (
-    <div className="min-h-[50vh] flex items-center justify-center p-8">
+    <div className="min-h-[50vh] flex items-center justify-center p-8" role="alert" aria-live="assertive">
       <div
         className={
           isApiError
