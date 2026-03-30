@@ -12,10 +12,10 @@ export function TechArsenal() {
           Capabilities
         </Badge>
         <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">
-          Technical <span className="text-primary">Arsenal</span>
+          Technology <span className="text-primary">Stack</span>
         </h2>
         <p className="text-muted-foreground mt-4 max-w-xl text-lg mx-auto lg:mx-0">
-          A curated stack for building scalable, high-performance applications from the ground up.
+          Tools and frameworks used for building maintainable, production-ready applications.
         </p>
       </div>
 

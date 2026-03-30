@@ -27,12 +27,13 @@ export function ActivityHeatmap({ data = [] }: { data?: GitHubContribution[] }) 
 
     const maxCount = d3.max(parsedData, (d) => d.count) || 10
 
-    // Color scale: transparent → primary
+    // Color scale: transparent → green with variable opacity based on contribution count
     const colorScale = d3.scaleSequential()
       .domain([0, maxCount])
       .interpolator(t => {
-        const alpha = t === 0 ? 0.05 : 0.15 + t * 0.85
-        return `hsla(var(--primary), ${alpha})`
+        // low contributions should be nearly transparent
+        const alpha = t === 0 ? 0.08 : 0.2 + t * 0.8
+        return `hsla(135, 70%, 40%, ${alpha})`
       })
 
     // Build week groups

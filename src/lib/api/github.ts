@@ -20,6 +20,24 @@ interface GitHubRepo {
   languages_url: string
 }
 
+function getGitHubHeaders() {
+  const token = process.env.GITHUB_TOKEN || ""
+  const headers: Record<string, string> = {
+    "Accept": "application/vnd.github.v3+json",
+  }
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`
+  }
+
+  console.debug("GitHub headers configured", {
+    hasToken: Boolean(token),
+    token: token ? "***" : "(none)"
+  })
+
+  return headers
+}
+
 /**
  * Fetches real statistics from GitHub for a specific user.
  * "STRICTLY PUBLIC": No API key/token required.
@@ -28,7 +46,7 @@ export async function fetchGitHubStats(username: string): Promise<GitHubStatsRes
   try {
     const [repos, contributions] = await Promise.all([
       fetchPublicRepos(username),
-      fetchPublicContributions(username)
+      fetchGitHubContributions(username),
     ])
 
     const repositoryList = repos as GitHubRepo[]
@@ -70,25 +88,62 @@ export async function fetchGitHubStats(username: string): Promise<GitHubStatsRes
  * Fetches public repositories for language distribution stats.
  */
 async function fetchPublicRepos(username: string) {
-  const response = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated`, {
-    next: { revalidate: 86400 }
+  const url = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`
+  const headers = getGitHubHeaders()
+
+  console.debug("fetchPublicRepos url", { url, username, headers })
+
+  const response = await fetch(url, {
+    headers,
+    next: { revalidate: 86400 },
   })
-  
+
+  console.debug("fetchPublicRepos response", {
+    status: response.status,
+    statusText: response.statusText,
+    remaining: response.headers.get("x-ratelimit-remaining"),
+    reset: response.headers.get("x-ratelimit-reset"),
+  })
+
   if (!response.ok) {
-    if (response.status === 403) throw new Error("GitHub Public Rate Limit Exceeded (60 req/hr)")
+    if (response.status === 403) {
+      const message = await response.text()
+      console.error("GitHub rate limit reached in fetchPublicRepos", message)
+      throw new Error("GitHub Rate Limit Exceeded")
+    }
     throw new Error(`Public Repo API error: ${response.status}`)
   }
-  return await response.json()
+
+  const data = await response.json()
+  if (!Array.isArray(data)) {
+    console.warn("fetchPublicRepos expected array but got", data)
+    throw new Error("Unexpected GitHub repos response")
+  }
+
+  return data
 }
 
 async function fetchRepoLanguages(repos: GitHubRepo[]): Promise<Map<string, number>> {
   const langMap = new Map<string, number>()
+  const headers = getGitHubHeaders()
 
   const requests = repos.map(async (repo) => {
     if (!repo.languages_url) return
 
+    console.debug("fetchRepoLanguages url", { repo: repo.full_name, url: repo.languages_url })
+
     try {
-      const resp = await fetch(repo.languages_url, { next: { revalidate: 86400 } })
+      const resp = await fetch(repo.languages_url, {
+        headers,
+        next: { revalidate: 86400 },
+      })
+
+      console.debug("fetchRepoLanguages response", {
+        repo: repo.full_name,
+        status: resp.status,
+        remaining: resp.headers.get("x-ratelimit-remaining"),
+      })
+
       if (!resp.ok) {
         return
       }
@@ -107,15 +162,112 @@ async function fetchRepoLanguages(repos: GitHubRepo[]): Promise<Map<string, numb
 }
 
 /**
+ * Fetches GitHub contribution data using GraphQL contributionsCollection.
+ */
+async function fetchGitHubContributions(username: string): Promise<{ data: GitHubContribution[]; total: number }> {
+  const token = process.env.GITHUB_TOKEN
+
+  if (!token) {
+    // fallback to public contributions / events if token is absent
+    console.warn("GITHUB_TOKEN not set, falling back to public contributions scraper")
+    return fetchPublicContributions(username)
+  }
+
+  const to = new Date()
+  const from = new Date(to)
+  from.setFullYear(to.getFullYear() - 1)
+
+  const fromIso = from.toISOString()
+  const toIso = to.toISOString()
+
+  const graphql = {
+    query: `
+      query ContributionsCollection($login: String!, $from: DateTime!, $to: DateTime!) {
+        user(login: $login) {
+          contributionsCollection(from: $from, to: $to) {
+            contributionCalendar {
+              totalContributions
+              weeks {
+                contributionDays {
+                  date
+                  contributionCount
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+    variables: {
+      login: username,
+      from: fromIso,
+      to: toIso,
+    },
+  }
+
+  const response = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    },
+    body: JSON.stringify(graphql),
+    next: { revalidate: 86400 },
+  })
+
+  const json = await response.json()
+
+  if (!response.ok || json.errors) {
+    console.warn("GitHub GraphQL contributions fetch failed", {
+      status: response.status,
+      errors: json.errors,
+      message: json.message,
+    })
+    return fetchPublicContributions(username)
+  }
+
+  const days: GitHubContribution[] = []
+  const weeks = json.data?.user?.contributionsCollection?.contributionCalendar?.weeks as { contributionDays: { date: string; contributionCount: number }[] }[] || []
+
+  weeks.forEach((week) => {
+    week.contributionDays.forEach((day) => {
+      days.push({
+        date: day.date,
+        count: day.contributionCount,
+      })
+    })
+  })
+
+  const sorted = days.sort((a, b) => a.date.localeCompare(b.date))
+  const total = json.data?.user?.contributionsCollection?.contributionCalendar?.totalContributions || 0
+
+  return { data: sorted, total }
+}
+
+/**
  * Scrapes the public contribution calendar fragment from github.com.
  * Returns 1 year of data without requiring an API key.
  */
-async function fetchPublicContributions(username: string): Promise<{ data: GitHubContribution[], total: number }> {
+async function fetchPublicContributions(username: string): Promise<{ data: GitHubContribution[]; total: number }> {
   const url = `https://github.com/users/${username}/contributions`
-  const response = await fetch(url, { next: { revalidate: 86400 } })
-  
-  if (!response.ok) throw new Error(`Public Contribution Scraper error: ${response.status}`)
-  
+  const headers = getGitHubHeaders()
+
+  console.debug("fetchPublicContributions url", { url, username, withToken: Boolean(process.env.GITHUB_TOKEN) })
+
+  const response = await fetch(url, {
+    headers,
+    next: { revalidate: 86400 },
+  })
+
+  if (!response.ok) {
+    const msg = await response.text()
+    console.warn("Public Contribution Scraper failed", { status: response.status, msg })
+    if (response.status === 429 || response.status === 403) {
+      return fetchPublicEventsFallback(username)
+    }
+    throw new Error(`Public Contribution Scraper error: ${response.status}`)
+  }
+
   const html = await response.text()
   const contributions: GitHubContribution[] = []
   let total = 0
@@ -135,7 +287,7 @@ async function fetchPublicContributions(username: string): Promise<{ data: GitHu
   let countMatch
   const counts: number[] = []
   while ((countMatch = countRegex.exec(html)) !== null) {
-      counts.push(parseInt(countMatch[1], 10))
+    counts.push(parseInt(countMatch[1], 10))
   }
 
   // Combine them
@@ -146,21 +298,33 @@ async function fetchPublicContributions(username: string): Promise<{ data: GitHu
 
   // If scraper fails to find elements (Github changed UI), fallback to public events (last 90d)
   if (contributions.length === 0) {
-      console.warn("Public scraper found no data, falling back to public events API")
-      return await fetchPublicEventsFallback(username)
+    console.warn("Public scraper found no data, falling back to public events API")
+    return await fetchPublicEventsFallback(username)
   }
 
-  return { 
-    data: contributions.sort((a,b) => a.date.localeCompare(b.date)), 
-    total 
+  return {
+    data: contributions.sort((a, b) => a.date.localeCompare(b.date)),
+    total,
   }
 }
 
 async function fetchPublicEventsFallback(username: string): Promise<{ data: GitHubContribution[], total: number }> {
-  const res = await fetch(`https://api.github.com/users/${username}/events/public?per_page=100`, {
+  const url = `https://api.github.com/users/${username}/events/public?per_page=100`
+  const headers = getGitHubHeaders()
+
+  console.debug("fetchPublicEventsFallback url", { url, username, withToken: Boolean(process.env.GITHUB_TOKEN) })
+
+  const res = await fetch(url, {
+      headers,
       next: { revalidate: 86400 }
   })
-  
+
+  console.debug("fetchPublicEventsFallback response", {
+    status: res.status,
+    remaining: res.headers.get("x-ratelimit-remaining"),
+    reset: res.headers.get("x-ratelimit-reset"),
+  })
+
   const contributions: GitHubContribution[] = []
   if (res.ok) {
       const events = await res.json() as { created_at: string }[]

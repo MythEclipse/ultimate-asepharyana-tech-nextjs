@@ -13,17 +13,17 @@ export function HeroSection() {
 
       <div className="flex justify-center relative my-20 z-10 w-full text-center">
         <div className="max-w-[89vw] md:max-w-4xl flex flex-col items-center">
-          <Badge variant="glow" className="mb-8 px-4 py-1.5 uppercase tracking-[0.3em] font-black">
-            Engineering Excellence
+          <Badge variant="glass" className="mb-8 px-4 py-1.5 uppercase tracking-[0.3em] font-black">
+            Software Engineering
           </Badge>
 
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance">
-            Building the Future of <br />
-            <span className="text-gradient">Digital Architecture</span>
+            Practical Solutions for <br />
+            <span className="text-primary">Modern Web Systems</span>
           </h1>
 
           <p className="max-w-2xl text-muted-foreground text-lg md:text-xl lg:text-2xl mb-12 font-medium leading-relaxed">
-            I&apos;m <span className="text-foreground border-b-2 border-primary/30 font-bold">Asep Haryana Saputra</span>, crafting reliability in Backend systems and high-performance Frontend experiences.
+            I&apos;m <span className="text-foreground border-b-2 border-primary/30 font-bold">Asep Haryana Saputra</span>, focused on stable backend architecture and efficient frontend delivery.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6">

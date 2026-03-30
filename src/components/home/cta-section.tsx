@@ -7,11 +7,11 @@ export function CallToActionSection() {
       <div className="absolute inset-0 bg-primary/20 blur-[160px] rounded-full mx-auto w-1/2 h-1/2 -z-10 animate-pulse-slow" />
 
       <h2 className="text-[clamp(2rem,10vw,6rem)] font-black text-foreground mb-12 leading-[0.9] tracking-tightest uppercase text-balance">
-        Ready to Forge the <br /> <span className="text-gradient">Next Generation?</span>
+        Explore collaboration <br /> <span className="text-primary">with practical outcomes</span>
       </h2>
 
       <p className="text-muted-foreground mb-12 max-w-2xl text-xl font-medium leading-relaxed">
-        I&apos;m currently available for high-impact projects and technical collaborations. Let&apos;s build something extraordinary together.
+        Available for consulting and project engagements in backend, frontend, and infrastructure engineering.
       </p>
 
       <div className="flex flex-col sm:flex-row items-center gap-6 mt-4">
