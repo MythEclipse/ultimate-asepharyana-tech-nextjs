@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import { Button } from "@/components/ui/button";
@@ -252,7 +253,7 @@ function TechArsenal() {
           <div key={item.name} className={"row-span-1 rounded-3xl group/bento hover:shadow-xl transition duration-500 shadow-input dark:shadow-none p-4 bg-card border border-border/10 dark:border-white/[0.05] justify-between flex flex-col space-y-4 hover:border-primary/20 " + (index === 0 || index === 3 ? "md:col-span-2" : "")}>
             <div className="group/header h-full min-h-[10rem] rounded-2xl glass border-hairline flex items-center justify-center p-8 transition-all hover:bg-foreground/5 overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover/header:opacity-100 transition-opacity" />
-              <img src={item.image} alt={item.name} width={56} height={56} className="w-14 h-14 object-contain filter drop-shadow-2xl group-hover:scale-125 transition-transform duration-500" />
+              <Image src={item.image} alt={item.name} width={56} height={56} className="w-14 h-14 object-contain filter drop-shadow-2xl group-hover:scale-125 transition-transform duration-500" />
             </div>
             <div className="group-hover/bento:translate-x-2 transition duration-200">
               <div className="font-sans font-bold text-foreground mb-2 mt-2">{item.name}</div>

@@ -1,7 +1,6 @@
 "use client"
 
 import { useParams } from "next/navigation"
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import { GlitchText } from "@/components/ui/glitch-text"
 import { Heading } from "@/components/ui/heading"
@@ -28,12 +27,6 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
         <div className="mx-auto w-full max-w-6xl px-4 md:px-0">
           <div className="glass rounded-3xl border border-border/20 p-4 md:p-6 shadow-xl">
             <div className="flex flex-col gap-3 md:gap-4">
-              <Link
-                href={`/${prefix}/detail/${data.anime.slug}`}
-                className="inline-flex items-center gap-2 text-primary hover:text-foreground transition-colors text-[10px] md:text-xs font-black uppercase tracking-widest"
-              >
-                ← Back to Series
-              </Link>
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
                 <Heading as="h2" className="text-lg md:text-xl leading-tight">
                   <GlitchText text={data.episode} className="text-foreground" />

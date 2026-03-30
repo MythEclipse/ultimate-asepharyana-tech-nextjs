@@ -1,6 +1,6 @@
 "use client"
 
-import { useParams, useSearchParams } from "next/navigation"
+import { useParams } from "next/navigation"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { type AnimeDetailData } from "@/lib/api/anime"
