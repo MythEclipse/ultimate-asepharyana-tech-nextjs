@@ -1,15 +1,11 @@
 "use client"
 
-import { use } from "react"
+import { useParams } from "next/navigation"
 import { AnimeListPage } from "@/components/anime/anime-list-page"
 
-export default function Page({ 
-  params 
-}: { 
-  params: Promise<{ page: string }> 
-}) {
-  const pageStr = use(params).page
-  const page = parseInt(pageStr) || 1
+export default function Page() {
+  const params = useParams()
+  const page = parseInt(params?.page ?? "1") || 1
 
   return <AnimeListPage source={1} page={page} type="complete" />
 }

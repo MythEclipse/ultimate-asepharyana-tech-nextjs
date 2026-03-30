@@ -24,8 +24,8 @@ interface AnimeCardProps {
 
 export function AnimeCard({ item, prefix }: AnimeCardProps) {
   // Normalize fields for the UI
-  const displayEpisode = item.episode || item.current_episode || (item.episode_count ? `${item.episode_count} Eps` : "");
-  
+  const displayEpisode = item.current_episode || item.episode || (item.episode_count ? `${item.episode_count} Eps` : "");
+
   return (
     <Link href={`/${prefix}/detail/${item.slug}`} className="group relative block h-full">
       <Card className="relative p-0 overflow-hidden aspect-[3/4.2] border-white/5 group-hover:border-primary/50 transition-all duration-500 hover:shadow-[0_0_30px_rgba(var(--primary-rgb),0.2)]">

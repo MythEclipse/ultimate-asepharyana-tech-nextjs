@@ -116,36 +116,26 @@ export interface AnimeFullData {
 export type AnimeSource = 1 | 2;
 
 const REVALIDATE_TIME = 3600;
-const PAGE_SIZE = 20;
-
-function createPagination(total: number, page: number): Pagination {
-  const last_visible_page = Math.max(1, Math.ceil(total / PAGE_SIZE));
-  const normalizedPage = Math.max(1, Math.min(page, last_visible_page));
-
-  return {
-    current_page: normalizedPage,
-    last_visible_page,
-    has_next_page: normalizedPage < last_visible_page,
-    next_page: normalizedPage < last_visible_page ? normalizedPage + 1 : null,
-    has_previous_page: normalizedPage > 1,
-    previous_page: normalizedPage > 1 ? normalizedPage - 1 : null,
-  };
-}
-
-function getPagedData<T>(items: T[], page: number): { data: T[]; pagination: Pagination } {
-  const pagination = createPagination(items.length, page);
-  const start = (pagination.current_page - 1) * PAGE_SIZE;
-  const end = start + PAGE_SIZE;
-
-  return {
-    data: items.slice(start, end),
-    pagination,
-  };
-}
 
 function getAnimeUrl(source: AnimeSource, path: string): string {
     const prefix = source === 2 ? "/anime2" : "/anime";
     return `${prefix}${path}`;
+}
+
+function getPaginationFromApi<T>(response: ApiResponse<T[]>): Pagination {
+  if (response.pagination) return response.pagination;
+
+  if (response.meta && typeof response.meta === "object") {
+    const meta = response.meta as { pagination?: Pagination };
+    if (meta.pagination) return meta.pagination;
+  }
+
+  throw new Error("API pagination metadata is missing");
+}
+
+function getArrayDataFromApi<T>(response: ApiResponse<T[]>): T[] {
+  if (Array.isArray(response.data)) return response.data;
+  throw new Error("API data is not an array");
 }
 
 export async function fetchAnimeIndex(source: AnimeSource): Promise<Anime1Data | Anime2Data> {
@@ -158,21 +148,27 @@ export async function fetchAnimeIndex(source: AnimeSource): Promise<Anime1Data |
 }
 
 export async function fetchAnimeOngoing(source: AnimeSource, page: number): Promise<{ data: (Anime1OngoingItem | Anime2OngoingItem)[]; pagination: Pagination }> {
-  const response = await fetchApi<ApiResponse<Anime1Data | Anime2Data>>(getAnimeUrl(source, ""), {
+  const endpoint = `${getAnimeUrl(source, "/ongoing_anime")}/${page}`;
+  const response = await fetchApi<ApiResponse<Anime1OngoingItem | Anime2OngoingItem>>(endpoint, {
     next: { revalidate: REVALIDATE_TIME }
   });
 
-  const ongoing = (response.data?.ongoing_anime ?? []) as Anime1OngoingItem[] | Anime2OngoingItem[];
-  return getPagedData(ongoing, page);
+  const ongoing = getArrayDataFromApi(response) as Anime1OngoingItem[] | Anime2OngoingItem[];
+  const pagination = getPaginationFromApi(response);
+
+  return { data: ongoing, pagination };
 }
 
 export async function fetchAnimeComplete(source: AnimeSource, page: number): Promise<{ data: Anime2CompleteItem[]; pagination: Pagination }> {
-  const response = await fetchApi<ApiResponse<Anime1Data | Anime2Data>>(getAnimeUrl(source, ""), {
+  const endpoint = `${getAnimeUrl(source, "/complete_anime")}/${page}`;
+  const response = await fetchApi<ApiResponse<Anime2CompleteItem>>(endpoint, {
     next: { revalidate: REVALIDATE_TIME }
   });
 
-  const complete = (response.data?.complete_anime ?? []) as Anime2CompleteItem[];
-  return getPagedData(complete, page);
+  const complete = getArrayDataFromApi(response) as Anime2CompleteItem[];
+  const pagination = getPaginationFromApi(response);
+
+  return { data: complete, pagination };
 }
 
 export async function fetchAnimeDetail(source: AnimeSource, slug: string): Promise<AnimeDetailData> {
@@ -291,3 +287,29 @@ export const fetchAnime1Stream = (slug: string) => fetchAnimeStream(1, slug);
 export const fetchAnime2Stream = (slug: string) => fetchAnimeStream(2, slug);
 export const searchAnime1 = (query: string) => searchAnime(1, query);
 export const searchAnime2 = (query: string) => searchAnime(2, query);
+
+// Additional OpenAPI-route wrappers
+export async function fetchAnimeGenre(source: AnimeSource, genreSlug: string): Promise<ApiResponse<unknown>> {
+  return await fetchApi<ApiResponse<unknown>>(`${getAnimeUrl(source, "/genre")}/${encodeURIComponent(genreSlug)}`, { next: { revalidate: REVALIDATE_TIME } });
+}
+
+export async function fetchAnimeGenrePage(source: AnimeSource, genreSlug: string, page: number): Promise<ApiResponse<unknown>> {
+  return await fetchApi<ApiResponse<unknown>>(`${getAnimeUrl(source, "/genre")}/${encodeURIComponent(genreSlug)}/${page}`, { next: { revalidate: REVALIDATE_TIME } });
+}
+
+export async function fetchAnimeGenreList(source: AnimeSource): Promise<ApiResponse<unknown>> {
+  return await fetchApi<ApiResponse<unknown>>(`${getAnimeUrl(source, "/genre_list")}`, { next: { revalidate: REVALIDATE_TIME } });
+}
+
+export async function fetchAnimeLatest(source: AnimeSource, slug: string): Promise<ApiResponse<unknown>> {
+  return await fetchApi<ApiResponse<unknown>>(`${getAnimeUrl(source, "/latest")}/${encodeURIComponent(slug)}`, { next: { revalidate: REVALIDATE_TIME } });
+}
+
+export async function fetchAnimeSearchPath(source: AnimeSource, query: string, page?: number): Promise<ApiResponse<unknown>> {
+  const queryPath = encodeURIComponent(query);
+  const endpoint = page && page > 1
+    ? `${getAnimeUrl(source, "/search")}/${queryPath}/${page}`
+    : `${getAnimeUrl(source, "/search")}/${queryPath}`;
+  return await fetchApi<ApiResponse<unknown>>(endpoint, { cache: "no-store" });
+}
+

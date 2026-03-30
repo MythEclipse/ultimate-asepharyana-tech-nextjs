@@ -1,6 +1,6 @@
 "use client"
 
-import { use } from "react"
+import { useParams, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { type AnimeDetailData } from "@/lib/api/anime"
@@ -129,16 +129,10 @@ function AnimeDetailContent({ data, source }: { data: AnimeDetailData, source: 1
   )
 }
 
-export default function AnimeDetailRoute({ 
-  params, 
-  searchParams 
-}: { 
-  params: Promise<{ slug: string }>, 
-  searchParams?: Promise<{ s?: string }> 
-}) {
-  const { slug } = use(params)
-  const s = searchParams ? use(searchParams).s : "1"
-  const source = s === "2" ? 2 : 1
+export default function AnimeDetailRoute({ source = 1 }: { source?: 1 | 2 }) {
+  const params = useParams()
+
+  const slug = params?.slug ?? ""
 
   const { data, isLoading } = useAnimeDetail(source, slug)
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { use } from "react"
+import { useParams } from "next/navigation"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { GlitchText } from "@/components/ui/glitch-text"
@@ -132,14 +132,9 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
   )
 }
 
-export default function AnimeWatchPage({ 
-  params, 
-  source = 1 
-}: { 
-  params: Promise<{ slug: string }>,
-  source?: 1 | 2 
-}) {
-  const { slug } = use(params)
+export default function AnimeWatchPage({ source = 1 }: { source?: 1 | 2 }) {
+  const params = useParams()
+  const slug = params?.slug ?? ""
   const { data, isLoading } = useAnimeStream(source, slug)
 
   if (isLoading) {

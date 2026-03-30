@@ -1,12 +1,12 @@
 "use client"
 
-import { use } from "react"
+import { useParams } from "next/navigation"
 import { KomikListPage } from "@/components/komik/komik-list-page"
 import { fetchManhwa } from "@/lib/api/komik"
 
-export default function Page({ params }: { params: Promise<{ page: string }> }) {
-  const pageStr = use(params).page
-  const page = parseInt(pageStr) || 1
+export default function Page() {
+  const params = useParams()
+  const page = parseInt(params?.page ?? "1") || 1
 
   return (
     <KomikListPage

@@ -1,6 +1,7 @@
 "use client"
 
-import { use, useState, useEffect } from "react"
+import { useParams } from "next/navigation"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { fetchChapter, type ChapterData } from "@/lib/api/komik"
@@ -102,8 +103,9 @@ function KomikChapterView({ data }: { data: ChapterData }) {
   )
 }
 
-export default function KomikChapterRoute({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params)
+export default function KomikChapterRoute() {
+  const params = useParams()
+  const slug = params?.slug ?? ""
   const [data, setData] = useState<ChapterData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 

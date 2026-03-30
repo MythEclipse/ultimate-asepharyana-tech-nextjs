@@ -15,6 +15,19 @@ interface CachedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 
 const FALLBACK_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900' viewBox='0 0 1200 900'%3E%3Crect width='1200' height='900' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%236b7280' font-family='Arial,Helvetica,sans-serif' font-size='42'%3EImage unavailable%3C/text%3E%3C/svg%3E"
 
+function normalizeImageUrl(src?: string | null): string {
+  if (!src) return ""
+
+  const fromWpProxy = src.match(/^https?:\/\/(i\d+)\.wp\.com\/(.+)$/i)
+  if (fromWpProxy) {
+    const target = fromWpProxy[2]
+    const withoutQuery = target.split("?")[0]
+    return `https://${withoutQuery}`
+  }
+
+  return src
+}
+
 export function CachedImage({
   src,
   alt,
@@ -28,17 +41,20 @@ export function CachedImage({
   maxAttempts = 2,
   ...props
 }: CachedImageProps) {
-  const normalizedSrc = !src || String(src).trim().length === 0 ? fallbackSrc : String(src)
+  const normalizedSrc = !src || String(src).trim().length === 0 ? fallbackSrc : normalizeImageUrl(String(src))
 
   const [resolvedSrc, setResolvedSrc] = useState(normalizedSrc)
   const [loadState, setLoadState] = useState<"idle" | "loading" | "loaded" | "error">("loading")
   const [attempt, setAttempt] = useState(0)
   const [isAuditing, setIsAuditing] = useState(false)
+  const [hasAudited, setHasAudited] = useState(false)
 
   useEffect(() => {
     setResolvedSrc(normalizedSrc)
     setLoadState("loading")
     setAttempt(0)
+    setIsAuditing(false)
+    setHasAudited(false)
   }, [normalizedSrc])
 
   const imageSrc = loadState === "error" ? fallbackSrc : resolvedSrc
@@ -54,31 +70,29 @@ export function CachedImage({
   const isFallback = imageSrc === fallbackSrc
 
   async function auditImage(srcUrl: string) {
-    if (!srcUrl || srcUrl === fallbackSrc) return
+    if (!srcUrl || srcUrl === fallbackSrc || hasAudited) return
+
+    setIsAuditing(true)
+    setHasAudited(true)
 
     try {
-      setIsAuditing(true)
-      const auditUrl = `${API_BASE_URL}/proxy/image-cache/audit`
-      const response = await fetch(auditUrl, {
+      const response = await fetch(`${API_BASE_URL}/proxy/image-cache`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ url: srcUrl }),
       })
 
       if (!response.ok) {
-        throw new Error(`Audit API failed ${response.status}`)
+        console.warn(`Image audit failed status ${response.status}`)
+        return
       }
 
       const result = await response.json()
-      console.debug("Image cache audit result", result)
-
-      if (result?.success && result?.cdn_url) {
-        setResolvedSrc(result.cdn_url)
-        setLoadState("loading")
-        setAttempt(0)
-      }
-    } catch (auditErr) {
-      console.warn("Audit image cache failed", auditErr)
+      console.debug("Image audit result", result)
+    } catch (err) {
+      console.warn("Image audit failed", err)
     } finally {
       setIsAuditing(false)
     }
@@ -138,13 +152,14 @@ export function CachedImage({
               setAttempt((prev) => prev + 1)
               setLoadState("loading")
               setResolvedSrc(normalizedSrc)
-            } else {
-              setLoadState("error")
-
-              if (!isAuditing && !isFallback) {
-                await auditImage(resolvedSrc)
-              }
+              return
             }
+
+            if (!isFallback && !hasAudited) {
+              await auditImage(resolvedSrc)
+            }
+
+            setLoadState("error")
           }}
           {...props}
         />

@@ -1,6 +1,6 @@
 "use client"
 
-import { use } from "react"
+import { useParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -121,12 +121,9 @@ function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
   )
 }
 
-export default function KomikDetailRoute({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = use(params)
+export default function KomikDetailRoute() {
+  const params = useParams()
+  const slug = params?.slug ?? ""
   const normalizedSlug = slug?.trim() || ""
 
   if (!normalizedSlug) {

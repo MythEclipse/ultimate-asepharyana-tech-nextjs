@@ -104,3 +104,28 @@ export async function searchKomik(query: string, page: number): Promise<MangaRes
       cache: "no-store"
   });
 }
+
+export async function fetchKomikGenre(genreSlug: string): Promise<MangaResponse> {
+  return await fetchApi<MangaResponse>(`/komik/genre/${encodeURIComponent(genreSlug)}`, {
+      next: { revalidate: REVALIDATE_TIME }
+  });
+}
+
+export async function fetchKomikGenrePage(genreSlug: string, page: number): Promise<MangaResponse> {
+  return await fetchApi<MangaResponse>(`/komik/genre/${encodeURIComponent(genreSlug)}/${page}`, {
+      next: { revalidate: REVALIDATE_TIME }
+  });
+}
+
+export async function fetchKomikGenreList(): Promise<MangaResponse> {
+  return await fetchApi<MangaResponse>(`/komik/genre_list`, {
+      next: { revalidate: REVALIDATE_TIME }
+  });
+}
+
+export async function fetchKomikPopular(slug: string): Promise<MangaResponse> {
+  return await fetchApi<MangaResponse>(`/komik/popular/${encodeURIComponent(slug)}`, {
+      next: { revalidate: REVALIDATE_TIME }
+  });
+}
+
