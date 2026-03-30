@@ -134,7 +134,8 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
 
 export default function AnimeWatchPage({ source = 1 }: { source?: 1 | 2 }) {
   const params = useParams()
-  const slug = params?.slug ?? ""
+  const rawSlug = params?.slug
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] ?? "" : rawSlug ?? ""
   const { data, isLoading } = useAnimeStream(source, slug)
 
   if (isLoading) {

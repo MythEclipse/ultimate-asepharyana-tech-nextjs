@@ -132,7 +132,8 @@ function AnimeDetailContent({ data, source }: { data: AnimeDetailData, source: 1
 export default function AnimeDetailRoute({ source = 1 }: { source?: 1 | 2 }) {
   const params = useParams()
 
-  const slug = params?.slug ?? ""
+  const rawSlug = params?.slug
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] ?? "" : rawSlug ?? ""
 
   const { data, isLoading } = useAnimeDetail(source, slug)
 

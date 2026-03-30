@@ -1,11 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils/index";
 import Link from "next/link";
 import { Button } from "./button";
@@ -21,82 +15,53 @@ export const FloatingNav = ({
   }[];
   className?: string;
 }) => {
-  const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(false);
+  const [lastScroll, setLastScroll] = useState(0);
 
-  useMotionValueEvent(scrollYProgress, "change", (current) => {
-    if (typeof current !== "number") return
+  useEffect(() => {
+    const onScroll = () => {
+      const current = window.scrollY;
+      if (current < 10) {
+        setVisible(false);
+      } else {
+        setVisible(current < lastScroll);
+      }
+      setLastScroll(current);
+    };
 
-    const prev = scrollYProgress.getPrevious() ?? 0
-    const direction = current - prev
-
-    if (current < 0.02) {
-      if (visible) setVisible(false)
-      return
-    }
-
-    const shouldShow = direction < 0
-    if (shouldShow !== visible) {
-      setVisible(shouldShow)
-    }
-  })
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [lastScroll]);
 
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        initial={{ opacity: 0, y: -100, scale: 0.95 }}
-        animate={{
-          y: visible ? 0 : -100,
-          opacity: visible ? 1 : 0,
-          scale: visible ? 1 : 0.95,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 260,
-          damping: 20,
-        }}
-        className={cn(
-          "flex max-w-fit fixed top-6 inset-x-0 mx-auto z-[5000] p-1.5 items-center justify-center space-x-2 glass rounded-full border-hairline",
-          className
-        )}
-      >
-        <div className="flex items-center space-x-1 px-4">
-          {navItems.map((navItem, idx: number) => (
-            <motion.div
-              key={`link=${idx}`}
-              whileHover={{ 
-                scale: 1.15,
-                y: -2,
-              }}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 10
-              }}
+    <div
+      className={cn(
+        "flex max-w-fit fixed top-6 inset-x-0 mx-auto z-[5000] p-1.5 items-center justify-center space-x-2 glass rounded-full border-hairline transition-all duration-300",
+        visible ? "translate-y-0 opacity-100" : "-translate-y-20 opacity-0",
+        className
+      )}
+    >
+      <div className="flex items-center space-x-1 px-4">
+        {navItems.map((navItem, idx: number) => (
+          <div key={`link=${idx}`} className="transition-transform duration-200 hover:-translate-y-1 hover:scale-105">
+            <Link
+              href={navItem.link}
+              className="relative p-2 flex items-center justify-center text-muted-foreground hover:text-primary transition-colors group"
             >
-              <Link
-                href={navItem.link}
-                className="relative p-2 flex items-center justify-center text-muted-foreground hover:text-primary transition-colors group"
-              >
-                <span className="block">{navItem.icon}</span>
-                <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 glass rounded-md text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                  {navItem.name}
-                </span>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-        
-        <div className="h-6 w-[1px] bg-foreground/10 mx-2" />
+              <span className="block">{navItem.icon}</span>
+              <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 px-2 py-1 glass rounded-md text-[10px] font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                {navItem.name}
+              </span>
+            </Link>
+          </div>
+        ))}
+      </div>
 
-        <Button 
-          variant="shiny" 
-          size="sm" 
-          className="rounded-full px-5 font-bold h-8 text-[11px] uppercase tracking-wider"
-        >
-          Login
-        </Button>
-      </motion.div>
-    </AnimatePresence>
+      <div className="h-6 w-[1px] bg-foreground/10 mx-2" />
+
+      <Button variant="shiny" size="sm" className="rounded-full px-5 font-bold h-8 text-[11px] uppercase tracking-wider">
+        Login
+      </Button>
+    </div>
   );
 };

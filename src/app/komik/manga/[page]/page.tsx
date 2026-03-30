@@ -6,7 +6,8 @@ import { fetchManga } from "@/lib/api/komik"
 
 export default function Page() {
   const params = useParams()
-  const page = parseInt(params?.page ?? "1") || 1
+  const pageParam = params?.page
+  const page = parseInt(Array.isArray(pageParam) ? pageParam[0] : pageParam ?? "1") || 1
 
   return (
     <KomikListPage

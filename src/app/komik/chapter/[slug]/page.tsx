@@ -105,7 +105,8 @@ function KomikChapterView({ data }: { data: ChapterData }) {
 
 export default function KomikChapterRoute() {
   const params = useParams()
-  const slug = params?.slug ?? ""
+  const rawSlug = params?.slug
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] ?? "" : rawSlug ?? ""
   const [data, setData] = useState<ChapterData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 

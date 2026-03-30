@@ -22,9 +22,7 @@ const nextConfig: NextConfig = {
   transpilePackages: [
     '@tsparticles/react',
     '@tsparticles/slim',
-    'framer-motion',
     'three',
-    'gsap',
   ],
 } satisfies NextConfig;
 

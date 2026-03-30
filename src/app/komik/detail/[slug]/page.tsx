@@ -123,7 +123,8 @@ function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
 
 export default function KomikDetailRoute() {
   const params = useParams()
-  const slug = params?.slug ?? ""
+  const rawSlug = params?.slug
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] ?? "" : rawSlug ?? ""
   const normalizedSlug = slug?.trim() || ""
 
   if (!normalizedSlug) {
