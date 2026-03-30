@@ -149,11 +149,11 @@ export async function fetchAnimeIndex(source: AnimeSource): Promise<Anime1Data |
 
 export async function fetchAnimeOngoing(source: AnimeSource, page: number): Promise<{ data: (Anime1OngoingItem | Anime2OngoingItem)[]; pagination: Pagination }> {
   const endpoint = `${getAnimeUrl(source, "/ongoing_anime")}/${page}`;
-  const response = await fetchApi<ApiResponse<Anime1OngoingItem | Anime2OngoingItem>>(endpoint, {
+  const response = await fetchApi<ApiResponse<(Anime1OngoingItem | Anime2OngoingItem)[]>>(endpoint, {
     next: { revalidate: REVALIDATE_TIME }
   });
 
-  const ongoing = getArrayDataFromApi(response) as Anime1OngoingItem[] | Anime2OngoingItem[];
+  const ongoing = getArrayDataFromApi(response) as (Anime1OngoingItem | Anime2OngoingItem)[];
   const pagination = getPaginationFromApi(response);
 
   return { data: ongoing, pagination };
@@ -161,7 +161,7 @@ export async function fetchAnimeOngoing(source: AnimeSource, page: number): Prom
 
 export async function fetchAnimeComplete(source: AnimeSource, page: number): Promise<{ data: Anime2CompleteItem[]; pagination: Pagination }> {
   const endpoint = `${getAnimeUrl(source, "/complete_anime")}/${page}`;
-  const response = await fetchApi<ApiResponse<Anime2CompleteItem>>(endpoint, {
+  const response = await fetchApi<ApiResponse<Anime2CompleteItem[]>>(endpoint, {
     next: { revalidate: REVALIDATE_TIME }
   });
 

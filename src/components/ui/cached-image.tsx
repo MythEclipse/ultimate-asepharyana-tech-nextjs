@@ -66,6 +66,10 @@ export function CachedImage({
     "overflow-hidden"
   )
 
+  const imgClassBase = fill
+    ? "absolute inset-0 w-full h-full"
+    : "w-full h-auto"
+
   const effectiveLoading = eager ? "eager" : loading
   const isFallback = imageSrc === fallbackSrc
 
@@ -101,12 +105,13 @@ export function CachedImage({
   const imgStyles = useMemo(
     () =>
       cn(
+        imgClassBase,
         className,
         "transition-opacity duration-500 ease-out transform-gpu",
         loadState !== "loaded" ? "opacity-0 scale-105 blur-sm" : "opacity-100 scale-100 blur-0",
         loadState === "error" ? "grayscale" : ""
       ),
-    [className, loadState]
+    [imgClassBase, className, loadState]
   )
 
   const handleRetry = () => {

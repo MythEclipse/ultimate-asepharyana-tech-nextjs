@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { TracingBeam } from "@/components/ui/tracing-beam"
 import { SkeletonGrid } from "@/components/ui/skeleton"
+import { EmptyState } from "@/components/ui/empty-state"
 import { IconBook, IconDiamond, IconBarbell } from "@tabler/icons-react"
 import { KomikCard } from "./komik-card"
 import { fetchManga, fetchManhwa, fetchManhua } from "@/lib/api/komik"
@@ -14,6 +15,18 @@ export function KomikHubContent() {
   const { data: manhua } = useQuery({ queryKey: ["manhua"], queryFn: () => fetchManhua(1) })
 
   if (!manga || !manhwa || !manhua) return <SkeletonGrid count={12} />
+
+  if (manga.data.length === 0 && manhwa.data.length === 0 && manhua.data.length === 0) {
+    return (
+      <div className="px-6 py-20">
+        <EmptyState
+          title="Library sedang kosong"
+          description="Saat ini tidak ada konten komik terdaftar. Coba lagi nanti atau periksa pembaruan lainnya."
+          variant="blank"
+        />
+      </div>
+    )
+  }
 
   return (
     <TracingBeam className="px-6">

@@ -2,7 +2,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils/index"
 
 interface SectionProps {
-  children: React.ReactNode
+  children?: React.ReactNode
   className?: string
   innerClassName?: string
   glow?: boolean

@@ -10,8 +10,8 @@ import { KomikHubContent } from "@/components/komik/komik-hub-content"
 export default function KomikPage() {
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-orange-500/30 transition-colors duration-500">
-      <div className="relative h-[35rem] w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
-        <div className="w-full absolute inset-0 h-screen">
+      <Section className="relative overflow-hidden py-28 md:py-32">
+        <div className="absolute inset-0 pointer-events-none z-0">
           <SparklesCore
             id="particles-komik"
             background="transparent"
@@ -22,7 +22,8 @@ export default function KomikPage() {
             particleColor="#f97316"
           />
         </div>
-        <div className="relative z-20 text-center px-4">
+
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
           <Badge variant="outline" className="mb-4 text-orange-500 border-orange-500/50 bg-orange-500/5 px-4 py-1">
             Universal Reading Library
           </Badge>
@@ -51,7 +52,7 @@ export default function KomikPage() {
             </form>
           </div>
         </div>
-      </div>
+      </Section>
 
       <Section className="py-20">
         <Suspense fallback={<div className="py-20">Loading komik...</div>}>

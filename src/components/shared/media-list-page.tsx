@@ -4,6 +4,7 @@ import { ReactNode } from "react"
 import Link from "next/link"
 import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
+import { EmptyState } from "@/components/ui/empty-state"
 import { Heading } from "@/components/ui/heading"
 import { SparklesCore } from "@/components/ui/sparkles"
 import { IconArrowLeft } from "@tabler/icons-react"
@@ -44,14 +45,45 @@ export function MediaListPage<T>({
   hubLink,
   hero,
 }: MediaListPageProps<T>) {
-  if (isLoading) return <SkeletonGrid count={10} />
+  if (isLoading) {
+    return (
+      <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
+        <Section className="pt-32 pb-16" />
+        <div className="px-6 py-12">
+          <SkeletonGrid count={10} />
+        </div>
+      </main>
+    )
+  }
 
   if (error || !data) {
     return (
-      <div className="p-20 text-center glass rounded-[3rem] border border-border/20">
-        <Heading as="h3">Connectivity Disruption</Heading>
-        <p className="text-muted-foreground mt-2">The neural uplink for {queryName} library failed.</p>
-      </div>
+      <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
+        <Section className="pt-24 pb-12" glow>
+          <div className="glass rounded-3xl border border-border/20 p-10"> 
+            <Heading as="h3">Connectivity Disruption</Heading>
+            <p className="text-muted-foreground mt-2">The neural uplink for {queryName} library failed.</p>
+          </div>
+        </Section>
+      </main>
+    )
+  }
+
+  if (data.data.length === 0) {
+    return (
+      <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
+        <Section className="pt-24 pb-12" glow>
+          <div className="mx-auto w-full max-w-4xl">
+            <EmptyState
+              title="Tidak ada item ditemukan"
+              description={`Tidak ada hasil untuk ${queryName}. Coba pilih halaman lain atau tunggu data baru.`}
+              variant="search"
+              actionLabel="Reload"
+              onAction={() => window.location.reload()}
+            />
+          </div>
+        </Section>
+      </main>
     )
   }
 
