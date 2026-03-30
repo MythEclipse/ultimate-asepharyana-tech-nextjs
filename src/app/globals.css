@@ -48,56 +48,56 @@
 }
 
 :root {
-  --background: 240 15% 98%;
-  --foreground: 240 10% 4%;
+  --background: 210 60% 96%;
+  --foreground: 225 30% 8%;
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 4%;
+  --card-foreground: 220 18% 12%;
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 4%;
-  --primary: 262 80% 50%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 240 5% 94%;
-  --secondary-foreground: 240 10% 4%;
-  --muted: 240 5% 94%;
-  --muted-foreground: 240 5% 40%;
-  --accent: 280 80% 60%;
+  --popover-foreground: 225 30% 8%;
+  --primary: 198 100% 70%;
+  --primary-foreground: 210 100% 10%;
+  --secondary: 205 40% 92%;
+  --secondary-foreground: 225 24% 20%;
+  --muted: 205 24% 90%;
+  --muted-foreground: 220 30% 35%;
+  --accent: 320 100% 76%;
   --accent-foreground: 0 0% 100%;
-  --destructive: 0 84% 50%;
+  --destructive: 348 90% 57%;
   --destructive-foreground: 0 0% 100%;
-  --border: 240 6% 88%;
-  --input: 240 6% 88%;
-  --ring: 262 80% 50%;
+  --border: 210 40% 85%;
+  --input: 210 40% 90%;
+  --ring: 198 100% 70%;
   --radius: 1rem;
 
-  --gradient-start: 262 80% 50%;
-  --gradient-mid: 280 80% 60%;
-  --gradient-end: 200 90% 50%;
+  --gradient-start: 198 100% 70%;
+  --gradient-mid: 320 100% 76%;
+  --gradient-end: 190 100% 80%;
 }
 
 .dark {
-  --background: 240 25% 2%;
-  --foreground: 240 15% 96%;
-  --card: 240 25% 4%;
+  --background: 215 30% 8%;
+  --foreground: 210 18% 92%;
+  --card: 215 30% 12%;
   --card-foreground: 0 0% 100%;
-  --popover: 240 25% 4%;
+  --popover: 215 30% 12%;
   --popover-foreground: 0 0% 100%;
-  --primary: 262 85% 65%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 240 20% 10%;
-  --secondary-foreground: 0 0% 100%;
-  --muted: 240 20% 10%;
-  --muted-foreground: 240 15% 65%;
-  --accent: 280 85% 70%;
+  --primary: 198 95% 58%;
+  --primary-foreground: 210 100% 10%;
+  --secondary: 215 40% 18%;
+  --secondary-foreground: 210 20% 90%;
+  --muted: 215 40% 18%;
+  --muted-foreground: 210 30% 70%;
+  --accent: 322 90% 68%;
   --accent-foreground: 0 0% 100%;
-  --destructive: 0 84% 60%;
+  --destructive: 348 90% 66%;
   --destructive-foreground: 0 0% 100%;
-  --border: 240 20% 14%;
-  --input: 240 20% 14%;
-  --ring: 262 85% 65%;
+  --border: 215 26% 20%;
+  --input: 215 26% 20%;
+  --ring: 198 95% 58%;
 
-  --gradient-start: 262 85% 65%;
-  --gradient-mid: 280 85% 70%;
-  --gradient-end: 200 90% 60%;
+  --gradient-start: 198 95% 58%;
+  --gradient-mid: 322 90% 68%;
+  --gradient-end: 190 90% 64%;
 }
 
 @layer base {
@@ -109,6 +109,10 @@
     color: hsl(var(--foreground));
     -webkit-font-smoothing: antialiased;
     letter-spacing: -0.01em;
+    background-image: radial-gradient(circle at 10% 15%, hsla(var(--primary), 0.15), transparent 35%), radial-gradient(circle at 85% 10%, hsla(var(--accent), 0.2), transparent 30%), radial-gradient(circle at 30% 95%, hsla(var(--secondary), 0.25), transparent 25%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-blend-mode: screen;
   }
 
   /* Refined Grain Overlay */
