@@ -1,9 +1,8 @@
 "use client"
 
 import { Suspense } from "react"
-import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
-import { fetchAnimeOngoing, fetchAnimeComplete, type AnimeSource, type Anime1OngoingItem, type Anime2OngoingItem, type Anime2CompleteItem } from "@/lib/api/anime"
+import { type AnimeSource, type Anime1OngoingItem, type Anime2OngoingItem, type Anime2CompleteItem } from "@/lib/api/anime"
 import { Pagination } from "@/lib/api/types"
 import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
@@ -12,27 +11,16 @@ import { SparklesCore } from "@/components/ui/sparkles"
 import { IconArrowLeft, IconFlame, IconChecklist } from "@tabler/icons-react"
 import { AnimeCard } from "./anime-card"
 import { PaginationControl } from "./pagination-control"
+import { getAnimePrefix, useAnimeListData, type AnimeListType } from "./use-anime"
 
 interface AnimeListPageProps {
   source: AnimeSource
   page: number
-  type: "ongoing" | "complete"
+  type: AnimeListType
 }
 
 function ListContent({ source, page, type }: AnimeListPageProps) {
-  const queryKey = [`anime-${type}`, source, page];
-
-  type AnimeListResponse = { data: (Anime1OngoingItem | Anime2OngoingItem | Anime2CompleteItem)[]; pagination: Pagination }
-
-  const { data, isLoading, error } = useQuery<AnimeListResponse, Error>({
-    queryKey,
-    queryFn: () => {
-      if (type === "ongoing") {
-        return fetchAnimeOngoing(source, page)
-      }
-      return fetchAnimeComplete(source, page)
-    }
-  })
+  const { data, isLoading, error } = useAnimeListData(source, page, type)
 
   if (isLoading) return <SkeletonGrid count={10} />
   
@@ -43,7 +31,7 @@ function ListContent({ source, page, type }: AnimeListPageProps) {
     </div>
   )
 
-  const prefix = source === 2 ? "anime2" : "anime";
+  const prefix = getAnimePrefix(source)
 
   return (
     <div className="space-y-20">

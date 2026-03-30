@@ -1,24 +1,19 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
 import { TracingBeam } from "@/components/ui/tracing-beam"
 import { SkeletonGrid } from "@/components/ui/skeleton"
 import { IconFlame, IconChecklist } from "@tabler/icons-react"
 import { SectionHeader } from "./section-header"
 import { AnimeCard } from "./anime-card"
-import { fetchAnimeOngoing, fetchAnimeComplete, type AnimeSource } from "@/lib/api/anime"
+import { type AnimeSource } from "@/lib/api/anime"
+import { getAnimePrefix, useAnimeHubData } from "./use-anime"
 
 export function AnimeHubContent({ source }: { source: AnimeSource }) {
-  const { data: ongoing } = useQuery({ 
-      queryKey: ["ongoing", source], 
-      queryFn: () => fetchAnimeOngoing(source, 1) 
-  })
-  const { data: complete } = useQuery({ 
-      queryKey: ["complete", source], 
-      queryFn: () => fetchAnimeComplete(source, 1) 
-  })
+  const { ongoingQuery, completeQuery } = useAnimeHubData(source)
 
-  const prefix = source === 2 ? "anime2" : "anime"
+  const ongoing = ongoingQuery.data
+  const complete = completeQuery.data
+  const prefix = getAnimePrefix(source)
 
   if (!ongoing || !complete) return <SkeletonGrid count={12} />
 
