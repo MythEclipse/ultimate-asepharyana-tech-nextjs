@@ -24,7 +24,7 @@ export function TechArsenal() {
           <BentoGridItem
             key={item.name}
             title={item.name}
-            description={`Precision engineering using ${item.name} for enterprise-grade solutions.`}
+            description={`Used as part of creating maintainable, reliable applications with ${item.name}.`}
             header={
               <div className="group/header h-full w-full min-h-[10rem] rounded-2xl glass border-hairline flex items-center justify-center p-8 transition-all hover:bg-foreground/5 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover/header:opacity-100 transition-opacity" />
