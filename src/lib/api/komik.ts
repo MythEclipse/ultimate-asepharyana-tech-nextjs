@@ -55,13 +55,10 @@ export interface ChapterResponse {
   data: ChapterData;
 }
 
-// ----------------------------------------------------
-// FETCH FUNCTIONS
-// ----------------------------------------------------
-const REVALIDATE_TIME = 3600; // 1 hour caching for lists
+const REVALIDATE_TIME = 3600;
 
 async function fetchKomikType(type: string, page: number): Promise<MangaResponse> {
-  return await fetchApi<MangaResponse>(`/komik/${type}?page=${page}`, {
+  return await fetchApi<MangaResponse>(`/komik/${type}/${page}`, {
       next: { revalidate: REVALIDATE_TIME }
   });
 }
@@ -79,29 +76,31 @@ export async function fetchManhua(page: number): Promise<MangaResponse> {
 }
 
 export async function fetchKomikDetail(komikId: string): Promise<KomikDetailData> {
-  const res = await fetchApi<KomikDetailResponse>(`/komik/detail?komik_id=${komikId}`, {
+  const res = await fetchApi<KomikDetailResponse>(`/komik/detail/${encodeURIComponent(komikId)}`, {
       next: { revalidate: REVALIDATE_TIME / 2 }
   });
 
-  if (!res || res.status !== true || !res.data) {
-    throw new Error("Komik detail payload invalid")
+  if (!res || !res.status || !res.data) {
+    throw new Error("Komik detail payload invalid");
   }
 
   return res.data;
 }
 
 export async function fetchChapter(slug: string): Promise<ChapterData> {
-  const res = await fetchApi<ChapterResponse>(`/komik/chapter?chapter_url=${encodeURIComponent(slug)}`, {
+  const res = await fetchApi<ChapterResponse>(`/komik/chapter/${encodeURIComponent(slug)}`, {
       next: { revalidate: REVALIDATE_TIME * 24 }
   });
+
   if (res.data) {
-      return res.data;
+    return res.data;
   }
+
   throw new Error("Failed to fetch chapter");
 }
 
 export async function searchKomik(query: string, page: number): Promise<MangaResponse> {
-  return await fetchApi<MangaResponse>(`/komik/search?query=${encodeURIComponent(query)}&page=${page}`, {
-      cache: "no-store" // Always fetch fresh on search
+  return await fetchApi<MangaResponse>(`/komik/search/${encodeURIComponent(query)}/${page}`, {
+      cache: "no-store"
   });
 }
