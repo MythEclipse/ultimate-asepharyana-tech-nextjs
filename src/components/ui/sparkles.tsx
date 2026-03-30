@@ -2,6 +2,7 @@
 import React, { useId } from "react";
 import { useEffect, useState, type ComponentType } from "react";
 import type { Container, Engine } from "@tsparticles/engine";
+import type { IParticlesProps } from "@tsparticles/react";
 import { cn } from "@/lib/utils/index";
 
 type ParticlesProps = {
@@ -29,7 +30,7 @@ export const SparklesCore = (props: ParticlesProps) => {
   } = props;
   
   const [init, setInit] = useState(false);
-  const [ParticlesComp, setParticlesComp] = useState<ComponentType<any> | null>(null);
+  const [ParticlesComp, setParticlesComp] = useState<ComponentType<IParticlesProps> | null>(null);
 
   useEffect(() => {
     // Dynamic import inside useEffect ensures the SSR worker never attempts to bundle or load these libraries
@@ -42,7 +43,7 @@ export const SparklesCore = (props: ParticlesProps) => {
           await loadSlim(engine);
         });
         
-        setParticlesComp(() => Particles as ComponentType<any>);
+        setParticlesComp(() => Particles as ComponentType<IParticlesProps>);
         setInit(true);
       } catch (error) {
         console.error("Failed to initialize particles:", error);

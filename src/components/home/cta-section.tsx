@@ -11,7 +11,7 @@ export function CallToActionSection() {
       </h2>
 
       <p className="text-muted-foreground mb-12 max-w-2xl text-xl font-medium leading-relaxed">
-        I'am currently available for high-impact projects and technical collaborations. Let&apos;s build something extraordinary together.
+        I&apos;m currently available for high-impact projects and technical collaborations. Let&apos;s build something extraordinary together.
       </p>
 
       <div className="flex flex-col sm:flex-row items-center gap-6 mt-4">
