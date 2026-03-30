@@ -17,54 +17,62 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
 
   return (
     <main className="min-h-screen bg-background text-foreground dark:bg-slate-950 dark:text-slate-100 relative selection:bg-primary/30 transition-colors duration-300">
-      {/* Immersive Background */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-3xl opacity-20 scale-[1.05]"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-3xl opacity-15"
           style={{ backgroundImage: `url(${data.image_url})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/60 to-transparent dark:from-slate-950/90 dark:via-slate-900/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/80 to-transparent dark:from-slate-950/95 dark:via-slate-950/80" />
       </div>
-
-      <Section className="relative z-10 pt-28 pb-24">
+      <Section className="relative z-10 pt-4 pb-4">
         <div className="mx-auto w-full max-w-6xl px-4 md:px-0">
-          <header className="mb-8 space-y-4">
-          <Link 
-            href={`/${prefix}/detail/${data.anime.slug}`}
-            className="inline-flex items-center gap-2 text-primary hover:text-foreground transition-colors text-[10px] font-black uppercase tracking-[0.3em]"
-          >
-            ← Back to Series
-          </Link>
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <Heading as="h1" className="text-3xl md:text-5xl">
-              <GlitchText text={data.episode} className="text-foreground" />
-            </Heading>
-          </div>
-        </header>
-
-        {/* Video Player Core */}
-        <div className="w-full bg-card/95 dark:bg-slate-900/85 rounded-3xl overflow-hidden shadow-2xl dark:shadow-black/40 border border-border/20 dark:border-slate-700 relative group transition-all duration-500 hover:-translate-y-0.5">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700" />
-          <div className="relative aspect-video w-full z-10 bg-black/95 dark:bg-slate-950/95">
-            {data.stream_url ? (
-              <iframe
-                src={data.stream_url}
-                className="w-full h-full border-0"
-                allowFullScreen
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                loading="lazy"
-              />
-            ) : (
-              <div className="min-h-[25rem] flex items-center justify-center text-center text-muted-foreground/70 dark:text-slate-400 font-black tracking-widest uppercase">
-                Stream URL Unavailable
+          <div className="glass rounded-3xl border border-border/20 p-4 md:p-6 shadow-xl">
+            <div className="flex flex-col gap-3 md:gap-4">
+              <Link
+                href={`/${prefix}/detail/${data.anime.slug}`}
+                className="inline-flex items-center gap-2 text-primary hover:text-foreground transition-colors text-[10px] md:text-xs font-black uppercase tracking-widest"
+              >
+                ← Back to Series
+              </Link>
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                <Heading as="h2" className="text-lg md:text-xl leading-tight">
+                  <GlitchText text={data.episode} className="text-foreground" />
+                </Heading>
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="secondary" className="text-xs md:text-xs">
+                    Streaming Now
+                  </Badge>
+                  <Badge variant="outline" className="text-xs md:text-xs">
+                    Episode
+                  </Badge>
+                </div>
               </div>
-            )}
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Playback Controls & Navigation */}
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Video Player Core */}
+          <div className="mt-3 w-full bg-card/95 dark:bg-slate-900/85 rounded-3xl overflow-hidden shadow-2xl dark:shadow-black/40 border border-border/20 dark:border-slate-700 relative group transition-all duration-500 hover:-translate-y-0.5">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700" />
+            <div className="relative aspect-video w-full z-10 bg-black/95 dark:bg-slate-950/95">
+              {data.stream_url ? (
+                <iframe
+                  src={data.stream_url}
+                  className="w-full h-full border-0"
+                  allowFullScreen
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  loading="lazy"
+                />
+              ) : (
+                <div className="min-h-[25rem] flex items-center justify-center text-center text-muted-foreground/70 dark:text-slate-400 font-black tracking-widest uppercase">
+                  Stream URL Unavailable
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Playback Controls & Navigation */}
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+
           {data.has_previous_episode && data.previous_episode ? (
             <Button
               href={`/${prefix}/watch/${data.previous_episode.slug}`}
@@ -134,6 +142,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
             </div>
           </div>
         )}
+      </div>
       </Section>
     </main>
   )
