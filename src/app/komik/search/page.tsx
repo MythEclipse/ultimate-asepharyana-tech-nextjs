@@ -1,38 +1,19 @@
 "use client"
 
 import { use, Suspense } from "react"
-import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { searchKomik, type MangaItem } from "@/lib/api/komik"
+import { useMediaSearch } from "@/components/shared/use-media"
+import { MediaSearchResults } from "@/components/shared/media-search-results"
 
 // UI
-import { Heading } from "@/components/ui/heading"
 import { CachedImage } from "@/components/ui/cached-image"
-import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
-import { Button } from "@/components/ui/button"
-import { IconArrowLeft, IconMoodSad } from "@tabler/icons-react"
+import { Badge } from "@/components/ui/badge"
+import { IconArrowLeft } from "@tabler/icons-react"
 
-function SearchHeader({ query, count }: { query: string, count: number }) {
-  return (
-    <div className="flex flex-col items-center text-center space-y-6 mb-20 animate-fade-in">
-      <Badge variant="glass" className="px-6 py-1.5 border-orange-500/20 text-orange-500 uppercase tracking-[0.3em] font-black">
-        Visual Library Query
-      </Badge>
-      <div className="space-y-2">
-        <h1 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase text-foreground">
-          Found <span className="text-orange-500">&quot;{query}&quot;</span>
-        </h1>
-        <p className="text-muted-foreground font-medium tracking-widest text-sm uppercase opacity-50">
-          Identified {count} translated scrolls in local archives
-        </p>
-      </div>
-      <div className="h-1 w-24 bg-gradient-to-r from-orange-500 to-orange-400 mx-auto rounded-full" />
-    </div>
-  )
-}
 
 function KomikSearchCard({ item, index }: { item: MangaItem; index: number }) {
   return (
@@ -72,36 +53,22 @@ function KomikSearchCard({ item, index }: { item: MangaItem; index: number }) {
 }
 
 function KomikSearchResults({ query }: { query: string }) {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["komik-search", query],
-    queryFn: () => searchKomik(query, 1),
-    enabled: !!query
-  })
-
-  if (isLoading) return <SkeletonGrid count={10} />
-  
-  if (error || !data || !data.data || data.data.length === 0) return (
-    <div className="flex flex-col items-center justify-center p-20 glass rounded-[3rem] border border-border/10 animate-fade-in">
-        <IconMoodSad size={80} className="text-muted-foreground/20 mb-6" />
-        <Heading as="h3" className="text-2xl text-muted-foreground font-black uppercase italic tracking-tighter">Zero Scrolls Located</Heading>
-        <p className="text-muted-foreground/60 mt-2 max-w-sm text-center font-medium">
-            Our archives do not contain any translated volumes matching your query.
-        </p>
-        <Button href="/komik" className="mt-8 rounded-2xl bg-orange-500 hover:bg-orange-600 border-none transition-all">
-           <IconArrowLeft className="mr-2" /> Back to Index
-        </Button>
-    </div>
-  )
+  const { data, isLoading, error } = useMediaSearch<{ data: MangaItem[]; pagination: import("@/lib/api/types").Pagination }>(["komik-search", query], () => searchKomik(query, 1), !!query)
 
   return (
-    <div className="space-y-20">
-      <SearchHeader query={query} count={data.data.length} />
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {data.data.map((item, i) => (
-          <KomikSearchCard key={item.slug || i} item={item} index={i} />
-        ))}
-      </div>
-    </div>
+    <MediaSearchResults
+      query={query}
+      isLoading={isLoading}
+      error={error}
+      items={data?.data ?? []}
+      count={data?.data.length ?? 0}
+      primaryLabel="Found"
+      accentLabel={query}
+      hrefBack="/komik"
+      onRenderCard={(item, i) => <KomikSearchCard key={item.slug || i} item={item} index={i} />}
+      emptyMessage="Zero Scrolls Located"
+      emptyHelpText="Our archives do not contain any translated volumes matching your query."
+    />
   )
 }
 

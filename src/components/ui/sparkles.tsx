@@ -1,7 +1,7 @@
 "use client";
 import React, { useId } from "react";
 import { useEffect, useState, type ComponentType } from "react";
-import type { Container, Engine } from "@tsparticles/engine";
+import type { Engine } from "@tsparticles/engine";
 import type { IParticlesProps } from "@tsparticles/react";
 import { cn } from "@/lib/utils/index";
 
@@ -53,7 +53,7 @@ export const SparklesCore = (props: ParticlesProps) => {
     initParticles();
   }, []);
 
-  const particlesLoaded = async (container?: Container) => {};
+  const particlesLoaded = async () => {};
 
   const generatedId = useId();
 

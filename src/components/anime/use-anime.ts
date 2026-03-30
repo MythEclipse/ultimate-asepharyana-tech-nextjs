@@ -1,8 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { fetchAnimeOngoing, fetchAnimeComplete, fetchAnimeDetail, fetchAnimeStream, searchAnime, type AnimeSource } from "@/lib/api/anime"
-import { type Pagination } from "@/lib/api/types"
+import { fetchAnimeOngoing, fetchAnimeComplete, fetchAnimeDetail, fetchAnimeStream, searchAnime, type AnimeSource, type Anime1OngoingItem, type Anime2OngoingItem, type Anime2CompleteItem } from "@/lib/api/anime"
 
 export type AnimeListType = "ongoing" | "complete"
 
@@ -24,20 +23,17 @@ export function useAnimeHubData(source: AnimeSource) {
   return { ongoingQuery, completeQuery }
 }
 
+import { useMediaListData } from "@/components/shared/use-media"
+
 export function useAnimeListData(source: AnimeSource, page: number, type: AnimeListType) {
-  const queryKey = ["anime-list", type, source, page]
+  const queryKey = `${type}-${source}`
+  const isOngoing = type === "ongoing"
 
-  const query = useQuery<{ data: any[]; pagination: Pagination }, Error>({
-    queryKey,
-    queryFn: () => {
-      if (type === "ongoing") {
-        return fetchAnimeOngoing(source, page)
-      }
-      return fetchAnimeComplete(source, page)
-    },
-  })
+  const fetchFn = isOngoing
+    ? (pageNumber: number) => fetchAnimeOngoing(source, pageNumber)
+    : (pageNumber: number) => fetchAnimeComplete(source, pageNumber)
 
-  return query
+  return useMediaListData<Anime1OngoingItem | Anime2OngoingItem | Anime2CompleteItem>([queryKey, page], () => fetchFn(page))
 }
 
 export function useAnimeDetail(source: AnimeSource, slug: string) {

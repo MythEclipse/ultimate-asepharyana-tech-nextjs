@@ -21,21 +21,8 @@ import {
   IconArrowLeft,
   IconPlayerPlay
 } from "@tabler/icons-react"
+import { DetailInfo } from "@/components/shared/detail-info"
 
-function DetailInfo({ icon: Icon, label, value }: { icon: React.ElementType, label: string, value?: string }) {
-  if (!value || value === "Unknown") return null;
-  return (
-    <div className="flex items-center gap-3 py-3 border-b border-border/10 last:border-0 transition-colors">
-      <div className="w-8 h-8 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-500/80 shrink-0">
-        <Icon size={16} />
-      </div>
-      <div className="flex flex-col">
-        <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">{label}</span>
-        <span className="text-sm font-bold text-foreground">{value}</span>
-      </div>
-    </div>
-  )
-}
 
 function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
   return (

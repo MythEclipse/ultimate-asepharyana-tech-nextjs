@@ -1,38 +1,18 @@
 "use client"
 
 import { use, Suspense } from "react"
-import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { searchAnime, type SearchAnimeItem } from "@/lib/api/anime"
+import { useMediaSearch } from "@/components/shared/use-media"
+import { MediaSearchResults } from "@/components/shared/media-search-results"
 import { CachedImage } from "@/components/ui/cached-image"
 
 // UI
-import { Heading } from "@/components/ui/heading"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
-import { Button } from "@/components/ui/button"
-import { IconArrowLeft, IconMoodSad } from "@tabler/icons-react"
-
-function SearchHeader({ query, count }: { query: string, count: number }) {
-  return (
-    <div className="flex flex-col items-center text-center space-y-6 mb-20 animate-fade-in">
-      <Badge variant="glass" className="px-6 py-1.5 border-primary/20 text-primary uppercase tracking-[0.3em] font-black">
-        Global Data Query
-      </Badge>
-      <div className="space-y-2">
-        <h1 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase text-foreground">
-          Results for <span className="text-primary">&quot;{query}&quot;</span>
-        </h1>
-        <p className="text-muted-foreground font-medium tracking-widest text-sm uppercase opacity-50">
-          Located {count} matching entries in primary cluster
-        </p>
-      </div>
-      <div className="h-1 w-24 bg-gradient-to-r from-primary to-accent rounded-full" />
-    </div>
-  )
-}
+import { IconArrowLeft } from "@tabler/icons-react"
 
 function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, source: 1 | 2, index: number }) {
   const prefix = source === 2 ? "anime2" : "anime"
@@ -69,36 +49,22 @@ function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, sourc
 }
 
 function SearchResults({ query, source }: { query: string, source: 1 | 2 }) {
-  const { data, isLoading, error } = useQuery<SearchAnimeItem[]>({
-    queryKey: ["anime-search", source, query],
-    queryFn: () => searchAnime(source, query),
-    enabled: query.trim().length > 0,
-  })
-
-  if (isLoading) return <SkeletonGrid count={10} />
-  
-  if (error || !data || data.length === 0) return (
-    <div className="flex flex-col items-center justify-center p-20 glass rounded-[3rem] border border-border/10 animate-fade-in">
-        <IconMoodSad size={80} className="text-muted-foreground/20 mb-6" />
-        <Heading as="h3" className="text-2xl text-muted-foreground">Zero Matches Found</Heading>
-        <p className="text-muted-foreground/60 mt-2 max-w-sm text-center font-medium">
-            Our neural link couldn&apos;t locate any entries matching your query in the current sector.
-        </p>
-        <Button href="/anime" className="mt-8 rounded-2xl" variant="outline">
-           <IconArrowLeft className="mr-2" /> Back to Hub
-        </Button>
-    </div>
-  )
+  const { data, isLoading, error } = useMediaSearch<SearchAnimeItem[]>(["anime-search", source, query], () => searchAnime(source, query), query.trim().length > 0)
 
   return (
-    <div className="space-y-20">
-      <SearchHeader query={query} count={data.length} />
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {data.map((item, i) => (
-          <AnimeSearchCard key={item.slug || i} item={item} source={source} index={i} />
-        ))}
-      </div>
-    </div>
+    <MediaSearchResults
+      query={query}
+      isLoading={isLoading}
+      error={error}
+      items={data || []}
+      count={data?.length ?? 0}
+      primaryLabel="Results for"
+      accentLabel={query}
+      hrefBack={source === 2 ? "/anime2" : "/anime"}
+      onRenderCard={(item, i) => <AnimeSearchCard key={(item as SearchAnimeItem).slug || i} item={item as SearchAnimeItem} source={source} index={i} />}
+      emptyMessage="Zero Matches Found"
+      emptyHelpText="Our neural link couldn't locate any entries matching your query in the current sector."
+    />
   )
 }
 
