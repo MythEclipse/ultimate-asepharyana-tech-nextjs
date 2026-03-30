@@ -39,12 +39,16 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    React.AnchorHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   href?: string
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  ButtonProps
+>(
   ({ className, variant, size, asChild = false, href, disabled, ...props }, ref) => {
     const classes = cn(buttonVariants({ variant, size }), className)
 
@@ -64,7 +68,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       }
 
       return (
-        <Link href={href} className={classes} aria-disabled={disabled ? "true" : undefined}>
+        <Link
+          href={href}
+          className={classes}
+          aria-disabled={disabled ? "true" : undefined}
+          ref={ref as React.ForwardedRef<HTMLAnchorElement>}
+        >
           {props.children}
         </Link>
       )
@@ -74,7 +83,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Comp
         className={classes}
-        ref={ref}
+        ref={ref as React.ForwardedRef<HTMLButtonElement>}
         disabled={disabled}
         aria-disabled={disabled ? "true" : undefined}
         {...props}

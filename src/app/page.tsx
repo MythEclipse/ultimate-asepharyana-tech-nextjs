@@ -1,28 +1,733 @@
-"use client"
+"use client";
 
-import { FloatingNav } from "@/components/ui/floating-navbar"
-import { HeroSection } from "@/components/home/hero-section"
-import { TechArsenal } from "@/components/home/tech-arsenal"
-import { ActivitySection } from "@/components/home/activity-section"
-import { CallToActionSection } from "@/components/home/cta-section"
-import { IconCode, IconCpu, IconDatabase, IconGlobe } from "@tabler/icons-react"
+import dynamic from "next/dynamic";
+import { useRef, useEffect } from "react";
+import { motion, useInView, useAnimation } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FloatingNav } from "@/components/ui/floating-navbar";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { NoSSR } from "@/components/ui/no-ssr";
+import { Section } from "@/components/ui/section";
+import { useGitHubStats } from "@/lib/hooks/use-github-stats";
+import {
+  IconCode,
+  IconCpu,
+  IconDatabase,
+  IconGlobe,
+  IconArrowRight,
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconBrandInstagram,
+} from "@tabler/icons-react";
 
+// Register GSAP ScrollTrigger
+gsap.registerPlugin(ScrollTrigger);
+
+// ---------- Lightweight Particle Background ----------
+const ParticleBackground = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let particles: Array<{
+      x: number;
+      y: number;
+      radius: number;
+      alpha: number;
+      vx: number;
+      vy: number;
+    }> = [];
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
+
+    const initParticles = () => {
+      particles = [];
+      const particleCount = Math.min(
+        100,
+        Math.floor((window.innerWidth * window.innerHeight) / 15000)
+      );
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 2 + 1,
+          alpha: Math.random() * 0.5 + 0.2,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.2,
+        });
+      }
+    };
+
+    const animate = () => {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(0,0,0,0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((p) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 51, 102, ${p.alpha})`;
+        ctx.fill();
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+      });
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 -z-10 pointer-events-none" />;
+};
+
+// ---------- Floating Ninja Star (GSAP Mouse Follow) ----------
+const FloatingStar = () => {
+  const starRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const star = starRef.current;
+    if (!star) return;
+
+    const onMouseMove = (e: MouseEvent) => {
+      const { clientX, clientY } = e;
+      const x = (clientX / window.innerWidth) * 2 - 1;
+      const y = (clientY / window.innerHeight) * 2 - 1;
+      gsap.to(star, {
+        duration: 0.8,
+        x: x * 30,
+        y: y * 30,
+        rotate: x * 20,
+        ease: "power2.out",
+      });
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    return () => window.removeEventListener("mousemove", onMouseMove);
+  }, []);
+
+  return (
+    <div
+      ref={starRef}
+      className="fixed bottom-20 right-20 w-12 h-12 z-50 pointer-events-none"
+      style={{ filter: "drop-shadow(0 0 8px rgba(255,51,102,0.6))" }}
+    >
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+        <path
+          d="M12 2L15 8L22 9L17 14L18 21L12 17.5L6 21L7 14L2 9L9 8L12 2Z"
+          fill="#ff3366"
+          stroke="#fff"
+          strokeWidth="1"
+        />
+      </svg>
+    </div>
+  );
+};
+
+// ---------- Tech Icons Data ----------
+interface TechIcon {
+  name: string;
+  image: string;
+  color: string;
+  description: string;
+}
+
+const TECH_STACK: TechIcon[] = [
+  {
+    name: "TypeScript",
+    image:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+    color: "from-blue-500 to-blue-600",
+    description:
+      "Type-safe architecture for reliable large-scale applications.",
+  },
+  {
+    name: "Rust",
+    image:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rust/rust-original.svg",
+    color: "from-orange-500 to-red-600",
+    description: "Memory-safe system programming with high performance.",
+  },
+  {
+    name: "Kotlin",
+    image:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
+    color: "from-purple-500 to-violet-600",
+    description:
+      "Modern JVM language for Android and backend development.",
+  },
+  {
+    name: "JavaScript",
+    image:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+    color: "from-yellow-400 to-yellow-600",
+    description:
+      "Versatile web scripting for dynamic client and server UI.",
+  },
+  {
+    name: "Java",
+    image:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg",
+    color: "from-red-500 to-orange-500",
+    description:
+      "Enterprise-grade services and scalable microservices.",
+  },
+  {
+    name: "Python",
+    image:
+      "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+    color: "from-green-500 to-blue-500",
+    description:
+      "Productivity scripting and data-driven AI integration.",
+  },
+];
+
+// ---------- Dynamic Imports (Charts) ----------
+const SkillsRadarChart = dynamic(
+  () => import("@/components/d3/skills-radar-chart").then((mod) => mod.SkillsRadarChart),
+  {
+    ssr: false,
+    loading: () => <div className="h-[400px] w-full bg-muted animate-pulse rounded-3xl" />,
+  }
+);
+
+const ActivityHeatmap = dynamic(
+  () => import("@/components/d3/activity-heatmap").then((mod) => mod.ActivityHeatmap),
+  {
+    ssr: false,
+    loading: () => <div className="h-[200px] w-full bg-muted animate-pulse rounded-3xl" />,
+  }
+);
+
+// ---------- Hero Section ----------
+function HeroSection() {
+  const controls = useAnimation();
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.2 });
+
+  useEffect(() => {
+    if (inView) controls.start("visible");
+  }, [controls, inView]);
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, staggerChildren: 0.2, delayChildren: 0.3 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
+  return (
+    <motion.section
+      ref={ref}
+      initial="hidden"
+      animate={controls}
+      variants={containerVariants}
+      className="pb-20 pt-36 min-h-[90vh] w-full flex flex-col items-center justify-center relative"
+    >
+      <Spotlight
+        className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen"
+        fill="var(--color-primary)"
+      />
+      <Spotlight
+        className="top-10 left-full h-[80vh] w-[50vw]"
+        fill="var(--color-accent)"
+      />
+
+      <div className="flex justify-center relative my-20 z-10 w-full text-center">
+        <div className="max-w-[89vw] md:max-w-4xl flex flex-col items-center">
+          <motion.div variants={itemVariants}>
+            <Badge
+              variant="glass"
+              className="mb-8 px-4 py-1.5 uppercase tracking-[0.3em] font-black"
+            >
+              Software Engineering
+            </Badge>
+          </motion.div>
+
+          <motion.h1
+            variants={itemVariants}
+            className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance"
+          >
+            Practical Solutions for <br />
+            <span className="gradient-text">Modern Web Systems</span>
+          </motion.h1>
+
+          <motion.p
+            variants={itemVariants}
+            className="max-w-2xl text-muted-foreground text-lg md:text-xl lg:text-2xl mb-12 font-medium leading-relaxed"
+          >
+            I&apos;m{" "}
+            <span className="text-foreground border-b-2 border-primary/30 font-bold">
+              Asep Haryana Saputra
+            </span>
+            , focused on stable backend architecture and efficient frontend delivery.
+          </motion.p>
+
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6">
+            <Button
+              href="/project"
+              size="xl"
+              variant="shiny"
+              className="shadow-2xl shadow-primary/20"
+            >
+              View Portfolio{" "}
+              <IconArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button
+              href="mailto:superaseph@gmail.com"
+              size="xl"
+              variant="outline"
+              className="glass border-hairline hover:bg-foreground/5"
+            >
+              Get in Touch
+            </Button>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground">
+          Scroll
+        </span>
+        <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent" />
+      </div>
+    </motion.section>
+  );
+}
+
+// ---------- Spotlight Component ----------
+function Spotlight({ className, fill }: { className?: string; fill?: string }) {
+  return (
+    <svg
+      className={
+        "animate-spotlight pointer-events-none absolute z-[1] h-[169%] w-[138%] lg:w-[84%] opacity-0 " +
+        (className ?? "")
+      }
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 3787 2842"
+      fill="none"
+    >
+      <g filter="url(#filter)">
+        <ellipse
+          cx="1924.71"
+          cy="273.501"
+          rx="1924.71"
+          ry="273.501"
+          transform="matrix(-0.822377 -0.568943 0.568943 -0.822377 3631.88 2291.09)"
+          fill={fill || "white"}
+          fillOpacity="0.21"
+        />
+      </g>
+      <defs>
+        <filter
+          id="filter"
+          x="0.860352"
+          y="0.838989"
+          width="3785.16"
+          height="2840.26"
+          filterUnits="userSpaceOnUse"
+          colorInterpolationFilters="sRGB"
+        >
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feGaussianBlur
+            stdDeviation="151"
+            result="effect1_foregroundBlur_1065_8"
+          />
+        </filter>
+      </defs>
+    </svg>
+  );
+}
+
+// ---------- Tech Arsenal Section (with GSAP scroll animations) ----------
+function TechArsenal() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      cardsRef.current.forEach((card, i) => {
+        if (card) {
+          gsap.fromTo(
+            card,
+            { opacity: 0, y: 50, scale: 0.9 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.8,
+              delay: i * 0.1,
+              scrollTrigger: {
+                trigger: card,
+                start: "top bottom-=100",
+                end: "top center",
+                toggleActions: "play none none reverse",
+              },
+            }
+          );
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <Section ref={sectionRef} className="py-24 w-full" glow>
+      <div className="mb-16 text-center lg:text-left">
+        <Badge variant="glass" className="mb-4">
+          Capabilities
+        </Badge>
+        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">
+          Technology <span className="text-primary">Stack</span>
+        </h2>
+        <p className="text-muted-foreground mt-4 max-w-xl text-lg mx-auto lg:mx-0">
+          Tools and frameworks used for building maintainable, production-ready
+          applications.
+        </p>
+      </div>
+
+      <div className="grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
+        {TECH_STACK.slice(0, 6).map((item, index) => (
+          <div
+            key={item.name}
+            ref={(el) => {
+              cardsRef.current[index] = el;
+            }}
+            className={
+              "row-span-1 rounded-3xl group/bento hover:shadow-xl transition duration-500 shadow-input dark:shadow-none p-4 bg-card border border-border/10 dark:border-white/[0.05] justify-between flex flex-col space-y-4 hover:border-primary/20 " +
+              (index === 0 || index === 3 ? "md:col-span-2" : "")
+            }
+          >
+            <div className="group/header h-full w-full min-h-[10rem] rounded-2xl glass border-hairline flex items-center justify-center p-8 transition-all hover:bg-foreground/5 overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover/header:opacity-100 transition-opacity" />
+              <img
+                src={item.image}
+                alt={item.name}
+                width={56}
+                height={56}
+                className="w-14 h-14 object-contain filter drop-shadow-2xl group-hover:scale-125 transition-transform duration-500"
+              />
+            </div>
+            <div className="group-hover/bento:translate-x-2 transition duration-200">
+              <div className="font-sans font-bold text-foreground mb-2 mt-2">
+                {item.name}
+              </div>
+              <div className="font-sans font-normal text-muted-foreground text-xs">
+                {item.description}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+// ---------- Activity Section ----------
+function ActivitySection() {
+  const { data, isLoading } = useGitHubStats();
+  const contributions = data?.contributions ?? [];
+  const languages = data?.languages ?? [];
+  const radarRef = useRef<HTMLDivElement>(null);
+  const heatmapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (radarRef.current) {
+      gsap.fromTo(
+        radarRef.current,
+        { opacity: 0, scale: 0.8 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          scrollTrigger: {
+            trigger: radarRef.current,
+            start: "top bottom-=100",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }
+    if (heatmapRef.current) {
+      gsap.fromTo(
+        heatmapRef.current,
+        { opacity: 0, x: 50 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 1,
+          scrollTrigger: {
+            trigger: heatmapRef.current,
+            start: "top bottom-=100",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }
+  }, []);
+
+  return (
+    <Section className="py-24 w-full relative">
+      <div className="w-full flex flex-col items-center mb-24 relative text-center">
+        <Badge variant="glow" className="mb-4">
+          Activity Matrix
+        </Badge>
+        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">
+          Operational <span className="text-primary">Cadence</span>
+        </h2>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <Card ref={radarRef} className="p-8">
+          <div className="mb-10">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+              Intelligence Radar
+            </span>
+            <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">
+              Core Expertise
+            </h3>
+          </div>
+
+          <div className="min-h-[400px] flex items-center justify-center">
+            <NoSSR
+              fallback={
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary" />
+              }
+            >
+              {isLoading ? (
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary" />
+              ) : languages.length ? (
+                <SkillsRadarChart data={languages} />
+              ) : (
+                <div className="text-center space-y-2">
+                  <p className="text-muted-foreground text-sm font-medium italic">
+                    Live statistics currently unavailable. Please try again later.
+                  </p>
+                  <Badge variant="outline" className="text-[10px] opacity-50">
+                    Public API Fallback Active
+                  </Badge>
+                </div>
+              )}
+            </NoSSR>
+          </div>
+        </Card>
+
+        <Card ref={heatmapRef} className="p-8">
+          <div className="mb-10">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">
+              Development Pulse
+            </span>
+            <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">
+              Technical Consistency
+            </h3>
+          </div>
+
+          <div className="min-h-[400px] flex items-center justify-center">
+            <NoSSR
+              fallback={
+                <div className="space-y-4 w-full px-10">
+                  <div className="h-2 bg-muted rounded-full animate-pulse" />
+                </div>
+              }
+            >
+              {isLoading ? (
+                <div className="space-y-4 w-full px-10">
+                  {Array.from({ length: 8 }).map((_, idx) => (
+                    <div
+                      key={idx}
+                      className="h-2 bg-muted rounded-full animate-pulse"
+                    />
+                  ))}
+                </div>
+              ) : contributions.length ? (
+                <ActivityHeatmap data={contributions} />
+              ) : (
+                <div className="text-center space-y-2">
+                  <p className="text-muted-foreground text-sm font-medium italic">
+                    No contribution data detected in public manifest.
+                  </p>
+                  <Badge variant="outline" className="text-[10px] opacity-50">
+                    1-Year Scraper Syncing...
+                  </Badge>
+                </div>
+              )}
+            </NoSSR>
+          </div>
+        </Card>
+      </div>
+    </Section>
+  );
+}
+
+// ---------- Call to Action Section ----------
+function CallToActionSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const buttonRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        sectionRef.current,
+        { opacity: 0, y: 100 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom-=100",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+      if (buttonRef.current) {
+        gsap.to(buttonRef.current, {
+          scale: 1.05,
+          repeat: -1,
+          yoyo: true,
+          duration: 1.5,
+          ease: "power1.inOut",
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <motion.section
+      ref={sectionRef}
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+      className="w-full py-48 relative flex flex-col items-center justify-center text-center px-4"
+    >
+      <div className="absolute inset-0 bg-primary/20 blur-[160px] rounded-full mx-auto w-1/2 h-1/2 -z-10 animate-pulse-slow" />
+
+      <h2 className="text-[clamp(2rem,10vw,6rem)] font-black text-foreground mb-12 leading-[0.9] tracking-tightest uppercase text-balance">
+        Explore collaboration <br />{" "}
+        <span className="text-primary">with practical outcomes</span>
+      </h2>
+
+      <p className="text-muted-foreground mb-12 max-w-2xl text-xl font-medium leading-relaxed">
+        Available for consulting and project engagements in backend, frontend,
+        and infrastructure engineering.
+      </p>
+
+      <div className="flex flex-col sm:flex-row items-center gap-6 mt-4">
+        <Button
+          ref={buttonRef}
+          href="mailto:superaseph@gmail.com"
+          size="xl"
+          variant="shiny"
+          className="shadow-2xl shadow-primary/40"
+        >
+          Initiate Project <IconArrowRight className="ml-2" />
+        </Button>
+
+        <div className="flex items-center gap-4">
+          {[
+            {
+              href: "https://github.com/MythEclipse",
+              icon: IconBrandGithub,
+              label: "GitHub",
+            },
+            {
+              href: "https://linkedin.com",
+              icon: IconBrandLinkedin,
+              label: "LinkedIn",
+            },
+            {
+              href: "https://instagram.com",
+              icon: IconBrandInstagram,
+              label: "Instagram",
+            },
+          ].map(({ href, icon: Icon, label }) => (
+            <motion.a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ y: -5, scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-14 h-14 glass rounded-2xl flex items-center justify-center hover:border-primary/50 hover:bg-primary/10 transition-all hover:-translate-y-2 border-hairline"
+            >
+              <Icon size={24} className="text-foreground" />
+            </motion.a>
+          ))}
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+// ---------- Main Home Component ----------
 export default function Home() {
   const navItems = [
     { name: "Home", link: "/", icon: <IconCode className="h-4 w-4" /> },
-    { name: "Projects", link: "/project", icon: <IconGlobe className="h-4 w-4" /> },
+    {
+      name: "Projects",
+      link: "/project",
+      icon: <IconGlobe className="h-4 w-4" />,
+    },
     { name: "Anime", link: "/anime", icon: <IconCpu className="h-4 w-4" /> },
-    { name: "Dashboard", link: "/dashboard", icon: <IconDatabase className="h-4 w-4" /> },
-  ]
+    {
+      name: "Dashboard",
+      link: "/dashboard",
+      icon: <IconDatabase className="h-4 w-4" />,
+    },
+  ];
 
   return (
     <main className="relative flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
+      <ParticleBackground />
+      <FloatingStar />
       <FloatingNav navItems={navItems} />
-
       <HeroSection />
       <TechArsenal />
       <ActivitySection />
       <CallToActionSection />
     </main>
-  )
+  );
 }
