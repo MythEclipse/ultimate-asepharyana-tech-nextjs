@@ -3,7 +3,7 @@
 import { use, Suspense } from "react"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
-import { searchAnime1, type SearchAnimeItem } from "@/lib/api/anime"
+import { searchAnime, type SearchAnimeItem } from "@/lib/api/anime"
 import { CachedImage } from "@/components/ui/cached-image"
 
 // UI
@@ -71,8 +71,8 @@ function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, sourc
 function SearchResults({ query, source }: { query: string, source: 1 | 2 }) {
   const { data, isLoading, error } = useQuery<SearchAnimeItem[]>({
     queryKey: ["anime-search", source, query],
-    queryFn: () => searchAnime1(query), // Defaulting to searchAnime1, will split in anime2 route
-    enabled: !!query
+    queryFn: () => searchAnime(source, query),
+    enabled: query.trim().length > 0,
   })
 
   if (isLoading) return <SkeletonGrid count={10} />

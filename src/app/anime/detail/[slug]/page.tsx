@@ -1,10 +1,10 @@
 "use client"
 
 import { use } from "react"
-import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { fetchAnime1Detail, fetchAnime2Detail, type AnimeDetailData } from "@/lib/api/anime"
+import { type AnimeDetailData } from "@/lib/api/anime"
+import { useAnimeDetail } from "@/components/anime/use-anime"
 import { CachedImage } from "@/components/ui/cached-image"
 
 // UI components
@@ -153,10 +153,7 @@ export default function AnimeDetailRoute({
   const s = searchParams ? use(searchParams).s : "1"
   const source = s === "2" ? 2 : 1
 
-  const { data, isLoading } = useQuery<AnimeDetailData>({
-    queryKey: ["anime-detail", slug, source],
-    queryFn: () => source === 2 ? fetchAnime2Detail(slug) : fetchAnime1Detail(slug)
-  })
+  const { data, isLoading } = useAnimeDetail(source, slug)
 
   if (isLoading) {
     return (

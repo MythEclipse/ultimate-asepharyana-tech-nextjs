@@ -1,7 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { fetchAnimeOngoing, fetchAnimeComplete, type AnimeSource } from "@/lib/api/anime"
+import { fetchAnimeOngoing, fetchAnimeComplete, fetchAnimeDetail, fetchAnimeStream, searchAnime, type AnimeSource } from "@/lib/api/anime"
 import { type Pagination } from "@/lib/api/types"
 
 export type AnimeListType = "ongoing" | "complete"
@@ -38,4 +38,26 @@ export function useAnimeListData(source: AnimeSource, page: number, type: AnimeL
   })
 
   return query
+}
+
+export function useAnimeDetail(source: AnimeSource, slug: string) {
+  return useQuery({
+    queryKey: ["anime-detail", source, slug],
+    queryFn: () => fetchAnimeDetail(source, slug),
+  })
+}
+
+export function useAnimeStream(source: AnimeSource, slug: string) {
+  return useQuery({
+    queryKey: ["anime-stream", source, slug],
+    queryFn: () => fetchAnimeStream(source, slug),
+  })
+}
+
+export function useAnimeSearch(source: AnimeSource, query: string) {
+  return useQuery({
+    queryKey: ["anime-search", source, query],
+    queryFn: () => searchAnime(source, query),
+    enabled: query.trim().length > 0,
+  })
 }

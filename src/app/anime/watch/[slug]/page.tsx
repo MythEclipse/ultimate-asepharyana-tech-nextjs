@@ -2,7 +2,6 @@
 
 import { use } from "react"
 import Link from "next/link"
-import { useQuery } from "@tanstack/react-query"
 import { notFound } from "next/navigation"
 import { GlitchText } from "@/components/ui/glitch-text"
 import { Heading } from "@/components/ui/heading"
@@ -10,7 +9,8 @@ import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
 import { Button } from "@/components/ui/button"
-import { type AnimeFullData, fetchAnime1Stream, fetchAnime2Stream } from "@/lib/api/anime"
+import { type AnimeFullData } from "@/lib/api/anime"
+import { useAnimeStream } from "@/components/anime/use-anime"
 
 function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 }) {
   const prefix = source === 2 ? "anime2" : "anime"
@@ -140,13 +140,7 @@ export default function AnimeWatchPage({
   source?: 1 | 2 
 }) {
   const { slug } = use(params)
-  const { data, isLoading } = useQuery<AnimeFullData>({
-    queryKey: ["anime-watch", source, slug],
-    queryFn: async () => {
-      if (source === 2) return fetchAnime2Stream(slug)
-      return fetchAnime1Stream(slug)
-    }
-  })
+  const { data, isLoading } = useAnimeStream(source, slug)
 
   if (isLoading) {
     return (
