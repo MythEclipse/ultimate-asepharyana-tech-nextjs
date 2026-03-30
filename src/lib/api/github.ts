@@ -30,11 +30,6 @@ function getGitHubHeaders() {
     headers["Authorization"] = `Bearer ${token}`
   }
 
-  console.debug("GitHub headers configured", {
-    hasToken: Boolean(token),
-    token: token ? "***" : "(none)"
-  })
-
   return headers
 }
 
@@ -91,18 +86,9 @@ async function fetchPublicRepos(username: string) {
   const url = `https://api.github.com/users/${username}/repos?per_page=100&sort=updated`
   const headers = getGitHubHeaders()
 
-  console.debug("fetchPublicRepos url", { url, username, headers })
-
   const response = await fetch(url, {
     headers,
     next: { revalidate: 86400 },
-  })
-
-  console.debug("fetchPublicRepos response", {
-    status: response.status,
-    statusText: response.statusText,
-    remaining: response.headers.get("x-ratelimit-remaining"),
-    reset: response.headers.get("x-ratelimit-reset"),
   })
 
   if (!response.ok) {
@@ -130,19 +116,13 @@ async function fetchRepoLanguages(repos: GitHubRepo[]): Promise<Map<string, numb
   const requests = repos.map(async (repo) => {
     if (!repo.languages_url) return
 
-    console.debug("fetchRepoLanguages url", { repo: repo.full_name, url: repo.languages_url })
-
     try {
       const resp = await fetch(repo.languages_url, {
         headers,
         next: { revalidate: 86400 },
       })
 
-      console.debug("fetchRepoLanguages response", {
-        repo: repo.full_name,
-        status: resp.status,
-        remaining: resp.headers.get("x-ratelimit-remaining"),
-      })
+
 
       if (!resp.ok) {
         return
@@ -252,7 +232,7 @@ async function fetchPublicContributions(username: string): Promise<{ data: GitHu
   const url = `https://github.com/users/${username}/contributions`
   const headers = getGitHubHeaders()
 
-  console.debug("fetchPublicContributions url", { url, username, withToken: Boolean(process.env.GITHUB_TOKEN) })
+
 
   const response = await fetch(url, {
     headers,
@@ -312,17 +292,9 @@ async function fetchPublicEventsFallback(username: string): Promise<{ data: GitH
   const url = `https://api.github.com/users/${username}/events/public?per_page=100`
   const headers = getGitHubHeaders()
 
-  console.debug("fetchPublicEventsFallback url", { url, username, withToken: Boolean(process.env.GITHUB_TOKEN) })
-
   const res = await fetch(url, {
       headers,
       next: { revalidate: 86400 }
-  })
-
-  console.debug("fetchPublicEventsFallback response", {
-    status: res.status,
-    remaining: res.headers.get("x-ratelimit-remaining"),
-    reset: res.headers.get("x-ratelimit-reset"),
   })
 
   const contributions: GitHubContribution[] = []

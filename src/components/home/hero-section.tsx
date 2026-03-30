@@ -17,9 +17,9 @@ export function HeroSection() {
             Software Engineering
           </Badge>
 
-          <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance">
+          <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance anime-wave">
             Practical Solutions for <br />
-            <span className="text-primary">Modern Web Systems</span>
+            <span className="text-primary anime-glow">Modern Web Systems</span>
           </h1>
 
           <p className="max-w-2xl text-muted-foreground text-lg md:text-xl lg:text-2xl mb-12 font-medium leading-relaxed">

@@ -45,6 +45,55 @@
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
   }
+
+  @keyframes anime-pulse {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+    25% { transform: translateY(-8px) scale(1.03); opacity: 0.95; }
+    50% { transform: translateY(-2px) scale(1.01); opacity: 1; }
+    75% { transform: translateY(-6px) scale(1.02); opacity: 0.97; }
+  }
+
+  @keyframes anime-streak {
+    0% { transform: translateX(-100%) skewX(-10deg); opacity: 0; }
+    40% { opacity: 0.4; }
+    100% { transform: translateX(260%) skewX(10deg); opacity: 0; }
+  }
+
+  @keyframes anime-wave {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(1.5deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-1.5deg); }
+  }
+}
+
+.anime-glow {
+  animation: anime-pulse 4.2s ease-in-out infinite;
+  box-shadow: 0 0 18px rgba(var(--primary-rgb, 56, 184, 255), 0.35), 0 0 42px rgba(var(--accent-rgb, 255, 95, 188), 0.25);
+}
+
+.anime-streak {
+  position: relative;
+  overflow: hidden;
+}
+
+.anime-streak::before {
+  content: '';
+  position: absolute;
+  inset: -40% 0 -40% 0;
+  background: linear-gradient(120deg, transparent 20%, hsla(var(--primary), 0.35) 45%, hsla(var(--accent), 0.25) 55%, transparent 80%);
+  transform: translateX(-100%);
+  animation: anime-streak 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.anime-wave {
+  display: inline-block;
+  animation: anime-wave 3.8s ease-in-out infinite;
+}
+
+.anime-tilt {
+  animation: tilt 16s ease-in-out infinite;
 }
 
 :root {
