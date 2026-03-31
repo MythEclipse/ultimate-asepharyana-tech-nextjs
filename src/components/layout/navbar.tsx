@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { useAuth } from "@/lib/store/auth"
+import { IconSun, IconMoon, IconDeviceDesktop } from "@tabler/icons-react"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -63,14 +64,12 @@ export function Navbar() {
            >
              <div className="relative z-10 w-5 h-5 flex items-center justify-center">
                 {mounted ? (
-                  theme === "dark" || theme === "system" ? ( // Wait next-themes resolving is complex, simplified logic
-                     <svg className="w-5 h-5 text-indigo-400 group-hover:-rotate-12 transition-transform duration-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                     </svg>
+                  theme === "light" ? (
+                    <IconSun className="w-5 h-5 text-amber-500 transition-transform duration-700 group-hover:rotate-12" />
+                  ) : theme === "dark" ? (
+                    <IconMoon className="w-5 h-5 text-indigo-400 transition-transform duration-700 group-hover:-rotate-12" />
                   ) : (
-                     <svg className="w-5 h-5 text-amber-500 group-hover:rotate-180 transition-transform duration-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                     </svg>
+                    <IconDeviceDesktop className="w-5 h-5 text-cyan-400 transition-transform duration-700 group-hover:scale-125 animate-pulse" />
                   )
                 ) : (
                   <div className="w-5 h-5 rounded-full bg-border/20 animate-pulse" />
