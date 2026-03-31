@@ -45,7 +45,6 @@ export default function LoginPage() {
     <main className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-background">
       {/* Cinematic Background Infrastructure - Optimized */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[50rem] h-[50rem] bg-indigo-500/10 rounded-full blur-[80px] animate-tilt will-change-[transform,opacity]" />
         <div className="absolute bottom-[-15%] right-[-5%] w-[45rem] h-[45rem] bg-blue-500/10 rounded-full blur-[80px] animate-tilt-reverse will-change-[transform,opacity]" />
       </div>
 

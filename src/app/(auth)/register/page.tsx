@@ -53,7 +53,6 @@ export default function RegisterPage() {
       {/* Cinematic Background Infrastructure - Optimized */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute bottom-[-10%] left-[-10%] w-[50rem] h-[50rem] bg-purple-500/10 rounded-full blur-[80px] animate-tilt will-change-[transform,opacity]" />
-        <div className="absolute top-[-15%] right-[-5%] w-[45rem] h-[45rem] bg-indigo-500/10 rounded-full blur-[80px] animate-tilt-reverse will-change-[transform,opacity]" />
       </div>
 
       <div className="w-full max-w-[520px] relative z-10 animate-fade-in group/main">

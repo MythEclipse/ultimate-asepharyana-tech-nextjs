@@ -168,7 +168,6 @@ const ActivityHeatmap = dynamic(
 function HeroSection() {
   return (
     <section className="pb-20 pt-36 min-h-[90vh] w-full flex flex-col items-center justify-center relative transition-all duration-700">
-      <Spotlight className="-top-40 -left-10 md:-left-32 md:-top-20 h-screen" fill="var(--color-primary)" />
       <Spotlight className="top-10 left-full h-[80vh] w-[50vw]" fill="var(--color-accent)" />
 
       <div className="flex justify-center relative my-20 z-10 w-full text-center">

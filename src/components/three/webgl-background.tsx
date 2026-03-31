@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import * as THREE from "three"
-import { useParticleField, useWireframeOrbs } from "./particle-field"
+import { useParticleField } from "./particle-field"
 
 function getPrimaryColor(): string {
   if (typeof window === "undefined") return "#7c3aed"
@@ -54,8 +54,6 @@ export function WebGLBackground() {
     colorHex: primaryColor,
     accentHex: accentColor,
   })
-
-  const orbsRef = useWireframeOrbs(sceneRef, primaryColor)
 
   useEffect(() => {
     if (!canvasRef.current) return
@@ -110,15 +108,6 @@ export function WebGLBackground() {
         particlesRef.current.rotation.x = elapsed * 0.01
       }
 
-      // Orbit wireframe orbs
-      orbsRef.current.forEach((orb) => {
-        const ud = orb.userData as { speed: number; orbitRadius: number; originX: number; originY: number; phase: number }
-        orb.rotation.x += ud.speed * 0.7
-        orb.rotation.y += ud.speed
-        orb.position.x = ud.originX + Math.sin(elapsed * ud.speed * 30 + ud.phase) * ud.orbitRadius
-        orb.position.y = ud.originY + Math.cos(elapsed * ud.speed * 25 + ud.phase) * ud.orbitRadius
-      })
-
       // Camera parallax from mouse
       if (cameraRef.current) {
         cameraRef.current.position.x += (mouseRef.current.x * 1.5 - cameraRef.current.position.x) * 0.03
@@ -137,7 +126,7 @@ export function WebGLBackground() {
       window.removeEventListener("resize", onResize)
       renderer.dispose()
     }
-  }, [orbsRef, particlesRef])
+  }, [particlesRef])
 
   return (
     <canvas
