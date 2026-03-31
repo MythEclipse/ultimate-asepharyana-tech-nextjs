@@ -350,7 +350,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="relative flex justify-center items-center flex-col overflow-hidden mx-auto sm:px-10 px-5">
+    <>
       <ParticleBackground />
       <FloatingStar />
       <FloatingNav navItems={navItems} />
@@ -358,6 +358,6 @@ export default function Home() {
       <TechArsenal />
       <ActivitySection />
       <CallToActionSection />
-    </main>
+    </>
   );
 }
