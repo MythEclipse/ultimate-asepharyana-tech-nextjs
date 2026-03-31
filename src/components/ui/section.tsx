@@ -23,7 +23,10 @@ export const Section = React.forwardRef<HTMLElement, SectionProps>(
     return (
       <section
         ref={ref}
-        className={cn("py-24 md:py-40 lg:py-56 px-6 relative overflow-hidden", className)}
+        className={cn(
+          "py-24 md:py-40 lg:py-56 px-6 relative overflow-visible",
+          className
+        )}
       >
         {glow && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">

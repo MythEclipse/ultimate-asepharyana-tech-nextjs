@@ -19,7 +19,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen flex flex-col relative overflow-x-hidden bg-background text-foreground selection:bg-primary/30 selection:text-foreground">
         <WebGLBackground />
 
-        <div className="fixed inset-0 pointer-events-none -z-10 select-none overflow-hidden">
+        <div className="fixed inset-0 pointer-events-none -z-10 select-none overflow-visible">
           <div className="absolute top-[-20%] left-[-10%] w-[1000px] h-[1000px] bg-primary/10 rounded-full blur-[120px] opacity-40 animate-pulse-slow" />
           <div className="absolute bottom-[-20%] right-[-10%] w-[1200px] h-[1200px] bg-accent/10 rounded-full blur-[150px] opacity-30 animate-pulse-slow" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,hsla(var(--primary),0.03)_0%,transparent_70%)]" />
