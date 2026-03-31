@@ -29,12 +29,12 @@ export const Section = React.forwardRef<HTMLElement, SectionProps>(
         )}
       >
         {glow && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none overflow-visible">
           {(glowVariant === "primary" || glowVariant === "both") && (
-            <div className="absolute top-1/4 left-1/4 w-[150vw] md:w-[50rem] h-[150vw] md:h-[50rem] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow max-w-[50rem] max-h-[50rem] will-change-[transform,opacity]" />
+            <div className="absolute top-1/4 left-1/4 w-[150vw] md:w-[50rem] h-[150vw] md:h-[50rem] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow will-change-[transform,opacity]" />
           )}
           {(glowVariant === "accent" || glowVariant === "both") && (
-            <div className="absolute bottom-1/4 right-1/4 w-[120vw] md:w-[40rem] h-[120vw] md:h-[40rem] bg-accent/10 rounded-full blur-[100px] animate-pulse-slow [animation-delay:2s] max-w-[40rem] max-h-[40rem] will-change-[transform,opacity]" />
+            <div className="absolute bottom-1/4 right-1/4 w-[120vw] md:w-[40rem] h-[120vw] md:h-[40rem] bg-accent/10 rounded-full blur-[100px] animate-pulse-slow [animation-delay:2s] will-change-[transform,opacity]" />
           )}
         </div>
       )}
