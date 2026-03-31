@@ -34,10 +34,24 @@ function getGitHubHeaders() {
 }
 
 /**
- * Fetches real statistics from GitHub for a specific user.
- * "STRICTLY PUBLIC": No API key/token required.
+ * Fetches statistics from GitHub.
+ * Prioritizes cached data from src/lib/data/github-stats.json if available.
  */
-export async function fetchGitHubStats(username: string): Promise<GitHubStatsResponse> {
+export async function fetchGitHubStats(username: string, options: { forceFetch?: boolean } = {}): Promise<GitHubStatsResponse> {
+  // Attempt to use cached data first unless forcing a fetch
+  if (!options.forceFetch) {
+    try {
+      // Use dynamic import to avoid build errors if the file doesn't exist yet
+      const cached = await import("../data/github-stats.json");
+      if (cached && cached.default) {
+        console.log("Using cached GitHub stats");
+        return cached.default as GitHubStatsResponse;
+      }
+    } catch (err) {
+      console.warn("Cached GitHub stats not found or invalid, falling back to real-time fetch", err);
+    }
+  }
+
   try {
     const [repos, contributions] = await Promise.all([
       fetchPublicRepos(username),
@@ -133,7 +147,7 @@ async function fetchRepoLanguages(repos: GitHubRepo[]): Promise<Map<string, numb
         langMap.set(lang, (langMap.get(lang) || 0) + bytes)
       })
     } catch (error) {
-      console.warn(`Failed fetching language details for repo ${repo.full_name}`, error)
+      console.warn(`Failed fetching languages for ${repo.full_name}`, error);
     }
   })
 

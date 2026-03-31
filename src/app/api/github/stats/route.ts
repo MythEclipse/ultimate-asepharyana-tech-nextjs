@@ -5,15 +5,18 @@ import { fetchGitHubStats } from "@/lib/api/github"
  * Next.js API route to fetch real-time stats from GitHub.
  * Protects the GITHUB_TOKEN and performs backend data aggregation.
  */
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const force = searchParams.get("force") === "true"
   const username = "MythEclipse"
 
   try {
-    const data = await fetchGitHubStats(username)
+    const data = await fetchGitHubStats(username, { forceFetch: force })
     return NextResponse.json(data, {
       status: 200,
       headers: {
-        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=43200",
+        // Since we have a 12h cron job, we can set a long max-age but still allow revalidation
+        "Cache-Control": "public, s-maxage=43200, stale-while-revalidate=21600",
       },
     })
   } catch (error: unknown) {
