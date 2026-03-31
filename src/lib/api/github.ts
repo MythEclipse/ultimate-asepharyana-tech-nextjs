@@ -33,22 +33,37 @@ function getGitHubHeaders() {
   return headers
 }
 
+const GITHUB_STATS_URL = "https://raw.githubusercontent.com/MythEclipse/ultimate-asepharyana-tech-nextjs/refs/heads/main/src/lib/data/github-stats.json"
+
 /**
  * Fetches statistics from GitHub.
- * Prioritizes cached data from src/lib/data/github-stats.json if available.
+ * Prioritizes the remote raw JSON from the main branch to ensure the latest data is shown
+ * immediately after the cron job runs without requiring a redeploy.
  */
 export async function fetchGitHubStats(username: string, options: { forceFetch?: boolean } = {}): Promise<GitHubStatsResponse> {
   // Attempt to use cached data first unless forcing a fetch
   if (!options.forceFetch) {
+    // 1. Try remote raw URL for latest data
     try {
-      // Use dynamic import to avoid build errors if the file doesn't exist yet
-      const cached = await import("../data/github-stats.json");
-      if (cached && cached.default) {
-        console.log("Using cached GitHub stats");
-        return cached.default as GitHubStatsResponse;
+      const response = await fetch(GITHUB_STATS_URL, { 
+        next: { revalidate: 3600 } // Check for updates at most once per hour
+      })
+      if (response.ok) {
+        return await response.json()
       }
     } catch (err) {
-      console.warn("Cached GitHub stats not found or invalid, falling back to real-time fetch", err);
+      console.warn("Failed to fetch remote GitHub stats, falling back to local cache", err)
+    }
+
+    // 2. Try local build-time import as secondary fallback
+    try {
+      // Use dynamic import to avoid build errors if the file doesn't exist yet
+      const cached = await import("../data/github-stats.json")
+      if (cached && cached.default) {
+        return cached.default as GitHubStatsResponse
+      }
+    } catch (err) {
+      console.warn("Local cached GitHub stats not found or invalid", err)
     }
   }
 
