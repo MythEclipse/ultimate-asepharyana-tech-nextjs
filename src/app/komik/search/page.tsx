@@ -4,7 +4,6 @@ import { use, Suspense } from "react"
 import Link from "next/link"
 import { searchKomik, type MangaItem } from "@/lib/api/komik"
 import { useMediaSearch } from "@/components/shared/use-media"
-import { MediaSearchResults } from "@/components/shared/media-search-results"
 
 // UI
 import { CachedImage } from "@/components/ui/cached-image"
@@ -52,11 +51,13 @@ function KomikSearchCard({ item, index }: { item: MangaItem; index: number }) {
   )
 }
 
+import { MediaSearchPage } from "@/components/shared/media-search-page"
+
 function KomikSearchResults({ query }: { query: string }) {
   const { data, isLoading, error } = useMediaSearch<{ data: MangaItem[]; pagination: import("@/lib/api/types").Pagination }>(["komik-search", query], () => searchKomik(query, 1), !!query)
 
   return (
-    <MediaSearchResults
+    <MediaSearchPage
       query={query}
       isLoading={isLoading}
       error={error}

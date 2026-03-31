@@ -4,7 +4,6 @@ import { use, Suspense } from "react"
 import Link from "next/link"
 import { searchAnime, type SearchAnimeItem } from "@/lib/api/anime"
 import { useMediaSearch } from "@/components/shared/use-media"
-import { MediaSearchResults } from "@/components/shared/media-search-results"
 import { CachedImage } from "@/components/ui/cached-image"
 
 // UI
@@ -48,11 +47,13 @@ function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, sourc
   )
 }
 
-function SearchResults({ query, source }: { query: string, source: 1 | 2 }) {
+import { MediaSearchPage } from "@/components/shared/media-search-page"
+
+function SearchResults({ query, source }: { query: string; source: 1 | 2 }) {
   const { data, isLoading, error } = useMediaSearch<SearchAnimeItem[]>(["anime-search", source, query], () => searchAnime(source, query), query.trim().length > 0)
 
   return (
-    <MediaSearchResults
+    <MediaSearchPage
       query={query}
       isLoading={isLoading}
       error={error}

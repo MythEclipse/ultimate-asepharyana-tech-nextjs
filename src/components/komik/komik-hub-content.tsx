@@ -1,13 +1,12 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
-import { TracingBeam } from "@/components/ui/tracing-beam"
 import { SkeletonGrid } from "@/components/ui/skeleton"
 import { EmptyState } from "@/components/ui/empty-state"
 import { IconBook, IconDiamond, IconBarbell } from "@tabler/icons-react"
 import { KomikCard } from "./komik-card"
 import { fetchManga, fetchManhwa, fetchManhua } from "@/lib/api/komik"
-import { MediaHubSection } from "@/components/shared/media-hub-section"
+import { MediaHubContent, type SharedHubSection } from "@/components/shared/media-hub-content"
 
 export function KomikHubContent() {
   const { data: manga } = useQuery({ queryKey: ["manga"], queryFn: () => fetchManga(1) })
@@ -28,42 +27,38 @@ export function KomikHubContent() {
     )
   }
 
-  return (
-    <TracingBeam className="px-6">
-      <div className="space-y-32 py-10">
-        <MediaHubSection<import("@/lib/api/komik").MangaItem>
-          id="manga"
-          title="Manga • JP"
-          icon={IconBook}
-          color="bg-orange-600"
-          link="/komik/manga/1"
-          items={manga.data}
-          maxItems={10}
-          renderItem={(item, index) => <KomikCard key={item.slug} item={item} index={index} />}
-        />
+  const sections: SharedHubSection<import("@/lib/api/komik").MangaItem>[] = [
+    {
+      id: "manga",
+      title: "Manga • JP",
+      icon: IconBook,
+      color: "bg-orange-600",
+      link: "/komik/manga/1",
+      items: manga.data,
+      maxItems: 10,
+      renderItem: (item, index) => <KomikCard key={item.slug} item={item} index={index} />,
+    },
+    {
+      id: "manhwa",
+      title: "Manhwa • KR",
+      icon: IconDiamond,
+      color: "bg-blue-600",
+      link: "/komik/manhwa/1",
+      items: manhwa.data,
+      maxItems: 10,
+      renderItem: (item, index) => <KomikCard key={item.slug} item={item} index={index} />,
+    },
+    {
+      id: "manhua",
+      title: "Manhua • CN",
+      icon: IconBarbell,
+      color: "bg-emerald-600",
+      link: "/komik/manhua/1",
+      items: manhua.data,
+      maxItems: 10,
+      renderItem: (item, index) => <KomikCard key={item.slug} item={item} index={index} />,
+    },
+  ]
 
-        <MediaHubSection<import("@/lib/api/komik").MangaItem>
-          id="manhwa"
-          title="Manhwa • KR"
-          icon={IconDiamond}
-          color="bg-blue-600"
-          link="/komik/manhwa/1"
-          items={manhwa.data}
-          maxItems={10}
-          renderItem={(item, index) => <KomikCard key={item.slug} item={item} index={index} />}
-        />
-
-        <MediaHubSection<import("@/lib/api/komik").MangaItem>
-          id="manhua"
-          title="Manhua • CN"
-          icon={IconBarbell}
-          color="bg-emerald-600"
-          link="/komik/manhua/1"
-          items={manhua.data}
-          maxItems={10}
-          renderItem={(item, index) => <KomikCard key={item.slug} item={item} index={index} />}
-        />
-      </div>
-    </TracingBeam>
-  )
+  return <MediaHubContent sections={sections} />
 }

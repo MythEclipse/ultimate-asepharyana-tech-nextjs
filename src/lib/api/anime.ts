@@ -1,5 +1,6 @@
 import { fetchApi } from "./config";
 import { ApiResponse, Pagination } from "./types";
+import { fetchMediaList, fetchMediaDetail, fetchMediaStream, searchMedia } from "./media";
 
 export interface Anime1OngoingItem {
   title: string;
@@ -122,21 +123,6 @@ function getAnimeUrl(source: AnimeSource, path: string): string {
     return `${prefix}${path}`;
 }
 
-function getPaginationFromApi<T>(response: ApiResponse<T[]>): Pagination {
-  if (response.pagination) return response.pagination;
-
-  if (response.meta && typeof response.meta === "object") {
-    const meta = response.meta as { pagination?: Pagination };
-    if (meta.pagination) return meta.pagination;
-  }
-
-  throw new Error("API pagination metadata is missing");
-}
-
-function getArrayDataFromApi<T>(response: ApiResponse<T[]>): T[] {
-  if (Array.isArray(response.data)) return response.data;
-  throw new Error("API data is not an array");
-}
 
 export async function fetchAnimeIndex(source: AnimeSource): Promise<Anime1Data | Anime2Data> {
   const response = await fetchApi<ApiResponse<Anime1Data | Anime2Data>>(getAnimeUrl(source, ""), {
@@ -148,36 +134,18 @@ export async function fetchAnimeIndex(source: AnimeSource): Promise<Anime1Data |
 }
 
 export async function fetchAnimeOngoing(source: AnimeSource, page: number): Promise<{ data: (Anime1OngoingItem | Anime2OngoingItem)[]; pagination: Pagination }> {
-  const endpoint = `${getAnimeUrl(source, "/ongoing_anime")}/${page}`;
-  const response = await fetchApi<ApiResponse<(Anime1OngoingItem | Anime2OngoingItem)[]>>(endpoint, {
-    next: { revalidate: REVALIDATE_TIME }
-  });
-
-  const ongoing = getArrayDataFromApi(response) as (Anime1OngoingItem | Anime2OngoingItem)[];
-  const pagination = getPaginationFromApi(response);
-
-  return { data: ongoing, pagination };
+  const key = source === 2 ? "anime2" : "anime1"
+  return fetchMediaList(key, "ongoing", page) as Promise<{ data: (Anime1OngoingItem | Anime2OngoingItem)[]; pagination: Pagination }>;
 }
 
 export async function fetchAnimeComplete(source: AnimeSource, page: number): Promise<{ data: Anime2CompleteItem[]; pagination: Pagination }> {
-  const endpoint = `${getAnimeUrl(source, "/complete_anime")}/${page}`;
-  const response = await fetchApi<ApiResponse<Anime2CompleteItem[]>>(endpoint, {
-    next: { revalidate: REVALIDATE_TIME }
-  });
-
-  const complete = getArrayDataFromApi(response) as Anime2CompleteItem[];
-  const pagination = getPaginationFromApi(response);
-
-  return { data: complete, pagination };
+  const key = source === 2 ? "anime2" : "anime1"
+  return fetchMediaList(key, "complete", page) as Promise<{ data: Anime2CompleteItem[]; pagination: Pagination }>;
 }
 
 export async function fetchAnimeDetail(source: AnimeSource, slug: string): Promise<AnimeDetailData> {
-  const res = await fetchApi<ApiResponse<AnimeDetailData>>(getAnimeUrl(source, `/detail/${encodeURIComponent(slug)}`), {
-      next: { revalidate: REVALIDATE_TIME / 2 }
-  });
-
-  if (!res.data) throw new Error("No data found");
-  const data = res.data;
+  const key = source === 2 ? "anime2" : "anime1"
+  const data = await fetchMediaDetail(key, slug) as AnimeDetailData
 
   if (source === 2) {
     if (!data.episode_lists || data.episode_lists.length === 0) {
@@ -207,74 +175,13 @@ export async function fetchAnimeDetail(source: AnimeSource, slug: string): Promi
 }
 
 export async function fetchAnimeStream(source: AnimeSource, slug: string): Promise<AnimeFullData> {
-  if (source === 1) {
-    const res = await fetchApi<ApiResponse<AnimeFullData>>(`/anime/full/${encodeURIComponent(slug)}`, {
-        next: { revalidate: REVALIDATE_TIME }
-    });
-    if (!res.data) throw new Error("No data found");
-    return res.data;
-  } else {
-    const match = slug.match(/^(.*)-episode-(.*)$/);
-    if (!match) throw new Error("Invalid slug format for Anime2");
-
-    const animeSlug = match[1];
-    const epNum = match[2];
-
-    const detail = await fetchAnimeDetail(2, animeSlug);
-    const download_urls: Record<string, DownloadLink[]> = {};
-    const allGroups = [...(detail.downloads || []), ...(detail.batch as unknown as DownloadGroup[] || [])];
-
-    for (const group of allGroups) {
-      const resStr = group.resolution || "";
-      const resClean = resStr.replace(/Episode/i, "").trim();
-      const matchFound = parseInt(resClean) === parseInt(epNum) || resClean === epNum;
-
-      if (matchFound) {
-        download_urls[resStr] = group.links.map(l => ({ server: l.name, url: l.url }));
-      }
-    }
-
-    return {
-      episode: `Episode ${epNum}`,
-      episode_number: epNum,
-      anime: { slug: animeSlug },
-      has_next_episode: false,
-      has_previous_episode: false,
-      stream_url: "",
-      download_urls,
-      image_url: detail.poster,
-      next_episode: null,
-      previous_episode: null,
-    };
-  }
+  const key = source === 2 ? "anime2" : "anime1"
+  return fetchMediaStream(key, slug)
 }
 
 export async function searchAnime(source: AnimeSource, query: string): Promise<SearchAnimeItem[]> {
-  if (!query.trim()) return [];
-
-  if (source === 1) {
-    interface ApiSearchItem { title: string; slug: string; poster: string; episode: string; anime_url: string; genres: string[]; status: string; rating: string; }
-    const res = await fetchApi<ApiResponse<ApiSearchItem[]>>(`/anime/search/${encodeURIComponent(query)}`, { cache: 'no-store' });
-    const items = res.data ?? [];
-    return items.map(item => ({
-      title: item.title,
-      slug: item.slug,
-      poster: item.poster,
-      info: item.episode,
-      sub_info: item.rating,
-    }));
-  } else {
-    interface ApiAnime2SearchItem { title: string; slug: string; poster: string; description: string; anime_url: string; genres: string[]; rating: string; type: string; season: string; }
-    const res = await fetchApi<ApiResponse<ApiAnime2SearchItem[]>>(`/anime2/search/${encodeURIComponent(query)}`, { cache: 'no-store' });
-    const items = res.data ?? [];
-    return items.map(item => ({
-      title: item.title,
-      slug: item.slug,
-      poster: item.poster,
-      info: `${item.type} | ${item.season}`,
-      sub_info: item.rating,
-    }));
-  }
+  const key = source === 2 ? "anime2" : "anime1"
+  return searchMedia(key, query) as Promise<SearchAnimeItem[]>
 }
 
 export const fetchAnime1Ongoing = (page: number) => fetchAnimeOngoing(1, page);

@@ -1,5 +1,6 @@
 import { fetchApi } from "./config";
 import { Pagination } from "./types";
+import { fetchMediaList, fetchMediaDetail, searchMedia } from "./media";
 
 export interface MangaItem {
   title: string;
@@ -57,34 +58,24 @@ export interface ChapterResponse {
 
 const REVALIDATE_TIME = 3600;
 
-async function fetchKomikType(type: string, page: number): Promise<MangaResponse> {
-  return await fetchApi<MangaResponse>(`/komik/${type}/${page}`, {
-      next: { revalidate: REVALIDATE_TIME }
-  });
+async function fetchKomikType(type: "manga" | "manhwa" | "manhua", page: number): Promise<MangaResponse> {
+  return fetchMediaList("komik", type, page) as Promise<MangaResponse>
 }
 
 export async function fetchManga(page: number): Promise<MangaResponse> {
-  return fetchKomikType("manga", page);
+  return fetchKomikType("manga", page)
 }
 
 export async function fetchManhwa(page: number): Promise<MangaResponse> {
-  return fetchKomikType("manhwa", page);
+  return fetchKomikType("manhwa", page)
 }
 
 export async function fetchManhua(page: number): Promise<MangaResponse> {
-  return fetchKomikType("manhua", page);
+  return fetchKomikType("manhua", page)
 }
 
 export async function fetchKomikDetail(komikId: string): Promise<KomikDetailData> {
-  const res = await fetchApi<KomikDetailResponse>(`/komik/detail/${encodeURIComponent(komikId)}`, {
-      next: { revalidate: REVALIDATE_TIME / 2 }
-  });
-
-  if (!res || !res.status || !res.data) {
-    throw new Error("Komik detail payload invalid");
-  }
-
-  return res.data;
+  return fetchMediaDetail("komik", komikId) as Promise<KomikDetailData>
 }
 
 export async function fetchChapter(slug: string): Promise<ChapterData> {
@@ -100,9 +91,7 @@ export async function fetchChapter(slug: string): Promise<ChapterData> {
 }
 
 export async function searchKomik(query: string, page: number): Promise<MangaResponse> {
-  return await fetchApi<MangaResponse>(`/komik/search/${encodeURIComponent(query)}/${page}`, {
-      cache: "no-store"
-  });
+  return searchMedia("komik", query, page) as Promise<MangaResponse>
 }
 
 export async function fetchKomikGenre(genreSlug: string): Promise<MangaResponse> {

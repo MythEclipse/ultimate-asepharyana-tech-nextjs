@@ -1,12 +1,10 @@
 "use client"
 
-import { TracingBeam } from "@/components/ui/tracing-beam"
-import { SkeletonGrid } from "@/components/ui/skeleton"
 import { IconFlame, IconChecklist } from "@tabler/icons-react"
 import { AnimeCard, type AnimeItem } from "./anime-card"
 import { type AnimeSource } from "@/lib/api/anime"
 import { getAnimePrefix, useAnimeHubData } from "./use-anime"
-import { MediaHubSection } from "@/components/shared/media-hub-section"
+import { MediaHubContent, type SharedHubSection } from "@/components/shared/media-hub-content"
 
 export function AnimeHubContent({ source }: { source: AnimeSource }) {
   const { ongoingQuery, completeQuery } = useAnimeHubData(source)
@@ -15,33 +13,28 @@ export function AnimeHubContent({ source }: { source: AnimeSource }) {
   const complete = completeQuery.data
   const prefix = getAnimePrefix(source)
 
-  if (!ongoing || !complete) return <SkeletonGrid count={12} />
+  const sections: SharedHubSection<AnimeItem>[] = [
+    {
+      id: "ongoing",
+      title: "Hot Ongoing",
+      icon: IconFlame,
+      color: "bg-orange-600",
+      link: `/${prefix}/ongoing-anime/1`,
+      items: ongoing?.data ?? [],
+      maxItems: 10,
+      renderItem: (item) => <AnimeCard key={item.slug} item={item} prefix={prefix} />,
+    },
+    {
+      id: "complete",
+      title: "Legendary Completed",
+      icon: IconChecklist,
+      color: "bg-blue-600",
+      link: `/${prefix}/complete-anime/1`,
+      items: complete?.data ?? [],
+      maxItems: 10,
+      renderItem: (item) => <AnimeCard key={item.slug} item={item} prefix={prefix} />,
+    },
+  ]
 
-  return (
-    <TracingBeam className="px-6">
-      <div className="space-y-32 py-10">
-        <MediaHubSection<AnimeItem>
-          id="ongoing"
-          title="Hot Ongoing"
-          icon={IconFlame}
-          color="bg-orange-600"
-          link={`/${prefix}/ongoing-anime/1`}
-          items={ongoing.data}
-          maxItems={10}
-          renderItem={(item) => <AnimeCard key={item.slug} item={item} prefix={prefix} />}
-        />
-
-        <MediaHubSection<AnimeItem>
-          id="complete"
-          title="Legendary Completed"
-          icon={IconChecklist}
-          color="bg-blue-600"
-          link={`/${prefix}/complete-anime/1`}
-          items={complete.data}
-          maxItems={10}
-          renderItem={(item) => <AnimeCard key={item.slug} item={item} prefix={prefix} />}
-        />
-      </div>
-    </TracingBeam>
-  )
+  return <MediaHubContent sections={sections} isLoading={!ongoing || !complete} />
 }
