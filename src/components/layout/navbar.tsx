@@ -26,7 +26,11 @@ export function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-[100] w-full backdrop-blur-3xl bg-background/70 border-b border-border/50">
+    <nav
+      role="navigation"
+      aria-label="Primary"
+      className="sticky top-0 z-[100] w-full backdrop-blur-3xl bg-background/70 border-b border-border/50"
+    >
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
         {/* Logo Protocol */}
         <Link href="/" className="flex items-center space-x-6 group">
@@ -53,6 +57,7 @@ export function Navbar() {
            {/* Theme Engine */}
            <button
              onClick={cycleTheme}
+             aria-label="Toggle theme mode"
              className="p-4 rounded-2xl hover:bg-muted/50 transition-all group relative overflow-hidden active:scale-95"
              title={mounted ? `Theme: ${theme}` : "Theme: loading"}
            >
@@ -93,6 +98,8 @@ export function Navbar() {
         <button
           className="md:hidden p-4 rounded-2xl hover:bg-muted/50 transition-all active:scale-95 group"
           onClick={toggleMenu}
+          aria-label={isOpen ? "Close mobile menu" : "Open mobile menu"}
+          aria-expanded={isOpen}
         >
           <div className="space-y-1.5 w-6">
              <div className={`h-0.5 bg-foreground rounded-full transition-all duration-500 ${isOpen ? "rotate-45 translate-y-2" : "w-full"}`} />
@@ -139,16 +146,20 @@ function NavLink({ href, label, currentPath }: { href: string; label: string; cu
   const isActive = currentPath === href || (href !== "/" && currentPath.startsWith(href))
   
   return (
-    <Link href={href} className={`px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 rounded-xl relative group/link ${
+    <Link
+      href={href}
+      aria-current={isActive ? "page" : undefined}
+      className={`px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 rounded-xl relative group/link ${
         isActive ? "text-primary" : "text-muted-foreground hover:text-foreground hover:bg-white/5"
-    }`}>
-        <span className="relative z-10">{label}</span>
-        {isActive && (
-            <>
-                <div className="absolute inset-0 bg-primary/5 rounded-xl border border-primary/10 animate-fade-in" />
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-primary rounded-full blur-[2px] animate-pulse" />
-            </>
-        )}
+      }`}
+    >
+      <span className="relative z-10">{label}</span>
+      {isActive && (
+        <>
+          <div className="absolute inset-0 bg-primary/5 rounded-xl border border-primary/10 animate-fade-in" />
+          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-primary rounded-full blur-[2px] animate-pulse" />
+        </>
+      )}
     </Link>
   )
 }

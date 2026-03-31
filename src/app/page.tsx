@@ -244,7 +244,7 @@ function TechArsenal() {
     <Section className="py-24 w-full" glow>
       <div className="mb-16 text-center lg:text-left">
         <Badge variant="glass" className="mb-4">Capabilities</Badge>
-        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Beginner <span className="text-primary">Tech Stack</span></h2>
+        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Beginner <span className="text-foreground">Tech Stack</span></h2>
         <p className="text-muted-foreground mt-4 max-w-xl text-lg mx-auto lg:mx-0">Core tools and frameworks I am currently exploring in practice projects (React, Tailwind, Next.js).</p>
       </div>
 
@@ -275,13 +275,13 @@ function ActivitySection() {
     <Section className="py-24 w-full relative">
       <div className="w-full flex flex-col items-center mb-24 relative text-center">
         <Badge variant="glow" className="mb-4">Activity Matrix</Badge>
-        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Development <span className="text-primary">Activity</span></h2>
+        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Development <span className="text-foreground">Activity</span></h2>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <Card className="p-8">
           <div className="mb-10">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Intelligence Radar</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Intelligence Radar</span>
             <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">Core Expertise</h3>
           </div>
           <div className="min-h-[400px] flex items-center justify-center">
@@ -293,7 +293,7 @@ function ActivitySection() {
 
         <Card className="p-8">
           <div className="mb-10">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Development Pulse</span>
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Development Pulse</span>
             <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">Technical Consistency</h3>
           </div>
           <div className="min-h-[400px] flex items-center justify-center">
@@ -331,7 +331,14 @@ function CallToActionSection() {
             { href: "https://linkedin.com", icon: IconBrandLinkedin, label: "LinkedIn" },
             { href: "https://instagram.com", icon: IconBrandInstagram, label: "Instagram" },
           ].map(({ href, icon: Icon, label }) => (
-            <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="w-14 h-14 glass rounded-2xl flex items-center justify-center hover:border-primary/50 hover:bg-primary/10 transition-all hover:-translate-y-2 border-hairline">
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-14 h-14 glass rounded-2xl flex items-center justify-center hover:border-primary/50 hover:bg-primary/10 transition-all hover:-translate-y-2 border-hairline"
+              aria-label={`Visit ${label}`}
+            >
               <Icon size={24} className="text-foreground" />
             </a>
           ))}
