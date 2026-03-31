@@ -244,8 +244,8 @@ function TechArsenal() {
     <Section className="py-24 w-full" glow>
       <div className="mb-16 text-center lg:text-left">
         <Badge variant="glass" className="mb-4">Capabilities</Badge>
-        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Technology <span className="text-primary">Stack</span></h2>
-        <p className="text-muted-foreground mt-4 max-w-xl text-lg mx-auto lg:mx-0">Tools and frameworks used for building maintainable, production-ready applications.</p>
+        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Beginner <span className="text-primary">Tech Stack</span></h2>
+        <p className="text-muted-foreground mt-4 max-w-xl text-lg mx-auto lg:mx-0">Core tools and technologies I use while practicing React, Tailwind, and Next.js projects.</p>
       </div>
 
       <div className="grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
@@ -275,7 +275,7 @@ function ActivitySection() {
     <Section className="py-24 w-full relative">
       <div className="w-full flex flex-col items-center mb-24 relative text-center">
         <Badge variant="glow" className="mb-4">Activity Matrix</Badge>
-        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Operational <span className="text-primary">Cadence</span></h2>
+        <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Development <span className="text-primary">Activity</span></h2>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
