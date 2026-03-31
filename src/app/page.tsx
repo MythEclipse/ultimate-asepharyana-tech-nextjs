@@ -175,11 +175,11 @@ function HeroSection() {
         <div className="max-w-[89vw] md:max-w-4xl flex flex-col items-center">
           <div className="mb-8 px-4 py-1.5 uppercase tracking-[0.3em] font-black glass rounded-full shadow-sm">Software Engineering</div>
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance">
-            Practical Solutions for <br />
-            <span className="gradient-text">Modern Web Systems</span>
+            Beginner Web Portfolio <br />
+            <span className="gradient-text">Learning Frontend & Simple UI</span>
           </h1>
           <p className="max-w-2xl text-muted-foreground text-lg md:text-xl lg:text-2xl mb-12 font-medium leading-relaxed">
-            I&apos;m <span className="text-foreground border-b-2 border-primary/30 font-bold">Asep Haryana Saputra</span>, focused on stable backend architecture and efficient frontend delivery.
+            Hi, I’m <span className="text-foreground border-b-2 border-primary/30 font-bold">Asep Haryana Saputra</span>. I build projects with React, Tailwind, and Next.js to gain practical experience and showcase fundamental skills.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6">

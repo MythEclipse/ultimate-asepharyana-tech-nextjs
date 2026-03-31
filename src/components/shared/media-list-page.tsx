@@ -123,7 +123,13 @@ export function MediaListPage<T>({
          <div className="space-y-20">
            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
              {data.data.map((item, i) => (
-               <div key={i}>{itemRenderer(item, i)}</div>
+               <div
+                 key={i}
+                 className="opacity-0 animate-fade-up"
+                 style={{ animationDelay: `${i * 60}ms` }}
+               >
+                 {itemRenderer(item, i)}
+               </div>
              ))}
            </div>
            <PaginationControl pagination={data.pagination} baseUrl={baseUrl} variant={variant} />
