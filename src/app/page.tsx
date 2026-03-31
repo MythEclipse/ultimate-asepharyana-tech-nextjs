@@ -245,7 +245,7 @@ function TechArsenal() {
       <div className="mb-16 text-center lg:text-left">
         <Badge variant="glass" className="mb-4">Capabilities</Badge>
         <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Beginner <span className="text-primary">Tech Stack</span></h2>
-        <p className="text-muted-foreground mt-4 max-w-xl text-lg mx-auto lg:mx-0">Core tools and technologies I use while practicing React, Tailwind, and Next.js projects.</p>
+        <p className="text-muted-foreground mt-4 max-w-xl text-lg mx-auto lg:mx-0">Core tools and frameworks I am currently exploring in practice projects (React, Tailwind, Next.js).</p>
       </div>
 
       <div className="grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
@@ -313,11 +313,11 @@ function CallToActionSection() {
       <div className="absolute inset-0 bg-primary/20 blur-[160px] rounded-full mx-auto w-1/2 h-1/2 -z-10 animate-pulse-slow" />
 
       <h2 className="text-[clamp(2rem,10vw,6rem)] font-black text-foreground mb-12 leading-[0.9] tracking-tightest uppercase text-balance">
-        Explore collaboration <br /> <span className="text-primary">with practical outcomes</span>
+        Build projects together <br /> <span className="text-primary">and learn step-by-step</span>
       </h2>
 
       <p className="text-muted-foreground mb-12 max-w-2xl text-xl font-medium leading-relaxed">
-        Available for consulting and project engagements in backend, frontend, and infrastructure engineering.
+        Sharing beginner-friendly projects with clear structure to show growth in web development skills.
       </p>
 
       <div className="flex flex-col sm:flex-row items-center gap-6 mt-4">
