@@ -27,7 +27,7 @@ export const TECH_STACK: TechIcon[] = [
   {
       name: "Kotlin",
       image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kotlin/kotlin-original.svg",
-      color: "from-purple-500 to-violet-600",
+      color: "from-blue-500 to-blue-600",
       description: "Modern JVM language for Android and backend development.",
   },
   {

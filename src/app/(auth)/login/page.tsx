@@ -49,7 +49,7 @@ export default function LoginPage() {
       </div>
 
       <div className="w-full max-w-[480px] relative z-10 animate-fade-in group/main">
-        <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-[3rem] blur-2xl opacity-10 group-hover/main:opacity-20 transition-opacity duration-1000" />
+        <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-500 rounded-[3rem] blur-2xl opacity-10 group-hover/main:opacity-20 transition-opacity duration-1000" />
         
         <div className="glass-card rounded-[3rem] border border-white/10 overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.4)] transition-all duration-700 hover:border-white/20 relative bg-background/50 backdrop-blur-3xl">
           <div className="p-12 space-y-10">

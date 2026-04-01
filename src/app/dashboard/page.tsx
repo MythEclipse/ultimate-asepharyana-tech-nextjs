@@ -91,12 +91,12 @@ export default function DashboardPage() {
             </Link>
 
             <Link href="/project" className="md:col-span-12 group">
-                 <Card className="p-10 min-h-[200px] flex items-center justify-between group-hover:border-purple-500/40">
+                 <Card className="p-10 min-h-[200px] flex items-center justify-between group-hover:border-blue-500/40">
                      <div className="space-y-3">
-                        <h2 className="text-4xl font-black tracking-tighter italic">CASE STUDIES & <span className="text-purple-500">PROJECTS</span></h2>
+                        <h2 className="text-4xl font-black tracking-tighter italic">CASE STUDIES & <span className="text-blue-500">PROJECTS</span></h2>
                         <p className="text-sm text-muted-foreground font-medium">Review architectural decisions and technical implementation details.</p>
                      </div>
-                     <div className="w-16 h-16 rounded-2xl glass border-hairline flex items-center justify-center text-purple-500 group-hover:scale-110 transition-transform hidden md:flex">
+                     <div className="w-16 h-16 rounded-2xl glass border-hairline flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform hidden md:flex">
                         <IconBriefcase size={32} stroke={1.5} />
                      </div>
                 </Card>

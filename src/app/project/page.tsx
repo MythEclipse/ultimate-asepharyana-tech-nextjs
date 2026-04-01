@@ -36,7 +36,7 @@ export default function ProjectPage() {
           <p className="max-w-xl text-muted-foreground/60 text-base font-medium leading-relaxed">
             A curated collection of software engineering projects built with 
             <span className="text-cyan-400 font-bold"> Rust </span>
-            and modern <span className="text-purple-400 font-bold"> Frontend </span>
+            and modern <span className="text-blue-400 font-bold"> Frontend </span>
             technologies.
           </p>
 

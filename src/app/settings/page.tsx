@@ -105,14 +105,14 @@ export default function SettingsPage() {
               <button
                 onClick={() => setTheme("system")}
                 className={`relative group/btn p-8 rounded-[2rem] bg-card/40 backdrop-blur-md border transition-all duration-500 active:scale-95 ${
-                    theme === "system" ? "bg-purple-500/10 border-purple-500/40 text-purple-400" : "border-border/5 text-muted-foreground hover:bg-background/80 hover:text-foreground"
+                    theme === "system" ? "bg-blue-500/10 border-blue-500/40 text-blue-400" : "border-border/5 text-muted-foreground hover:bg-background/80 hover:text-foreground"
                 }`}
               >
                 <div className="relative z-10 space-y-3">
                   <span className="text-3xl block transition-transform group-hover/btn:scale-125 duration-500">💻</span>
                   <span className="text-[10px] font-black uppercase tracking-[0.2em]">Neural Sync</span>
                 </div>
-                <div className="absolute inset-x-0 bottom-0 h-1 bg-purple-500 scale-x-0 group-hover/btn:scale-x-50 transition-transform origin-center" />
+                <div className="absolute inset-x-0 bottom-0 h-1 bg-blue-500 scale-x-0 group-hover/btn:scale-x-50 transition-transform origin-center" />
               </button>
             </div>
           </section>
