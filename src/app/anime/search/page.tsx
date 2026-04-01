@@ -46,13 +46,13 @@ function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, sourc
   )
 }
 
-import { MediaSearchPage } from "@/components/shared/media-search-page"
+import { MediaSearchResults } from "@/components/shared/media-search-results"
 
 function SearchResults({ query, source }: { query: string; source: 1 | 2 }) {
   const { data, isLoading, error } = useMediaSearch<SearchAnimeItem[]>(["anime-search", source, query], () => searchAnime(source, query), query.trim().length > 0)
 
   return (
-    <MediaSearchPage
+    <MediaSearchResults
       query={query}
       isLoading={isLoading}
       error={error}

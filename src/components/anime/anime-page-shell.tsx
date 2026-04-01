@@ -7,13 +7,14 @@ import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
 import { SparklesCore } from "@/components/ui/sparkles"
 import { IconPlayerPlay } from "@tabler/icons-react"
-import { animeSearchRoute } from "@/lib/utils/routes"
+import { animePrefix, animeSearchRoute } from "@/lib/utils/routes"
 
 type AnimePageShellProps = {
   source: 1 | 2
 }
 
 export function AnimePageShell({ source }: AnimePageShellProps) {
+  const sourcePrefix = animePrefix(source)
   const searchRoute = animeSearchRoute(source)
 
   return (
@@ -21,7 +22,7 @@ export function AnimePageShell({ source }: AnimePageShellProps) {
       <div className="relative h-[40rem] w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
         <div className="w-full absolute inset-0 h-screen">
           <SparklesCore
-            id={`particles-${prefix}`}
+            id={`particles-${sourcePrefix}`}
             background="transparent"
             minSize={0.4}
             maxSize={1.2}

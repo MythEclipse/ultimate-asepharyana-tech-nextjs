@@ -5,10 +5,6 @@ import { fetchAnimeOngoing, fetchAnimeComplete, fetchAnimeDetail, fetchAnimeStre
 
 export type AnimeListType = "ongoing" | "complete"
 
-export function getAnimePrefix(source: AnimeSource) {
-  return source === 2 ? "anime2" : "anime"
-}
-
 export function useAnimeHubData(source: AnimeSource) {
   const ongoingQuery = useQuery({
     queryKey: ["anime-hub", "ongoing", source],

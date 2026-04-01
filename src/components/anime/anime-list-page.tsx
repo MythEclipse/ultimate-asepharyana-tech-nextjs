@@ -3,7 +3,7 @@
 import { type AnimeSource } from "@/lib/api/anime"
 import { MediaListPage } from "@/components/shared/media-list-page"
 import { AnimeCard, type AnimeItem } from "./anime-card"
-import { getAnimePrefix, useAnimeListData, type AnimeListType } from "./use-anime"
+import { useAnimeListData, type AnimeListType } from "./use-anime"
 import { animeHubRoute, animeListBaseRoute } from "@/lib/utils/routes"
 
 interface AnimeListPageProps {
@@ -15,7 +15,6 @@ interface AnimeListPageProps {
 export function AnimeListPage({ source, page, type }: AnimeListPageProps) {
   const { data, isLoading, error } = useAnimeListData(source, page, type)
   const isOngoing = type === "ongoing"
-  const prefix = getAnimePrefix(source)
 
   const hero = {
     title: isOngoing ? "ONGOING" : "COMPLETE",
@@ -36,7 +35,7 @@ export function AnimeListPage({ source, page, type }: AnimeListPageProps) {
       data={data}
       error={error}
       queryName={`${hero.title} ${hero.accent}`}
-      itemRenderer={(item) => <AnimeCard item={item as AnimeItem} prefix={prefix} />}
+      itemRenderer={(item) => <AnimeCard item={item as AnimeItem} source={source} />}
       variant="primary"
       baseUrl={animeListBaseRoute(source, type)}
       hubLink={animeHubRoute(source)}

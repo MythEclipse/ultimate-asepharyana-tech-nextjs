@@ -52,13 +52,13 @@ function KomikSearchCard({ item, index }: { item: MangaItem; index: number }) {
   )
 }
 
-import { MediaSearchPage } from "@/components/shared/media-search-page"
+import { MediaSearchResults } from "@/components/shared/media-search-results"
 
 function KomikSearchResults({ query }: { query: string }) {
   const { data, isLoading, error } = useMediaSearch<{ data: MangaItem[]; pagination: import("@/lib/api/types").Pagination }>(["komik-search", query], () => searchKomik(query, 1), !!query)
 
   return (
-    <MediaSearchPage
+    <MediaSearchResults
       query={query}
       isLoading={isLoading}
       error={error}

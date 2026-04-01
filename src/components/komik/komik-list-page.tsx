@@ -1,9 +1,10 @@
 "use client"
 
 import { type MangaResponse } from "@/lib/api/komik"
-import { MediaListPage } from "@/components/shared/media-list-page"
+import { MediaListPage, type HeroConfig } from "@/components/shared/media-list-page"
 import { KomikCard } from "./komik-card"
 import { useMediaListData } from "@/components/shared/use-media"
+import { komikHubRoute } from "@/lib/utils/routes"
 
 interface KomikListPageProps {
   page: number
@@ -11,16 +12,7 @@ interface KomikListPageProps {
   queryKeyBase: string
   baseUrl: string
   variant: "manga" | "manhwa" | "manhua"
-  heroExpose: {
-    title: string
-    accent: string
-    description: string
-    accentTextClass: string
-    tagClass: string
-    introText: string
-    colorClass: string
-    linkTextClass: string
-  }
+  heroExpose: HeroConfig
 }
 
 export function KomikListPage({ page, fetchFn, queryKeyBase, baseUrl, variant, heroExpose }: KomikListPageProps) {
@@ -37,7 +29,7 @@ export function KomikListPage({ page, fetchFn, queryKeyBase, baseUrl, variant, h
       )}
       variant={variant === "manga" ? "primary" : variant === "manhwa" ? "indigo" : "red"}
       baseUrl={baseUrl}
-      hubLink="/komik"
+      hubLink={komikHubRoute()}
       hero={heroExpose}
     />
   )

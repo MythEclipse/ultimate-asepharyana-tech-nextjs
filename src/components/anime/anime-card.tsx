@@ -1,6 +1,7 @@
 "use client"
 
 import { MediaCard } from "@/components/shared/media-card"
+import { type AnimeSource } from "@/lib/api/anime"
 import { animeDetailRoute } from "@/lib/utils/routes"
 
 export interface AnimeItem {
@@ -16,13 +17,12 @@ export interface AnimeItem {
 
 interface AnimeCardProps {
   item: AnimeItem
-  prefix: string
+  source: AnimeSource
   isFirst?: boolean
 }
 
-export function AnimeCard({ item, prefix, isFirst }: AnimeCardProps) {
+export function AnimeCard({ item, source, isFirst }: AnimeCardProps) {
   const displayEpisode = item.current_episode || item.episode || (item.episode_count ? `${item.episode_count} Eps` : "")
-  const source = prefix === "anime2" ? 2 : 1
 
   return (
     <MediaCard
