@@ -1,6 +1,5 @@
 "use client"
 
-import { useParams } from "next/navigation"
 import { notFound } from "next/navigation"
 import { GlitchText } from "@/components/ui/glitch-text"
 import { Heading } from "@/components/ui/heading"
@@ -10,10 +9,10 @@ import { Section } from "@/components/ui/section"
 import { Button } from "@/components/ui/button"
 import { type AnimeFullData } from "@/lib/api/anime"
 import { useAnimeStream } from "@/components/anime/use-anime"
+import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
+import { animeWatchRoute } from "@/lib/utils/routes"
 
 function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 }) {
-  const prefix = source === 2 ? "anime2" : "anime"
-
   return (
     <main className="min-h-screen bg-background text-foreground dark:bg-slate-950 dark:text-slate-100 relative selection:bg-primary/30 transition-colors duration-300">
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
@@ -68,7 +67,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
 
           {data.has_previous_episode && data.previous_episode ? (
             <Button
-              href={`/${prefix}/watch/${data.previous_episode.slug}`}
+              href={animeWatchRoute(source, data.previous_episode.slug)}
               variant="outline"
               className="flex items-center justify-center gap-3 px-4 py-4 text-xs md:text-sm font-black uppercase tracking-wider rounded-2xl border border-border/20 dark:border-slate-600"
             >
@@ -86,7 +85,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
 
           {data.has_next_episode && data.next_episode ? (
             <Button
-              href={`/${prefix}/watch/${data.next_episode.slug}`}
+              href={animeWatchRoute(source, data.next_episode.slug)}
               variant="premium"
               className="flex items-center justify-center gap-3 px-4 py-4 text-xs md:text-sm font-black uppercase tracking-wider rounded-2xl"
             >
@@ -142,9 +141,12 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
 }
 
 export default function AnimeWatchPage({ source = 1 }: { source?: 1 | 2 }) {
-  const params = useParams()
-  const rawSlug = params?.slug
-  const slug = Array.isArray(rawSlug) ? rawSlug[0] ?? "" : rawSlug ?? ""
+  const slug = parseSlugParam(useRouteParam("slug"))
+
+  if (!slug) {
+    notFound()
+  }
+
   const { data, isLoading } = useAnimeStream(source, slug)
 
   if (isLoading) {

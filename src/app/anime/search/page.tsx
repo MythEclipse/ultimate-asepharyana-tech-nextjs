@@ -12,12 +12,11 @@ import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
 import { IconArrowLeft } from "@tabler/icons-react"
+import { animeDetailRoute, animeHubRoute } from "@/lib/utils/routes"
 
 function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, source: 1 | 2, index: number }) {
-  const prefix = source === 2 ? "anime2" : "anime"
-  
   return (
-    <Link href={`/${prefix}/detail/${item.slug}`} className="group relative block h-full animate-slide-up">
+    <Link href={animeDetailRoute(source, item.slug)} className="group relative block h-full animate-slide-up">
       <Card className="relative p-0 overflow-hidden aspect-[3/4.2] border-border/10 group-hover:border-primary/50 transition-all duration-500 shadow-2xl">
         <CachedImage
           src={item.poster}
@@ -61,7 +60,7 @@ function SearchResults({ query, source }: { query: string; source: 1 | 2 }) {
       count={data?.length ?? 0}
       primaryLabel="Results for"
       accentLabel={query}
-      hrefBack={source === 2 ? "/anime2" : "/anime"}
+      hrefBack={animeHubRoute(source)}
       onRenderCard={(item, i) => <AnimeSearchCard key={(item as SearchAnimeItem).slug || i} item={item as SearchAnimeItem} source={source} index={i} />}
       emptyMessage="Zero Matches Found"
       emptyHelpText="Our neural link couldn't locate any entries matching your query in the current sector."
@@ -83,7 +82,7 @@ export default function AnimeSearchPage({
        <Section className="pt-32 px-6">
           <div className="mb-12">
              <Link 
-               href={source === 2 ? "/anime2" : "/anime"} 
+               href={animeHubRoute(source)} 
                className="inline-flex items-center gap-2 text-primary hover:text-foreground transition-colors text-[10px] font-black uppercase tracking-[0.3em]"
              >
                 <IconArrowLeft size={14} /> Back to Hub

@@ -1,12 +1,10 @@
 "use client"
 
-import { useParams } from "next/navigation"
 import { AnimeListPage } from "@/components/anime/anime-list-page"
+import { parsePageParam, useRouteParam } from "@/lib/utils/route-params"
 
 export default function Page() {
-  const params = useParams()
-  const pageParam = params?.page
-  const page = parseInt(Array.isArray(pageParam) ? pageParam[0] : pageParam ?? "1") || 1
+  const page = parsePageParam(useRouteParam("page"))
 
   return <AnimeListPage source={1} page={page} type="ongoing" />
 }

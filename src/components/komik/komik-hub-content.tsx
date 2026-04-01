@@ -7,6 +7,7 @@ import { IconBook, IconDiamond, IconBarbell } from "@tabler/icons-react"
 import { KomikCard } from "./komik-card"
 import { fetchManga, fetchManhwa, fetchManhua } from "@/lib/api/komik"
 import { MediaHubContent, type SharedHubSection } from "@/components/shared/media-hub-content"
+import { komikListRoute } from "@/lib/utils/routes"
 
 export function KomikHubContent() {
   const { data: manga } = useQuery({ queryKey: ["manga"], queryFn: () => fetchManga(1) })
@@ -33,7 +34,7 @@ export function KomikHubContent() {
       title: "Manga • JP",
       icon: IconBook,
       color: "bg-orange-600",
-      link: "/komik/manga/1",
+      link: komikListRoute("manga", 1),
       items: manga.data,
       maxItems: 10,
       renderItem: (item, index) => <KomikCard key={item.slug} item={item} index={index} />,
@@ -43,7 +44,7 @@ export function KomikHubContent() {
       title: "Manhwa • KR",
       icon: IconDiamond,
       color: "bg-blue-600",
-      link: "/komik/manhwa/1",
+      link: komikListRoute("manhwa", 1),
       items: manhwa.data,
       maxItems: 10,
       renderItem: (item, index) => <KomikCard key={item.slug} item={item} index={index} />,
@@ -53,7 +54,7 @@ export function KomikHubContent() {
       title: "Manhua • CN",
       icon: IconBarbell,
       color: "bg-emerald-600",
-      link: "/komik/manhua/1",
+      link: komikListRoute("manhua", 1),
       items: manhua.data,
       maxItems: 10,
       renderItem: (item, index) => <KomikCard key={item.slug} item={item} index={index} />,

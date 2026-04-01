@@ -6,8 +6,11 @@ import { SparklesCore } from "@/components/ui/sparkles"
 import { Badge } from "@/components/ui/badge"
 import { IconBook } from "@tabler/icons-react"
 import { KomikHubContent } from "@/components/komik/komik-hub-content"
+import { komikSearchRoute } from "@/lib/utils/routes"
 
 export default function KomikPage() {
+  const searchRoute = komikSearchRoute()
+
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-orange-500/30 transition-colors duration-500">
       <Section className="relative overflow-hidden py-28 md:py-32">
@@ -36,7 +39,7 @@ export default function KomikPage() {
 
           <div className="mt-10 max-w-xl mx-auto relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-400 rounded-2xl blur opacity-25 group-focus-within:opacity-50 transition duration-1000" />
-            <form action="/komik/search" className="relative flex items-center bg-card border border-border rounded-2xl p-1 transition-colors duration-500">
+            <form action={searchRoute} className="relative flex items-center bg-card border border-border rounded-2xl p-1 transition-colors duration-500">
               <div className="pl-4 text-muted-foreground">
                 <IconBook size={20} className="text-orange-500/50" />
               </div>

@@ -1,10 +1,11 @@
 "use client"
 
-import { useParams } from "next/navigation"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { type AnimeDetailData } from "@/lib/api/anime"
 import { useAnimeDetail } from "@/components/anime/use-anime"
+import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
+import { animeHubRoute, animeWatchRoute } from "@/lib/utils/routes"
 
 import { 
   IconPlayerPlay, 
@@ -18,12 +19,10 @@ import { MediaDetailShell, type MediaDetailEntry } from "@/components/shared/med
 
 
 function AnimeDetailContent({ data, source }: { data: AnimeDetailData; source: 1 | 2 }) {
-  const prefix = source === 2 ? "anime2" : "anime"
-
   const entries: MediaDetailEntry[] = (data.episode_lists ?? []).map((ep) => ({
     id: ep.slug,
     label: ep.episode,
-    href: `/${prefix}/watch/${ep.slug}`,
+    href: animeWatchRoute(source, ep.slug),
   }))
 
   return (
@@ -46,8 +45,8 @@ function AnimeDetailContent({ data, source }: { data: AnimeDetailData; source: 1
       entriesCountLabel={`${entries.length} Total Units`}
       entries={entries}
       entryLinkPrefix=""
-      backLink={`/${prefix}`}
-      hubLink={`/${prefix}`}
+      backLink={animeHubRoute(source)}
+      hubLink={animeHubRoute(source)}
       variantColor="text-primary"
       onRenderEntry={(entry) => (
         <Link
@@ -69,10 +68,11 @@ function AnimeDetailContent({ data, source }: { data: AnimeDetailData; source: 1
 }
 
 export default function AnimeDetailRoute({ source = 1 }: { source?: 1 | 2 }) {
-  const params = useParams()
+  const slug = parseSlugParam(useRouteParam("slug"))
 
-  const rawSlug = params?.slug
-  const slug = Array.isArray(rawSlug) ? rawSlug[0] ?? "" : rawSlug ?? ""
+  if (!slug) {
+    notFound()
+  }
 
   const { data, isLoading } = useAnimeDetail(source, slug)
 

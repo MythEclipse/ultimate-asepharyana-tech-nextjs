@@ -5,6 +5,7 @@ import { AnimeCard, type AnimeItem } from "./anime-card"
 import { type AnimeSource } from "@/lib/api/anime"
 import { getAnimePrefix, useAnimeHubData } from "./use-anime"
 import { MediaHubContent, type SharedHubSection } from "@/components/shared/media-hub-content"
+import { animeListRoute } from "@/lib/utils/routes"
 
 export function AnimeHubContent({ source }: { source: AnimeSource }) {
   const { ongoingQuery, completeQuery } = useAnimeHubData(source)
@@ -19,7 +20,7 @@ export function AnimeHubContent({ source }: { source: AnimeSource }) {
       title: "Hot Ongoing",
       icon: IconFlame,
       color: "bg-orange-600",
-      link: `/${prefix}/ongoing-anime/1`,
+      link: animeListRoute(source, "ongoing", 1),
       items: ongoing?.data ?? [],
       maxItems: 10,
       renderItem: (item) => <AnimeCard key={item.slug} item={item} prefix={prefix} />,
@@ -29,7 +30,7 @@ export function AnimeHubContent({ source }: { source: AnimeSource }) {
       title: "Legendary Completed",
       icon: IconChecklist,
       color: "bg-blue-600",
-      link: `/${prefix}/complete-anime/1`,
+      link: animeListRoute(source, "complete", 1),
       items: complete?.data ?? [],
       maxItems: 10,
       renderItem: (item) => <AnimeCard key={item.slug} item={item} prefix={prefix} />,

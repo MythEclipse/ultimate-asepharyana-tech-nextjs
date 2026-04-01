@@ -7,13 +7,14 @@ import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
 import { SparklesCore } from "@/components/ui/sparkles"
 import { IconPlayerPlay } from "@tabler/icons-react"
+import { animeSearchRoute } from "@/lib/utils/routes"
 
 type AnimePageShellProps = {
   source: 1 | 2
 }
 
 export function AnimePageShell({ source }: AnimePageShellProps) {
-  const prefix = source === 2 ? "anime2" : "anime"
+  const searchRoute = animeSearchRoute(source)
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30 transition-colors duration-500 pb-20">
@@ -43,7 +44,7 @@ export function AnimePageShell({ source }: AnimePageShellProps) {
 
           <div className="mt-10 max-w-xl mx-auto relative group">
             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-2xl blur opacity-25 group-focus-within:opacity-60 transition duration-1000" />
-            <form action={`/${prefix}/search`} className="relative flex items-center bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-1 shadow-2xl transition-all">
+            <form action={searchRoute} className="relative flex items-center bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-1 shadow-2xl transition-all">
               <div className="pl-4 text-muted-foreground/50">
                 <IconPlayerPlay size={20} className="text-primary/50" />
               </div>

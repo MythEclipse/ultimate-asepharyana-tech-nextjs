@@ -2,6 +2,7 @@
 
 import { MangaItem } from "@/lib/api/komik"
 import { MediaCard } from "@/components/shared/media-card"
+import { komikDetailRoute } from "@/lib/utils/routes"
 
 interface KomikCardProps {
   item: MangaItem
@@ -12,7 +13,7 @@ interface KomikCardProps {
 export function KomikCard({ item, index, variant = "manga" }: KomikCardProps) {
   return (
     <MediaCard
-      href={`/komik/detail/${item.slug}`}
+      href={komikDetailRoute(item.slug)}
       title={item.title}
       image={item.poster}
       subtitle={item.chapter}

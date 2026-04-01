@@ -12,11 +12,12 @@ import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
 import { Badge } from "@/components/ui/badge"
 import { IconArrowLeft } from "@tabler/icons-react"
+import { komikDetailRoute, komikHubRoute } from "@/lib/utils/routes"
 
 
 function KomikSearchCard({ item, index }: { item: MangaItem; index: number }) {
   return (
-    <Link href={`/komik/detail/${item.slug}`} className="group relative block h-full animate-slide-up">
+    <Link href={komikDetailRoute(item.slug)} className="group relative block h-full animate-slide-up">
        <Card className="relative p-0 overflow-hidden aspect-[3/4.2] border-white/5 group-hover:border-orange-500/50 transition-all duration-500 shadow-2xl">
         <CachedImage
           src={item.poster}
@@ -65,7 +66,7 @@ function KomikSearchResults({ query }: { query: string }) {
       count={data?.data.length ?? 0}
       primaryLabel="Found"
       accentLabel={query}
-      hrefBack="/komik"
+      hrefBack={komikHubRoute()}
       onRenderCard={(item, i) => <KomikSearchCard key={item.slug || i} item={item} index={i} />}
       emptyMessage="Zero Scrolls Located"
       emptyHelpText="Our archives do not contain any translated volumes matching your query."
@@ -85,7 +86,7 @@ export default function KomikSearchPage({
        <Section className="pt-32 px-6">
           <div className="mb-12">
              <Link 
-               href="/komik" 
+               href={komikHubRoute()} 
                className="inline-flex items-center gap-2 text-orange-500 hover:text-foreground transition-colors text-[10px] font-black uppercase tracking-[0.3em]"
              >
                 <IconArrowLeft size={14} /> Back to Library

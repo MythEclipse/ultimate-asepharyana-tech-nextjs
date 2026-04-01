@@ -4,6 +4,7 @@ import { type AnimeSource } from "@/lib/api/anime"
 import { MediaListPage } from "@/components/shared/media-list-page"
 import { AnimeCard, type AnimeItem } from "./anime-card"
 import { getAnimePrefix, useAnimeListData, type AnimeListType } from "./use-anime"
+import { animeHubRoute, animeListBaseRoute } from "@/lib/utils/routes"
 
 interface AnimeListPageProps {
   source: AnimeSource
@@ -37,8 +38,8 @@ export function AnimeListPage({ source, page, type }: AnimeListPageProps) {
       queryName={`${hero.title} ${hero.accent}`}
       itemRenderer={(item) => <AnimeCard item={item as AnimeItem} prefix={prefix} />}
       variant="primary"
-      baseUrl={`/${prefix}/${type}-anime`}
-      hubLink={`/${prefix}`}
+      baseUrl={animeListBaseRoute(source, type)}
+      hubLink={animeHubRoute(source)}
       hero={hero}
     />
   )

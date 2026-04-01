@@ -1,7 +1,7 @@
 "use client"
 
 import { ReactNode } from "react"
-import { SectionHeader } from "@/components/anime/section-header"
+import { SectionHeader } from "@/components/shared/section-header"
 
 interface MediaHubSectionProps<T> {
   id: string

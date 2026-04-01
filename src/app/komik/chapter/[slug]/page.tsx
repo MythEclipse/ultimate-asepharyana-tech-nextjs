@@ -1,10 +1,11 @@
 "use client"
 
-import { useParams } from "next/navigation"
-import { useState, useEffect } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { notFound } from "next/navigation"
 import { fetchChapter, type ChapterData } from "@/lib/api/komik"
 import { MediaChapterShell } from "@/components/shared/media-chapter-shell"
+import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
+import { komikChapterRoute, komikDetailRoute } from "@/lib/utils/routes"
 
 function KomikChapterView({ data }: { data: ChapterData }) {
   let listSlug = data.list_chapter
@@ -15,29 +16,30 @@ function KomikChapterView({ data }: { data: ChapterData }) {
   return (
     <MediaChapterShell
       title={data.title}
-      backHref={`/komik/detail/${encodeURIComponent(komikId)}`}
-      prevHref={data.prev_chapter_id ? `/komik/chapter/${encodeURIComponent(data.prev_chapter_id)}` : undefined}
-      nextHref={data.next_chapter_id ? `/komik/chapter/${encodeURIComponent(data.next_chapter_id)}` : undefined}
+      backHref={komikDetailRoute(komikId)}
+      prevHref={data.prev_chapter_id ? komikChapterRoute(data.prev_chapter_id) : undefined}
+      nextHref={data.next_chapter_id ? komikChapterRoute(data.next_chapter_id) : undefined}
       chapterImageUrls={data.images ?? []}
     />
   )
 }
 
 export default function KomikChapterRoute() {
-  const params = useParams()
-  const rawSlug = params?.slug
-  const slug = Array.isArray(rawSlug) ? rawSlug[0] ?? "" : rawSlug ?? ""
-  const [data, setData] = useState<ChapterData | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const slug = parseSlugParam(useRouteParam("slug"))
 
-  useEffect(() => {
-    fetchChapter(slug).then(d => {
-      setData(d)
-      setIsLoading(false)
-    }).catch(() => {
-      notFound()
-    })
-  }, [slug])
+  if (!slug) {
+    notFound()
+  }
+
+  const { data, isLoading, error } = useQuery<ChapterData>({
+    queryKey: ["komik-chapter", slug],
+    queryFn: () => fetchChapter(slug),
+    enabled: Boolean(slug),
+  })
+
+  if (error) {
+    notFound()
+  }
 
   if (isLoading) {
     return (

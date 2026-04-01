@@ -1,20 +1,19 @@
 "use client"
 
-import { useParams } from "next/navigation"
 import { KomikListPage } from "@/components/komik/komik-list-page"
 import { fetchManhua } from "@/lib/api/komik"
+import { parsePageParam, useRouteParam } from "@/lib/utils/route-params"
+import { komikListBaseRoute } from "@/lib/utils/routes"
 
 export default function Page() {
-  const params = useParams()
-  const pageParam = params?.page
-  const page = parseInt(Array.isArray(pageParam) ? pageParam[0] : pageParam ?? "1") || 1
+  const page = parsePageParam(useRouteParam("page"))
 
   return (
     <KomikListPage
       page={page}
       fetchFn={fetchManhua}
       queryKeyBase="manhua-list"
-      baseUrl="/komik/manhua"
+      baseUrl={komikListBaseRoute("manhua")}
       variant="manhua"
       heroExpose={{
         title: "MANHUA",

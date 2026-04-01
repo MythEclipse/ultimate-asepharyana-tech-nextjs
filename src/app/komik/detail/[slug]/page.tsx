@@ -1,10 +1,11 @@
 "use client"
 
-import { useParams } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { fetchKomikDetail, type KomikDetailData } from "@/lib/api/komik"
+import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
+import { komikChapterRoute, komikHubRoute } from "@/lib/utils/routes"
 
 import { 
   IconCalendar, 
@@ -20,7 +21,7 @@ function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
   const entries: MediaDetailEntry[] = (data.chapters ?? []).map((chapter) => ({
     id: chapter.chapter_id,
     label: chapter.chapter,
-    href: `/komik/chapter/${chapter.chapter_id}`,
+    href: komikChapterRoute(chapter.chapter_id),
   }))
 
   return (
@@ -40,8 +41,8 @@ function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
       entriesCountLabel={`${entries.length} Records`}
       entries={entries}
       entryLinkPrefix=""
-      backLink="/komik"
-      hubLink="/komik"
+      backLink={komikHubRoute()}
+      hubLink={komikHubRoute()}
       variantColor="text-orange-500"
       onRenderEntry={(entry) => (
         <Link
@@ -62,10 +63,7 @@ function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
 }
 
 export default function KomikDetailRoute() {
-  const params = useParams()
-  const rawSlug = params?.slug
-  const slug = Array.isArray(rawSlug) ? rawSlug[0] ?? "" : rawSlug ?? ""
-  const normalizedSlug = slug?.trim() || ""
+  const normalizedSlug = parseSlugParam(useRouteParam("slug"))
 
   if (!normalizedSlug) {
     notFound()
