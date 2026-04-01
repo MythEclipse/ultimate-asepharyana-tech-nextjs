@@ -37,8 +37,8 @@ function KomikDetailContentBody({ data }: { data: KomikDetailData }) {
         { icon: IconClock, label: "Updated", value: data.updated_on },
       ]}
       description={data.description ?? "No description available."}
-      entriesHeading="Chapter Repository"
-      entriesCountLabel={`${entries.length} Records`}
+      entriesHeading="Chapter List"
+      entriesCountLabel={`${entries.length} Chapters`}
       entries={entries}
       entryLinkPrefix=""
       backLink={komikHubRoute()}

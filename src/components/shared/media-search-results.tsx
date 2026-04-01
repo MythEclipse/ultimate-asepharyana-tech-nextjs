@@ -55,14 +55,14 @@ export function MediaSearchResults<T>({
     <div className="space-y-20">
       <div className="flex flex-col items-center text-center space-y-6 mb-20 animate-fade-in">
         <Badge variant="glass" className="px-6 py-1.5 border-primary/20 text-primary uppercase tracking-[0.3em] font-black">
-          Search Results
+          Results
         </Badge>
         <div className="space-y-2">
           <h1 className="text-4xl md:text-6xl font-black italic tracking-tighter uppercase text-foreground">
             {primaryLabel} <span className="text-primary">{accentLabel}</span>
           </h1>
           <p className="text-muted-foreground font-medium tracking-widest text-sm uppercase opacity-50">
-            Located {count} matching entries for &quot;{query}&quot;
+            Found {count} results for &quot;{query}&quot;
           </p>
         </div>
         <div className="h-1 w-24 bg-gradient-to-r from-primary to-accent rounded-full" />

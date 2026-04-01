@@ -17,11 +17,11 @@ export default function Page() {
       variant="manga"
       heroExpose={{
         title: "MANGA",
-        accent: "CENTRAL",
-        description: "Accessing premium Japanese literary transmissions from the global cluster.",
+        accent: "LIST",
+        description: "List of manga updates.",
         accentTextClass: "text-cyan-500",
         tagClass: "bg-cyan-500/10 border border-cyan-500/20 text-cyan-400",
-        introText: "Japanese Archive",
+        introText: "Manga",
         colorClass: "border-cyan-500/20",
         linkTextClass: "text-cyan-500",
       }}

@@ -32,7 +32,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
                 </Heading>
                 <div className="flex flex-wrap items-center gap-2">
                   <Badge variant="secondary" className="text-xs md:text-xs">
-                    Streaming Now
+                    Now Playing
                   </Badge>
                   <Badge variant="outline" className="text-xs md:text-xs">
                     Episode
@@ -105,7 +105,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
         {data.download_urls && Object.keys(data.download_urls).length > 0 && (
           <div className="mt-16 space-y-8 pt-8 border-t border-border/20">
             <Heading as="h3" className="text-2xl text-center text-primary">
-              Resolution Matrix
+              Download Links
             </Heading>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
               {Object.entries(data.download_urls).map(([resolution, links]) => (

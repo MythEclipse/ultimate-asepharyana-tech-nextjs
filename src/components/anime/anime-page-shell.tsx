@@ -34,13 +34,13 @@ export function AnimePageShell({ source }: AnimePageShellProps) {
 
         <div className="relative z-20 text-center px-4">
           <Badge variant="outline" className="mb-4 text-primary border-primary/50 bg-primary/5 px-4 py-1 animate-pulse">
-            Premium Anime Collection
+            Anime List
           </Badge>
           <h1 className="text-6xl md:text-9xl font-black tracking-tighter uppercase italic text-foreground opacity-90">
             ANIME<span className="text-primary">HUB</span>
           </h1>
           <p className="mt-4 text-muted-foreground max-w-lg mx-auto text-sm md:text-base font-medium">
-            Dive into high-definition streaming and real-time updates from our massive library of ongoing and completed series.
+            Browse ongoing and completed anime updates.
           </p>
 
           <div className="mt-10 max-w-xl mx-auto relative group">
@@ -52,7 +52,7 @@ export function AnimePageShell({ source }: AnimePageShellProps) {
               <input
                 type="text"
                 name="q"
-                placeholder="Search series, episodes..."
+                placeholder="Search anime titles or episodes..."
                 className="w-full bg-transparent border-none outline-none px-4 py-4 text-foreground placeholder:text-muted-foreground/30 font-bold"
               />
               <button className="bg-primary text-background px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:brightness-110 active:scale-95 transition-all mr-1 shadow-lg shadow-primary/20">

@@ -41,8 +41,8 @@ function AnimeDetailContent({ data, source }: { data: AnimeDetailData; source: 1
         { icon: IconClock, label: "Duration", value: "duration" in data ? (data as { duration: string }).duration : "N/A" },
       ]}
       description={data.synopsis ?? "No synopsis available."}
-      entriesHeading="Episodes Library"
-      entriesCountLabel={`${entries.length} Total Units`}
+      entriesHeading="Episode List"
+      entriesCountLabel={`${entries.length} Episodes`}
       entries={entries}
       entryLinkPrefix=""
       backLink={animeHubRoute(source)}

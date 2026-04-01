@@ -17,11 +17,11 @@ export default function Page() {
       variant="manhua"
       heroExpose={{
         title: "MANHUA",
-        accent: "PROTOCOL",
-        description: "Accessing legendary Chinese literary transmissions and high-fidelity scroll data.",
+        accent: "LIST",
+        description: "List of manhua updates.",
         accentTextClass: "text-red-500",
         tagClass: "bg-red-500/10 border border-red-500/20 text-red-400",
-        introText: "Chinese Archive",
+        introText: "Manhua",
         colorClass: "border-red-500/20",
         linkTextClass: "text-red-500",
       }}

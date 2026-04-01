@@ -17,11 +17,11 @@ export default function Page() {
       variant="manhwa"
       heroExpose={{
         title: "MANHWA",
-        accent: "SYSTEM",
-        description: "Synchronizing with the neural web for Korean literary transmissions and digital scroll data.",
+        accent: "LIST",
+        description: "List of manhwa updates.",
         accentTextClass: "text-indigo-500",
         tagClass: "bg-indigo-500/10 border border-indigo-500/20 text-indigo-400",
-        introText: "Korean Archive",
+        introText: "Manhwa",
         colorClass: "border-indigo-500/20",
         linkTextClass: "text-indigo-500",
       }}

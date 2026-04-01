@@ -68,8 +68,8 @@ function KomikSearchResults({ query }: { query: string }) {
       accentLabel={query}
       hrefBack={komikHubRoute()}
       onRenderCard={(item, i) => <KomikSearchCard key={item.slug || i} item={item} index={i} />}
-      emptyMessage="Zero Scrolls Located"
-      emptyHelpText="Our archives do not contain any translated volumes matching your query."
+      emptyMessage="No results found"
+      emptyHelpText="Try another keyword."
     />
   )
 }

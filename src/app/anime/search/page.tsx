@@ -62,8 +62,8 @@ function SearchResults({ query, source }: { query: string; source: 1 | 2 }) {
       accentLabel={query}
       hrefBack={animeHubRoute(source)}
       onRenderCard={(item, i) => <AnimeSearchCard key={(item as SearchAnimeItem).slug || i} item={item as SearchAnimeItem} source={source} index={i} />}
-      emptyMessage="Zero Matches Found"
-      emptyHelpText="Our neural link couldn't locate any entries matching your query in the current sector."
+      emptyMessage="No results found"
+      emptyHelpText="Try another keyword."
     />
   )
 }
@@ -85,7 +85,7 @@ export default function AnimeSearchPage({
                href={animeHubRoute(source)} 
                className="inline-flex items-center gap-2 text-primary hover:text-foreground transition-colors text-[10px] font-black uppercase tracking-[0.3em]"
              >
-                <IconArrowLeft size={14} /> Back to Hub
+                <IconArrowLeft size={14} /> Back to Anime
              </Link>
           </div>
 

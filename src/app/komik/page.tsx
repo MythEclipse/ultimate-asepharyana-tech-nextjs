@@ -28,13 +28,13 @@ export default function KomikPage() {
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
           <Badge variant="outline" className="mb-4 text-orange-500 border-orange-500/50 bg-orange-500/5 px-4 py-1">
-            Universal Reading Library
+            Komik Library
           </Badge>
           <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase italic text-foreground">
             KOMIK<span className="text-orange-500">INDEX</span>
           </h1>
           <p className="mt-4 text-muted-foreground max-w-lg mx-auto text-sm md:text-base">
-            Explore thousands of translated chapters with high-fidelity imagery and fluid navigation.
+            Browse manga, manhwa, and manhua chapters.
           </p>
 
           <div className="mt-10 max-w-xl mx-auto relative group">
@@ -46,7 +46,7 @@ export default function KomikPage() {
               <input
                 type="text"
                 name="q"
-                placeholder="Search manga, manhwa..."
+                placeholder="Search manga, manhwa, or manhua..."
                 className="w-full bg-transparent border-none outline-none px-4 py-4 text-foreground placeholder:text-muted-foreground/50 font-bold"
               />
               <button className="bg-orange-500 text-white px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:brightness-110 transition-all mr-1">
@@ -58,7 +58,7 @@ export default function KomikPage() {
       </Section>
 
       <Section className="py-20">
-        <Suspense fallback={<div className="py-20">Loading komik...</div>}>
+        <Suspense fallback={<div className="py-20">Loading...</div>}>
           <KomikHubContent />
         </Suspense>
       </Section>

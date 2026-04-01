@@ -61,8 +61,8 @@ export function MediaListPage<T>({
       <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
         <Section className="pt-24 pb-12" glow>
           <div className="glass rounded-3xl border border-border/20 p-10"> 
-            <Heading as="h3">Connectivity Disruption</Heading>
-            <p className="text-muted-foreground mt-2">The neural uplink for {queryName} library failed.</p>
+            <Heading as="h3">Failed to Load Data</Heading>
+            <p className="text-muted-foreground mt-2">Could not load {queryName}.</p>
           </div>
         </Section>
       </main>
@@ -116,7 +116,7 @@ export function MediaListPage<T>({
             <Link 
               href={hubLink} 
               className={`inline-flex items-center gap-2 ${hero.linkTextClass} hover:text-foreground transition-colors text-[10px] font-black uppercase tracking-[0.3em]`}>
-               <IconArrowLeft size={14} /> Back to Hub
+               <IconArrowLeft size={14} /> Back
             </Link>
          </div>
 

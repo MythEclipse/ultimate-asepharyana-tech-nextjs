@@ -20,11 +20,11 @@ export function AnimeListPage({ source, page, type }: AnimeListPageProps) {
     title: isOngoing ? "ONGOING" : "COMPLETE",
     accent: isOngoing ? "ANIME" : "COLLECTION",
     description: isOngoing
-      ? "Monitoring the latest neural transmissions of active series worldwide."
-      : "Accessing the complete neural records of legendary concluded series.",
+      ? "List of currently airing anime."
+      : "List of completed anime.",
     accentTextClass: "text-primary",
     tagClass: "bg-primary/10 border border-primary/20 text-primary",
-    introText: isOngoing ? "Live Uploads" : "Archived Classics",
+    introText: isOngoing ? "Ongoing" : "Completed",
     colorClass: "border-primary/20",
     linkTextClass: "text-primary",
   }

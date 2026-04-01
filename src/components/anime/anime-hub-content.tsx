@@ -16,7 +16,7 @@ export function AnimeHubContent({ source }: { source: AnimeSource }) {
   const sections: SharedHubSection<AnimeItem>[] = [
     {
       id: "ongoing",
-      title: "Hot Ongoing",
+      title: "Ongoing Anime",
       icon: IconFlame,
       color: "bg-orange-600",
       link: animeListRoute(source, "ongoing", 1),
@@ -26,7 +26,7 @@ export function AnimeHubContent({ source }: { source: AnimeSource }) {
     },
     {
       id: "complete",
-      title: "Legendary Completed",
+      title: "Completed Anime",
       icon: IconChecklist,
       color: "bg-blue-600",
       link: animeListRoute(source, "complete", 1),
