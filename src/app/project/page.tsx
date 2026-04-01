@@ -19,7 +19,7 @@ export default function ProjectPage() {
       <Section glow glowVariant="both" className="pb-40">
         {/* Header */}
         <header className="flex flex-col items-center text-center space-y-8 mb-24">
-          <Badge variant="glass">Data Archive &bull; Selected Works</Badge>
+          <Badge variant="glass">Featured Projects</Badge>
 
           <div className="space-y-2">
             <Heading as="h1" className="text-7xl md:text-[9rem]">
@@ -34,9 +34,9 @@ export default function ProjectPage() {
           </div>
 
           <p className="max-w-xl text-muted-foreground/60 text-base font-medium leading-relaxed">
-            A curated collection of software engineering projects built with 
+            Software projects built with 
             <span className="text-cyan-400 font-bold"> Rust </span>
-            and modern <span className="text-blue-400 font-bold"> Frontend </span>
+            and <span className="text-blue-400 font-bold"> Frontend </span>
             technologies.
           </p>
 
@@ -104,7 +104,7 @@ export default function ProjectPage() {
                       <div className="relative flex items-center gap-2 pt-4 border-t border-border/10 mt-auto">
                         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 group-hover:text-cyan-400 transition-colors">
-                            {isExternal ? "View Docs" : "Explore Unit"}
+                            {isExternal ? "Visit" : "View"}
                         </span>
                         <svg className="w-4 h-4 text-primary transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
