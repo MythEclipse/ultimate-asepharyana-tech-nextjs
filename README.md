@@ -1,33 +1,42 @@
-This project is built with [Next.js](https://nextjs.org) and starts from the standard `create-next-app` structure.
+# Next.js Web App
 
-## Quick start
+Frontend alternatif berbasis Next.js App Router.
 
-1. Install dependencies:
+## Run Locally
 
 ```bash
 npm install
-```
-
-2. Run the development server:
-
-```bash
 npm run dev
 ```
 
-3. Open in browser: [http://localhost:3000](http://localhost:3000)
+Default local URL: `http://localhost:3000`
 
-4. Edit source in `app/page.tsx` and save. Next.js applies updates automatically.
+## Scripts
 
-## Project notes
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
 
-- Uses Next.js App Router (`app/` directory).
-- Includes Tailwind CSS utility classes.
-- Uses `next/font` to optimize and self-host fonts.
+## Environment Variables
 
-## Further reading
+Optional:
 
-- [Next.js Docs](https://nextjs.org/docs)
-- [Deployment guide](https://nextjs.org/docs/app/building-your-application/deploying)
+```env
+NEXT_PUBLIC_API_URL=https://rust.asepharyana.tech/api
+```
 
-This README is intentionally concise and focused on a stable development workflow.
+Jika tidak diisi, app otomatis memakai `https://rust.asepharyana.tech/api`.
+
+## Extra Script
+
+Tersedia script untuk refresh data GitHub stats:
+
+```bash
+GITHUB_TOKEN=<token> node scripts/fetch-github-stats.mjs
+```
+
+`GITHUB_TOKEN` bersifat opsional, tapi disarankan agar data kontribusi GraphQL dapat diambil lengkap.
 
