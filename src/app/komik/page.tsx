@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense } from "react"
+
 import { Section } from "@/components/ui/section"
 import { SparklesCore } from "@/components/ui/sparkles"
 import { Badge } from "@/components/ui/badge"
@@ -58,9 +58,7 @@ export default function KomikPage() {
       </Section>
 
       <Section className="py-20">
-        <Suspense fallback={<div className="py-20">Loading...</div>}>
-          <KomikHubContent />
-        </Suspense>
+        <KomikHubContent />
       </Section>
     </main>
   )

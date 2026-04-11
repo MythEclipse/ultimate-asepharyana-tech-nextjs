@@ -6,6 +6,7 @@ import { notFound } from "next/navigation"
 import { fetchKomikDetail, type KomikDetailData } from "@/lib/api/komik"
 import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
 import { komikChapterRoute, komikHubRoute } from "@/lib/utils/routes"
+import { PageLoadingOverlay } from "@/components/ui/page-loading-overlay"
 
 import { 
   IconCalendar, 
@@ -80,11 +81,7 @@ export default function KomikDetailRoute() {
   }
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background transition-colors duration-500">
-        <div className="w-16 h-16 rounded-full border-4 border-orange-500 border-t-transparent animate-spin" />
-      </div>
-    )
+    return <PageLoadingOverlay label="ANALYZING ARCHIVES" />
   }
 
   if (!data) notFound()

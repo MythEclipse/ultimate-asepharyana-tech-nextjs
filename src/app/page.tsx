@@ -149,11 +149,66 @@ const TECH_STACK: TechIcon[] = [
   { name: "Python", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", color: "from-green-500 to-blue-500", description: "Productivity scripting and data-driven AI integration." },
 ];
 
+const UnifiedActivityLoader = () => (
+  <Card className="col-span-1 lg:col-span-2 w-full p-8 md:p-16 flex flex-col items-center justify-center min-h-[500px] relative overflow-hidden group border-primary/20">
+    {/* Background Grid */}
+    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_80%)]" />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-primary/10 blur-[80px] rounded-full pointer-events-none" />
+
+    <div className="relative z-10 flex flex-col md:flex-row items-center gap-16 md:gap-24 opacity-80 group-hover:opacity-100 transition-opacity duration-1000">
+      
+      {/* Target Processing (Radar Node) */}
+      <div className="relative w-32 h-32 flex items-center justify-center">
+        <div className="absolute inset-0 rounded-full border border-primary/30 animate-[spin_4s_linear_infinite]" />
+        <div className="absolute inset-3 rounded-full border-t border-primary/60 animate-[spin_3s_linear_infinite_reverse]" />
+        <div className="absolute inset-6 rounded-full border border-dashed border-primary/20 animate-[spin_10s_linear_infinite]" />
+        <div className="w-4 h-4 bg-primary shadow-[0_0_20px_#ff3366] rounded-full animate-pulse" />
+      </div>
+
+      {/* Sync Beam */}
+      <div className="hidden md:flex flex-col items-center gap-3 relative w-32">
+        <div className="absolute top-1/2 -translate-y-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
+        <div className="w-16 h-[2px] bg-primary absolute top-1/2 -translate-y-1/2 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] shadow-[0_0_10px_#ff3366]" />
+        <div className="relative z-10 bg-background/50 backdrop-blur-sm px-3 py-1 rounded-full border border-primary/20 text-[10px] font-black tracking-[0.3em] uppercase text-primary">
+          Linking Data
+        </div>
+      </div>
+
+      {/* Grid Processing (Heatmap Nodes) */}
+      <div className="grid grid-cols-6 gap-2">
+        {Array.from({ length: 24 }).map((_, i) => {
+          const isBlinking = i % 4 === 0;
+          const isPrimary = i % 7 === 0;
+          return (
+            <div 
+              key={i} 
+              className={`w-3 h-3 rounded-[2px] ${isPrimary ? 'bg-primary/80' : 'bg-primary/20'} ${isBlinking ? 'animate-pulse' : ''}`}
+            />
+          );
+        })}
+      </div>
+    </div>
+
+    <div className="mt-20 relative z-10 flex flex-col items-center">
+      <div className="h-[2px] w-48 bg-gradient-to-r from-transparent via-primary to-transparent mb-4 opacity-50" />
+      <span className="text-[10px] font-black tracking-[0.5em] text-foreground uppercase animate-pulse">
+        Aggregating Global Activity Matrix...
+      </span>
+    </div>
+  </Card>
+);
+
+const ChartSkeleton = () => (
+  <div className="h-[400px] w-full flex items-center justify-center opacity-50">
+    <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary/80 animate-spin" />
+  </div>
+);
+
 const SkillsRadarChart = dynamic(
   () => import("@/components/d3/skills-radar-chart").then((mod) => mod.SkillsRadarChart),
   {
     ssr: false,
-    loading: () => <div className="h-[400px] w-full bg-muted animate-pulse rounded-3xl" />,
+    loading: ChartSkeleton,
   }
 );
 
@@ -161,7 +216,7 @@ const ActivityHeatmap = dynamic(
   () => import("@/components/d3/activity-heatmap").then((mod) => mod.ActivityHeatmap),
   {
     ssr: false,
-    loading: () => <div className="h-[200px] w-full bg-muted animate-pulse rounded-3xl" />,
+    loading: ChartSkeleton,
   }
 );
 
@@ -277,31 +332,33 @@ function ActivitySection() {
         <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Development <span className="text-foreground">Activity</span></h2>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        <Card className="p-8">
-          <div className="mb-10">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Intelligence Radar</span>
-            <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">Core Expertise</h3>
-          </div>
-          <div className="min-h-[400px] flex items-center justify-center">
-            <NoSSR fallback={<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary" />}>
-              {isLoading ? <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-primary" /> : languages.length ? <SkillsRadarChart data={languages} /> : (<div className="text-center space-y-2"><p className="text-muted-foreground text-sm font-medium italic">Live statistics currently unavailable. Please try again later.</p><Badge variant="outline" className="text-[10px] opacity-50">Public API Fallback Active</Badge></div>)}
-            </NoSSR>
-          </div>
-        </Card>
+      <NoSSR fallback={<UnifiedActivityLoader />}>
+        {isLoading ? (
+          <UnifiedActivityLoader />
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <Card className="p-8">
+              <div className="mb-10">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Intelligence Radar</span>
+                <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">Core Expertise</h3>
+              </div>
+              <div className="min-h-[400px] w-full flex items-center justify-center">
+                {languages.length ? <SkillsRadarChart data={languages} /> : (<div className="text-center space-y-2"><p className="text-muted-foreground text-sm font-medium italic">Live statistics currently unavailable. Please try again later.</p><Badge variant="outline" className="text-[10px] opacity-50">Public API Fallback Active</Badge></div>)}
+              </div>
+            </Card>
 
-        <Card className="p-8">
-          <div className="mb-10">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Development Pulse</span>
-            <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">Technical Consistency</h3>
+            <Card className="p-8">
+              <div className="mb-10">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Development Pulse</span>
+                <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">Technical Consistency</h3>
+              </div>
+              <div className="min-h-[400px] w-full flex items-center justify-center">
+                {contributions.length ? <ActivityHeatmap data={contributions} /> : (<div className="text-center space-y-2"><p className="text-muted-foreground text-sm font-medium italic">No contribution data detected in public manifest.</p><Badge variant="outline" className="text-[10px] opacity-50">1-Year Scraper Syncing...</Badge></div>)}
+              </div>
+            </Card>
           </div>
-          <div className="min-h-[400px] flex items-center justify-center">
-            <NoSSR fallback={<div className="space-y-4 w-full px-10"><div className="h-2 bg-muted rounded-full animate-pulse" /></div>}>
-              {isLoading ? (<div className="space-y-4 w-full px-10">{Array.from({ length: 8 }).map((_, idx) => (<div key={idx} className="h-2 bg-muted rounded-full animate-pulse" />))}</div>) : contributions.length ? <ActivityHeatmap data={contributions} /> : (<div className="text-center space-y-2"><p className="text-muted-foreground text-sm font-medium italic">No contribution data detected in public manifest.</p><Badge variant="outline" className="text-[10px] opacity-50">1-Year Scraper Syncing...</Badge></div>)}
-            </NoSSR>
-          </div>
-        </Card>
-      </div>
+        )}
+      </NoSSR>
     </Section>
   );
 }

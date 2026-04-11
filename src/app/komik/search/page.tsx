@@ -93,9 +93,7 @@ export default function KomikSearchPage({
              </Link>
           </div>
 
-          <Suspense fallback={<SkeletonGrid count={10} />}>
-             <KomikSearchResults query={q} />
-          </Suspense>
+          <KomikSearchResults query={q} />
        </Section>
     </main>
   )

@@ -89,9 +89,7 @@ export default function AnimeSearchPage({
              </Link>
           </div>
 
-          <Suspense fallback={<SkeletonGrid count={10} />}>
-             <SearchResults query={q} source={source} />
-          </Suspense>
+          <SearchResults query={q} source={source} />
        </Section>
     </main>
   )
