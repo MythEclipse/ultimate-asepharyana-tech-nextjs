@@ -26,10 +26,10 @@ export const FEATURED_PROJECTS: Project[] = [
     title: 'Elysia Discovery',
     description:
       'Layanan REST API yang dibuat berfokus pada kecepatan menggunakan ElysiaJS dan runtime Bun.',
-    image: 'https://elysia.asepharyana.tech/docs/',
+    image: '/project-elysia.png',
     category: 'API',
     tags: ['Bun', 'ElysiaJS', 'OpenAPI'],
-    link: '/project',
+    link: 'https://elysia.asepharyana.tech/docs/',
     colorClass: 'text-accent',
   },
 
