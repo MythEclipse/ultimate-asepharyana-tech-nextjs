@@ -1466,22 +1466,22 @@
     {
       "axis": "Jupyter Notebook",
       "value": 1,
-      "label": "33%"
+      "label": "34%"
     },
     {
       "axis": "Java",
       "value": 0.79,
-      "label": "26%"
-    },
-    {
-      "axis": "TypeScript",
-      "value": 0.34,
-      "label": "11%"
+      "label": "27%"
     },
     {
       "axis": "JavaScript",
       "value": 0.31,
       "label": "10%"
+    },
+    {
+      "axis": "TypeScript",
+      "value": 0.27,
+      "label": "9%"
     },
     {
       "axis": "Rust",
@@ -1504,5 +1504,5 @@
       "label": "2%"
     }
   ],
-  "updatedAt": "2026-04-12T02:01:10.861Z"
+  "updatedAt": "2026-04-12T12:49:54.376Z"
 }
