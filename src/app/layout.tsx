@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import { ClientLayout } from "@/components/layout/client-layout";
 import { QueryProvider } from "@/components/providers/query-provider";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// Fallback system fonts for build environments without network access
+const fontStack = `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", sans-serif`;
+const monoStack = `"Fira Code", "Courier New", monospace`;
 
 export const metadata: Metadata = {
   title: "Asep Haryana Saputra | Next.js",
@@ -27,7 +20,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      style={{
+        "--font-geist-sans": fontStack,
+        "--font-geist-mono": monoStack,
+      } as React.CSSProperties}
+      className="h-full antialiased"
       suppressHydrationWarning // Used by next-themes
     >
       <body className="min-h-full flex flex-col">
