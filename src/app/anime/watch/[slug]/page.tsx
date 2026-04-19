@@ -43,7 +43,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
             </div>
           </div>
 
-          {/* Video Player Core */}
+          {/* Video Player Caore */}
           <div className="mt-3 w-full bg-card/95 dark:bg-slate-900/85 rounded-3xl overflow-hidden shadow-2xl dark:shadow-black/40 border border-border/20 dark:border-slate-700 relative group transition-all duration-500 hover:-translate-y-0.5">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700" />
             <div className="relative aspect-video w-full z-10 bg-black/95 dark:bg-slate-950/95">
