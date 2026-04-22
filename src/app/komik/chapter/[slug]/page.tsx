@@ -6,7 +6,7 @@ import { fetchChapter, type ChapterData } from "@/lib/api/komik"
 import { MediaChapterShell } from "@/components/shared/media-chapter-shell"
 import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
 import { komikChapterRoute, komikDetailRoute } from "@/lib/utils/routes"
-import { PageLoadingOverlay } from "@/components/ui/page-loading-overlay"
+import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
 
 function KomikChapterView({ data }: { data: ChapterData }) {
   let listSlug = data.list_chapter
@@ -42,8 +42,10 @@ export default function KomikChapterRoute() {
     notFound()
   }
 
+  usePageLoadingOverlay({ isLoading, label: "DECODING PAGES" })
+
   if (isLoading) {
-    return <PageLoadingOverlay label="DECODING PAGES" />
+    return null
   }
 
   if (!data) notFound()

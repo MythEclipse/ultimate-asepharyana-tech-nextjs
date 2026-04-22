@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation"
 import { Navbar } from "./navbar"
 import { Footer } from "./footer"
 import { ThemeProvider } from "next-themes"
+import { PageLoadingOverlay } from "@/components/ui/page-loading-overlay"
+import { useLoadingOverlayState } from "@/components/providers/loading-provider"
 
 const WebGLBackground = dynamic(
   () => import("@/components/three/webgl-background").then((m) => ({ default: m.WebGLBackground })),
@@ -13,6 +15,7 @@ const WebGLBackground = dynamic(
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
+  const { show, label } = useLoadingOverlayState()
 
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
@@ -31,6 +34,8 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         </main>
 
         <Footer />
+
+        <PageLoadingOverlay show={show} label={label ?? "LOADING"} />
       </div>
     </ThemeProvider>
   )

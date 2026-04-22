@@ -11,7 +11,7 @@ import { type AnimeFullData } from "@/lib/api/anime"
 import { useAnimeStream } from "@/components/anime/use-anime"
 import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
 import { animeWatchRoute } from "@/lib/utils/routes"
-import { PageLoadingOverlay } from "@/components/ui/page-loading-overlay"
+import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
 
 function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 }) {
   return (
@@ -149,9 +149,10 @@ export default function AnimeWatchPage({ source = 1 }: { source?: 1 | 2 }) {
   }
 
   const { data, isLoading } = useAnimeStream(source, slug)
+  usePageLoadingOverlay({ isLoading, label: "BUFFERING STREAM" })
 
   if (isLoading) {
-    return <PageLoadingOverlay label="BUFFERING STREAM" />
+    return null
   }
 
   if (!data) notFound()

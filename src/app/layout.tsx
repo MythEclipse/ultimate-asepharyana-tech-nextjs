@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ClientLayout } from "@/components/layout/client-layout";
+import { LoadingProvider } from "@/components/providers/loading-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
 import "./globals.css";
 
@@ -28,11 +29,13 @@ export default function RootLayout({
       suppressHydrationWarning // Used by next-themes
     >
       <body className="min-h-full flex flex-col">
-        <ClientLayout>
-          <QueryProvider>
-            {children}
-          </QueryProvider>
-        </ClientLayout>
+        <LoadingProvider>
+          <ClientLayout>
+            <QueryProvider>
+              {children}
+            </QueryProvider>
+          </ClientLayout>
+        </LoadingProvider>
       </body>
     </html>
   );

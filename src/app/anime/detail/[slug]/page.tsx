@@ -6,7 +6,7 @@ import { type AnimeDetailData } from "@/lib/api/anime"
 import { useAnimeDetail } from "@/components/anime/use-anime"
 import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
 import { animeHubRoute, animeWatchRoute } from "@/lib/utils/routes"
-import { PageLoadingOverlay } from "@/components/ui/page-loading-overlay"
+import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
 
 import { 
   IconPlayerPlay, 
@@ -76,9 +76,10 @@ export default function AnimeDetailRoute({ source = 1 }: { source?: 1 | 2 }) {
   }
 
   const { data, isLoading } = useAnimeDetail(source, slug)
+  usePageLoadingOverlay({ isLoading, label: "DECRYPTING DATA" })
 
   if (isLoading) {
-    return <PageLoadingOverlay label="DECRYPTING DATA" />
+    return null
   }
 
   if (!data) notFound()

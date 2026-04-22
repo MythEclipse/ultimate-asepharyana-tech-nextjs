@@ -149,51 +149,11 @@ const TECH_STACK: TechIcon[] = [
   { name: "Python", image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg", color: "from-green-500 to-blue-500", description: "Productivity scripting and data-driven AI integration." },
 ];
 
-const UnifiedActivityLoader = () => (
-  <Card className="col-span-1 lg:col-span-2 w-full p-8 md:p-16 flex flex-col items-center justify-center min-h-[500px] relative overflow-hidden group border-primary/20">
-    {/* Background Grid */}
-    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_80%)]" />
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-primary/10 blur-[80px] rounded-full pointer-events-none" />
-
-    <div className="relative z-10 flex flex-col md:flex-row items-center gap-16 md:gap-24 opacity-80 group-hover:opacity-100 transition-opacity duration-1000">
-      
-      {/* Target Processing (Radar Node) */}
-      <div className="relative w-32 h-32 flex items-center justify-center">
-        <div className="absolute inset-0 rounded-full border border-primary/30 animate-[spin_4s_linear_infinite]" />
-        <div className="absolute inset-3 rounded-full border-t border-primary/60 animate-[spin_3s_linear_infinite_reverse]" />
-        <div className="absolute inset-6 rounded-full border border-dashed border-primary/20 animate-[spin_10s_linear_infinite]" />
-        <div className="w-4 h-4 bg-primary shadow-[0_0_20px_#ff3366] rounded-full animate-pulse" />
-      </div>
-
-      {/* Sync Beam */}
-      <div className="hidden md:flex flex-col items-center gap-3 relative w-32">
-        <div className="absolute top-1/2 -translate-y-1/2 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-        <div className="w-16 h-[2px] bg-primary absolute top-1/2 -translate-y-1/2 animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite] shadow-[0_0_10px_#ff3366]" />
-        <div className="relative z-10 bg-background/50 backdrop-blur-sm px-3 py-1 rounded-full border border-primary/20 text-[10px] font-black tracking-[0.3em] uppercase text-primary">
-          Linking Data
-        </div>
-      </div>
-
-      {/* Grid Processing (Heatmap Nodes) */}
-      <div className="grid grid-cols-6 gap-2">
-        {Array.from({ length: 24 }).map((_, i) => {
-          const isBlinking = i % 4 === 0;
-          const isPrimary = i % 7 === 0;
-          return (
-            <div 
-              key={i} 
-              className={`w-3 h-3 rounded-[2px] ${isPrimary ? 'bg-primary/80' : 'bg-primary/20'} ${isBlinking ? 'animate-pulse' : ''}`}
-            />
-          );
-        })}
-      </div>
-    </div>
-
-    <div className="mt-20 relative z-10 flex flex-col items-center">
-      <div className="h-[2px] w-48 bg-gradient-to-r from-transparent via-primary to-transparent mb-4 opacity-50" />
-      <span className="text-[10px] font-black tracking-[0.5em] text-foreground uppercase animate-pulse">
-        Aggregating Global Activity Matrix...
-      </span>
+const ActivityLoader = () => (
+  <Card className="col-span-1 lg:col-span-2 w-full p-8 flex flex-col items-center justify-center min-h-[360px] border border-border/10 bg-background">
+    <div className="flex flex-col items-center gap-4 text-center">
+      <div className="h-10 w-10 rounded-full border-2 border-primary/20 border-t-primary animate-spin" />
+      <p className="text-base font-medium text-foreground">Loading activity...</p>
     </div>
   </Card>
 );
@@ -332,9 +292,9 @@ function ActivitySection() {
         <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter">Development <span className="text-foreground">Activity</span></h2>
       </div>
 
-      <NoSSR fallback={<UnifiedActivityLoader />}>
+      <NoSSR fallback={<ActivityLoader />}>
         {isLoading ? (
-          <UnifiedActivityLoader />
+          <ActivityLoader />
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <Card className="p-8">

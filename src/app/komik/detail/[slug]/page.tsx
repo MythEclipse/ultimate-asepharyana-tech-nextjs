@@ -6,7 +6,7 @@ import { notFound } from "next/navigation"
 import { fetchKomikDetail, type KomikDetailData } from "@/lib/api/komik"
 import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
 import { komikChapterRoute, komikHubRoute } from "@/lib/utils/routes"
-import { PageLoadingOverlay } from "@/components/ui/page-loading-overlay"
+import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
 
 import { 
   IconCalendar, 
@@ -80,8 +80,10 @@ export default function KomikDetailRoute() {
     notFound()
   }
 
+  usePageLoadingOverlay({ isLoading, label: "ANALYZING ARCHIVES" })
+
   if (isLoading) {
-    return <PageLoadingOverlay label="ANALYZING ARCHIVES" />
+    return null
   }
 
   if (!data) notFound()
