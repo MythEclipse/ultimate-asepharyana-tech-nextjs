@@ -32,7 +32,7 @@ export default function DashboardPage() {
     <main className="min-h-screen relative overflow-hidden">
       <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="var(--color-primary)" />
       
-      <Section className="pt-32 pb-20 px-6 max-w-7xl mx-auto w-full">
+      <Section className="pt-24 pb-20 px-4 sm:px-6 max-w-6xl mx-auto w-full">
         {/* Header Section */}
         <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-24 animate-fade-in translate-y-0 opacity-100 transition-all duration-700">
           <div className="space-y-6">

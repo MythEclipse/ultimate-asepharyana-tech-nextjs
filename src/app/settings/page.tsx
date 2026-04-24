@@ -30,7 +30,7 @@ export default function SettingsPage() {
         <div className="absolute bottom-[10%] left-[5%] w-[35rem] h-[35rem] bg-accent/5 rounded-full blur-[120px] animate-tilt-reverse-slow" />
       </div>
 
-      <div className="container mx-auto max-w-3xl px-8 pt-24 space-y-16 relative z-10">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-24 space-y-16 relative z-10">
         {/* Cinematic Settings Header */}
         <header className="text-center space-y-6 animate-fade-in">
           <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-card/40 backdrop-blur-md border border-border/10 text-[10px] font-black uppercase tracking-[0.4em] text-primary">
@@ -39,7 +39,7 @@ export default function SettingsPage() {
           <h1 className="text-5xl font-black italic tracking-tighter uppercase leading-none text-foreground">
             Neural <span className="text-primary">Config</span>
           </h1>
-          <div className="w-12 h-1 bg-gradient-to-r from-primary to-accent mx-auto rounded-full" />
+          <div className="w-12 h-1 bg-linear-to-r from-primary to-accent mx-auto rounded-full" />
         </header>
 
         <div className="space-y-12">

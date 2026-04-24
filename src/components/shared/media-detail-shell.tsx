@@ -67,8 +67,8 @@ export function MediaDetailShell({
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
       </div>
 
-      <Section className="relative z-10 pt-40 px-6">
-        <TracingBeam className="px-6 md:px-0">
+      <Section className="relative z-10 pt-24 sm:pt-28 px-4 sm:px-6 lg:px-8">
+        <TracingBeam className="px-4 sm:px-6 md:px-0">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
             <div className="w-full lg:w-1/3 xl:w-80 shrink-0 flex flex-col gap-8">
               <Card className="relative p-0 overflow-hidden aspect-[3/4.2] border-white/10 group shadow-2xl transition-transform duration-500">
@@ -109,7 +109,7 @@ export function MediaDetailShell({
                   )}
                 </div>
 
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-none italic text-transparent bg-clip-text bg-gradient-to-r from-foreground via-foreground/80 to-muted-foreground/50">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-none italic text-transparent bg-clip-text bg-linear-to-r from-foreground via-foreground/80 to-muted-foreground/50">
                   {title}
                 </h1>
                 {subtitle && (

@@ -49,14 +49,14 @@ export default function RegisterPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden bg-background transition-colors duration-500">
+    <main className="min-h-screen flex items-center justify-center px-4 sm:px-6 py-6 relative overflow-hidden bg-background transition-colors duration-500">
       {/* Cinematic Background Infrastructure - Optimized */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute bottom-[-10%] left-[-10%] w-[50rem] h-[50rem] bg-blue-500/10 rounded-full blur-[80px] animate-tilt will-change-[transform,opacity]" />
       </div>
 
-      <div className="w-full max-w-[520px] relative z-10 animate-fade-in group/main">
-        <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-500 rounded-[3rem] blur-2xl opacity-10 group-hover/main:opacity-20 transition-opacity duration-1000" />
+      <div className="w-full max-w-lg sm:max-w-xl relative z-10 animate-fade-in group/main">
+        <div className="absolute -inset-1 bg-linear-to-r from-blue-500 via-indigo-500 to-blue-500 rounded-[3rem] blur-2xl opacity-10 group-hover/main:opacity-20 transition-opacity duration-1000" />
         
         <div className="glass-card rounded-[3rem] border border-white/10 overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.4)] transition-all duration-700 hover:border-white/20 relative bg-background/50 backdrop-blur-3xl">
           <div className="p-10 md:p-12 space-y-10">
@@ -64,7 +64,7 @@ export default function RegisterPage() {
             <header className="text-center space-y-4">
               <div className="space-y-2">
                 <h1 className="text-3xl font-black italic tracking-tighter uppercase leading-none">
-                  Create <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Account</span>
+                  Create <span className="bg-linear-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Account</span>
                 </h1>
                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground/40">Join the community today</p>
               </div>
@@ -145,7 +145,7 @@ export default function RegisterPage() {
                 <span className="relative z-10 transition-transform group-hover/btn:translate-x-1">
                   {isSubmitting ? "Registering..." : "Register"}
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-0 group-hover/btn:opacity-10 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-r from-blue-500 to-indigo-600 opacity-0 group-hover/btn:opacity-10 transition-opacity pointer-events-none" />
               </button>
             </form>
 

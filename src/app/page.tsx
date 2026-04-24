@@ -185,8 +185,8 @@ function HeroSection() {
     <section className="pb-20 pt-36 min-h-[90vh] w-full flex flex-col items-center justify-center relative transition-all duration-700">
       <Spotlight className="top-10 left-full h-[80vh] w-[50vw]" fill="var(--color-accent)" />
 
-      <div className="flex justify-center relative my-20 z-10 w-full text-center">
-        <div className="max-w-[89vw] md:max-w-4xl flex flex-col items-center">
+      <div className="flex justify-center relative my-20 z-10 w-full text-center px-4 sm:px-6">
+        <div className="max-w-xl sm:max-w-4xl flex flex-col items-center">
           <div className="mb-8 px-4 py-1.5 uppercase tracking-[0.3em] font-black glass rounded-full shadow-sm">Software Engineering</div>
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance">
             Beginner Web Portfolio <br />

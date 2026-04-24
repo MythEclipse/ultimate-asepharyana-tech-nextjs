@@ -182,7 +182,7 @@ export function SkillsRadarChart({ data = [] }: { data?: SkillMetric[] }) {
   }, [data])
 
   return (
-    <div ref={wrapperRef} className="w-full flex items-center justify-center max-w-[480px] mx-auto">
+    <div ref={wrapperRef} className="w-full flex items-center justify-center max-w-120 mx-auto">
       <svg ref={svgRef} className="text-foreground overflow-visible" aria-label="Skills proficiency radar chart" />
     </div>
   )

@@ -65,7 +65,7 @@ export function MediaSearchResults<T>({
             Found {count} results for &quot;{query}&quot;
           </p>
         </div>
-        <div className="h-1 w-24 bg-gradient-to-r from-primary to-accent rounded-full" />
+        <div className="h-1 w-24 bg-linear-to-r from-primary to-accent rounded-full" />
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">

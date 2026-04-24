@@ -24,7 +24,7 @@ export function MediaChapterShell({
 }: MediaChapterShellProps) {
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30 transition-colors duration-500">
-      <nav className="sticky top-0 z-[100] w-full backdrop-blur-md bg-background/80 border-b border-border/10 py-4 px-4 md:px-8 flex items-center justify-between transition-colors">
+      <nav className="sticky top-0 z-100 w-full backdrop-blur-md bg-background/80 border-b border-border/10 py-3 sm:py-4 px-4 sm:px-6 md:px-8 flex items-center justify-between transition-colors">
         <Link
           href={backHref}
           className="group flex items-center gap-2 text-sm font-black uppercase tracking-widest hover:text-primary transition-colors"
@@ -61,7 +61,7 @@ export function MediaChapterShell({
         </div>
       </nav>
 
-      <div className="w-full max-w-4xl mx-auto flex flex-col items-center bg-card/10 min-h-screen shadow-2xl transition-colors">
+      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 flex flex-col items-center bg-card/10 min-h-screen shadow-2xl transition-colors">
         {chapterImageUrls.map((src, idx) => (
           <CachedImage
             key={idx}
@@ -73,8 +73,8 @@ export function MediaChapterShell({
           />
         ))}
 
-        <div className="w-full py-24 flex flex-col items-center justify-center gap-8 border-t border-border/10 mt-10">
-          <div className="w-12 h-1 bg-gradient-to-r from-primary to-accent rounded-full" />
+        <div className="w-full py-16 sm:py-20 flex flex-col items-center justify-center gap-8 border-t border-border/10 mt-10">
+          <div className="w-12 h-1 bg-linear-to-r from-primary to-accent rounded-full" />
           <Heading as="h3" className="text-2xl text-muted-foreground/50">
             End of Chapter
           </Heading>
@@ -83,7 +83,7 @@ export function MediaChapterShell({
               Index
             </Button>
             {nextHref && (
-              <Button href={nextHref} className="px-8 py-4 rounded-full bg-gradient-to-r from-primary to-accent shadow-primary/20">
+              <Button href={nextHref} className="px-8 py-4 rounded-full bg-linear-to-r from-primary to-accent shadow-primary/20">
                 Next Chapter
               </Button>
             )}

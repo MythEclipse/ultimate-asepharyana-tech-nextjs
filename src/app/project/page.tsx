@@ -16,7 +16,7 @@ export default function ProjectPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground relative overflow-hidden transition-colors duration-500">
-      <Section glow glowVariant="both" className="pb-40">
+      <Section glow glowVariant="both" className="pb-40 max-w-6xl mx-auto">
         {/* Header */}
         <header className="flex flex-col items-center text-center space-y-8 mb-24">
           <Badge variant="glass">Featured Projects</Badge>
@@ -25,7 +25,7 @@ export default function ProjectPage() {
             <Heading as="h1" className="text-7xl md:text-[9rem]">
               <GlitchText
                   text="Project"
-                  className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
+                  className="bg-linear-to-r from-primary via-accent to-primary bg-clip-text text-transparent"
               />
             </Heading>
             <p className="text-3xl md:text-4xl font-black uppercase tracking-[0.3em] text-foreground/10 text-center">
@@ -41,7 +41,7 @@ export default function ProjectPage() {
           </p>
 
           <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.35em] text-muted-foreground/40">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-border/50" />
+            <div className="h-px w-16 bg-linear-to-r from-transparent to-border/50" />
             Total <span className="text-foreground/80 px-3 py-1 bg-muted/50 rounded-md border border-border/50">{FEATURED_PROJECTS.length}</span> Projects
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-border/50" />
           </div>
@@ -102,7 +102,7 @@ export default function ProjectPage() {
                       </div>
 
                       <div className="relative flex items-center gap-2 pt-4 border-t border-border/10 mt-auto">
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                        <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-cyan-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/40 group-hover:text-cyan-400 transition-colors">
                             {isExternal ? "Visit" : "View"}
                         </span>

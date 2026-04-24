@@ -19,8 +19,8 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        premium: "bg-gradient-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-gradient-x text-primary-foreground shadow-xl shadow-primary/20",
-        shiny: "relative overflow-hidden bg-primary text-primary-foreground shadow-lg before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent hover:shadow-primary/40",
+        premium: "bg-linear-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-gradient-x text-primary-foreground shadow-xl shadow-primary/20",
+        shiny: "relative overflow-hidden bg-primary text-primary-foreground shadow-lg before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-linear-to-r before:from-transparent before:via-white/20 before:to-transparent hover:shadow-primary/40",
       },
       size: {
         default: "h-10 px-4 py-2",

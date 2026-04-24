@@ -1,6 +1,6 @@
 "use client"
 
-import { use, Suspense } from "react"
+import { use } from "react"
 import Link from "next/link"
 import { searchAnime, type SearchAnimeItem } from "@/lib/api/anime"
 import { useMediaSearch } from "@/components/shared/use-media"
@@ -10,7 +10,6 @@ import { CachedImage } from "@/components/ui/cached-image"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
-import { SkeletonGrid } from "@/components/ui/skeleton"
 import { IconArrowLeft } from "@tabler/icons-react"
 import { animeDetailRoute, animeHubRoute } from "@/lib/utils/routes"
 
@@ -23,9 +22,9 @@ function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, sourc
           alt={item.title}
           fill
           loading={index === 0 ? "eager" : "lazy"}
-          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[10%] group-hover:grayscale-0"
+          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-10 group-hover:grayscale-0"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
         
         <div className="absolute top-3 right-3">
           <Badge variant="glass" className="text-[9px] uppercase font-black bg-white/5 border-white/10">

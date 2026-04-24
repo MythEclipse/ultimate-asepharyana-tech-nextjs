@@ -29,7 +29,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
 
         <Navbar />
 
-        <main key={pathname} className="relative z-10 flex-1 flex flex-col max-w-[100vw] transition-all duration-300">
+        <main key={pathname} className="relative z-10 flex-1 flex flex-col w-full transition-all duration-300">
           {children}
         </main>
 

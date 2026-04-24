@@ -30,9 +30,9 @@ export function Navbar() {
     <nav
       role="navigation"
       aria-label="Primary"
-      className="sticky top-0 z-[100] w-full backdrop-blur-3xl bg-background/70 border-b border-border/50"
+      className="sticky top-0 z-100 w-full backdrop-blur-3xl bg-background/70 border-b border-border/50"
     >
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-8">
+      <div className="container mx-auto flex h-16 items-center justify-between px-3 sm:px-4 md:px-8">
         {/* Logo Protocol */}
         <Link href="/" className="flex items-center space-x-6 group">
           <div className="relative">
@@ -88,7 +88,7 @@ export function Navbar() {
            ) : (
              <Link href="/login" className="ml-4 px-8 py-3.5 text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl bg-foreground text-background hover:scale-105 active:scale-95 transition-all shadow-2xl relative group overflow-hidden border border-border/20">
                 <span className="relative z-10">Login</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-0 group-hover:opacity-20 transition-opacity" />
+                <div className="absolute inset-0 bg-linear-to-r from-primary to-accent opacity-0 group-hover:opacity-20 transition-opacity" />
              </Link>
            )}
         </div>
@@ -111,7 +111,7 @@ export function Navbar() {
       {/* Expanded Mobile Interface */}
       {isOpen && (
          <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-3xl animate-fade-in overflow-hidden">
-            <div className="container mx-auto px-8 py-10 space-y-4">
+            <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-4">
                 <MobileNavLink 
                   href="/project" 
                   label="Projects" 
@@ -122,7 +122,7 @@ export function Navbar() {
                 <div className="pt-8 mt-8 border-t border-border/20 flex items-center justify-between">
                    <button
                      onClick={cycleTheme}
-                     className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-6 py-4 rounded-2xl glass border border-border/20 hover:border-border/40 transition-all"
+                     className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-5 py-3 rounded-2xl glass border border-border/20 hover:border-border/40 transition-all"
                    > 
                      <span className="text-lg">
                        {theme === "light" ? "☀️" : theme === "dark" ? "🌙" : "💻"}
@@ -130,7 +130,7 @@ export function Navbar() {
                      {theme}
                    </button>
                    
-                   <Link href="/login" onClick={() => setIsOpen(false)} className="px-8 py-4 rounded-2xl bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[0.3em] shadow-2xl hover:scale-105 transition-transform active:scale-95">
+                   <Link href="/login" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-2xl bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[0.3em] shadow-2xl hover:scale-105 transition-transform active:scale-95">
                      Login
                    </Link>
                 </div>

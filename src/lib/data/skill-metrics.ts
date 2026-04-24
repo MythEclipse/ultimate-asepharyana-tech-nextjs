@@ -1,3 +1,5 @@
+// Type definitions only: these interfaces describe the shape of skill data
+// without providing runtime payloads.
 export interface SkillMetric {
   axis: string
   value: number // 0–1
@@ -11,14 +13,15 @@ export interface SkillGroup {
 }
 
 /**
- * @deprecated Use live data from fetchGitHubStats() instead.
- * Static/Simulated data is no longer the source of truth to ensure 
- * adherence to "Strictly Public GitHub Data" requirements.
+ * @deprecated Runtime data is no longer generated here.
+ * Use live data from fetchGitHubStats() instead.
+ * Static/Simulated data is preserved only for legacy compatibility.
  */
 export const SKILL_RADAR_DATA: SkillMetric[] = []
 
 /**
- * @deprecated Use live data from fetchGitHubStats() instead.
+ * @deprecated Runtime data is no longer generated here.
+ * Use live data from fetchGitHubStats() instead.
  */
 export function generateActivityData(): { date: Date; count: number }[] {
   return []

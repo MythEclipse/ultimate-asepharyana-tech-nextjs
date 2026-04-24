@@ -93,8 +93,7 @@ export function CachedImage({
         return
       }
 
-      const result = await response.json()
-      console.debug("Image audit result", result)
+      await response.json()
     } catch (err) {
       console.warn("Image audit failed", err)
     } finally {

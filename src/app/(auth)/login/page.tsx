@@ -49,7 +49,7 @@ export default function LoginPage() {
       </div>
 
       <div className="w-full max-w-[480px] relative z-10 animate-fade-in group/main">
-        <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-blue-500 rounded-[3rem] blur-2xl opacity-10 group-hover/main:opacity-20 transition-opacity duration-1000" />
+        <div className="absolute -inset-1 bg-linear-to-r from-blue-500 via-indigo-500 to-blue-500 rounded-[3rem] blur-2xl opacity-10 group-hover/main:opacity-20 transition-opacity duration-1000" />
         
         <div className="glass-card rounded-[3rem] border border-white/10 overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.4)] transition-all duration-700 hover:border-white/20 relative bg-background/50 backdrop-blur-3xl">
           <div className="p-12 space-y-10">
@@ -63,7 +63,7 @@ export default function LoginPage() {
               </div>
               <div className="space-y-2">
                 <h1 className="text-3xl font-black italic tracking-tighter uppercase leading-none">
-                  Account <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Login</span>
+                  Account <span className="bg-linear-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Login</span>
                 </h1>
                 <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground/40">Sign in to your account</p>
               </div>
@@ -131,7 +131,7 @@ export default function LoginPage() {
                 <span className="relative z-10 transition-transform group-hover/btn:translate-x-1">
                   {isSubmitting ? "Signing In..." : "Sign In"}
                 </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 opacity-0 group-hover/btn:opacity-10 transition-opacity pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-r from-blue-500 to-indigo-600 opacity-0 group-hover/btn:opacity-10 transition-opacity pointer-events-none" />
               </button>
             </form>
 

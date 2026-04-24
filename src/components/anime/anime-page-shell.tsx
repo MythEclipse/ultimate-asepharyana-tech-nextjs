@@ -19,7 +19,7 @@ export function AnimePageShell({ source }: AnimePageShellProps) {
 
   return (
     <main className="min-h-screen bg-background text-foreground selection:bg-primary/30 transition-colors duration-500 pb-20">
-      <div className="relative h-[40rem] w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
+      <div className="relative h-160 w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
         <div className="w-full absolute inset-0 h-screen">
           <SparklesCore
             id={`particles-${sourcePrefix}`}
@@ -44,7 +44,7 @@ export function AnimePageShell({ source }: AnimePageShellProps) {
           </p>
 
           <div className="mt-10 max-w-xl mx-auto relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary to-accent rounded-2xl blur opacity-25 group-focus-within:opacity-60 transition duration-1000" />
+            <div className="absolute -inset-1 bg-linear-to-r from-primary to-accent rounded-2xl blur opacity-25 group-focus-within:opacity-60 transition duration-1000" />
             <form action={searchRoute} className="relative flex items-center bg-card/80 backdrop-blur-xl border border-border/50 rounded-2xl p-1 shadow-2xl transition-all">
               <div className="pl-4 text-muted-foreground/50">
                 <IconPlayerPlay size={20} className="text-primary/50" />

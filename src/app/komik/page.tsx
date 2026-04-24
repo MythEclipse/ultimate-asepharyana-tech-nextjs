@@ -38,7 +38,7 @@ export default function KomikPage() {
           </p>
 
           <div className="mt-10 max-w-xl mx-auto relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-orange-400 rounded-2xl blur opacity-25 group-focus-within:opacity-50 transition duration-1000" />
+            <div className="absolute -inset-1 bg-linear-to-r from-orange-500 to-orange-400 rounded-2xl blur opacity-25 group-focus-within:opacity-50 transition duration-1000" />
             <form action={searchRoute} className="relative flex items-center bg-card border border-border rounded-2xl p-1 transition-colors duration-500">
               <div className="pl-4 text-muted-foreground">
                 <IconBook size={20} className="text-orange-500/50" />
