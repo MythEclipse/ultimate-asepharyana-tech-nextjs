@@ -23,9 +23,9 @@ function KomikSearchCard({ item, index }: { item: MangaItem; index: number }) {
           alt={item.title}
           fill
           loading={index === 0 ? "eager" : "lazy"}
-          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0"
+          className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale-20 group-hover:grayscale-0"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
         
         <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
           {item.score && (

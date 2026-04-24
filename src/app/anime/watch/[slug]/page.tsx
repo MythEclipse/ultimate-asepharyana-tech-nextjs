@@ -21,7 +21,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-3xl opacity-15"
           style={{ backgroundImage: `url(${data.image_url})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/80 to-transparent dark:from-slate-950/95 dark:via-slate-950/80" />
+        <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/80 to-transparent dark:from-slate-950/95 dark:via-slate-950/80" />
       </div>
       <Section className="relative z-10 pt-4 pb-4">
         <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
@@ -46,7 +46,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
           {/* Video Player Caore */}
           <div className="mt-3 w-full bg-card/95 dark:bg-slate-900/85 rounded-3xl overflow-hidden shadow-2xl dark:shadow-black/40 border border-border/20 dark:border-slate-700 relative group transition-all duration-500 hover:-translate-y-0.5">
             <div className="absolute inset-0 bg-linear-to-r from-primary/10 via-accent/10 to-primary/10 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700" />
-            <div className="relative aspect-video w-full z-10 bg-black/95 dark:bg-slate-950/95">
+            <div className="relative aspect-video w-full z-10 bg-card/95 dark:bg-slate-950/95">
               {data.stream_url ? (
                 <iframe
                   src={data.stream_url}
@@ -56,7 +56,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
                   loading="lazy"
                 />
               ) : (
-                <div className="min-h-[25rem] flex items-center justify-center text-center text-muted-foreground/70 dark:text-slate-400 font-black tracking-widest uppercase">
+                <div className="min-h-100 flex items-center justify-center text-center text-muted-foreground/70 dark:text-slate-400 font-black tracking-widest uppercase">
                   Stream URL Unavailable
                 </div>
               )}

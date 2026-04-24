@@ -62,6 +62,10 @@ async function fetchKomikType(type: "manga" | "manhwa" | "manhua", page: number)
   return fetchMediaList("komik", type, page) as Promise<MangaResponse>
 }
 
+async function fetchKomikApi<T>(path: string, options?: RequestInit): Promise<T> {
+  return fetchApi<T>(`/komik/${path}`, options);
+}
+
 export async function fetchManga(page: number): Promise<MangaResponse> {
   return fetchKomikType("manga", page)
 }
@@ -79,8 +83,8 @@ export async function fetchKomikDetail(komikId: string): Promise<KomikDetailData
 }
 
 export async function fetchChapter(slug: string): Promise<ChapterData> {
-  const res = await fetchApi<ChapterResponse>(`/komik/chapter/${encodeURIComponent(slug)}`, {
-      next: { revalidate: REVALIDATE_TIME * 24 }
+  const res = await fetchKomikApi<ChapterResponse>(`chapter/${encodeURIComponent(slug)}`, {
+    next: { revalidate: REVALIDATE_TIME * 24 },
   });
 
   if (res.data) {
@@ -95,26 +99,26 @@ export async function searchKomik(query: string, page: number): Promise<MangaRes
 }
 
 export async function fetchKomikGenre(genreSlug: string): Promise<MangaResponse> {
-  return await fetchApi<MangaResponse>(`/komik/genre/${encodeURIComponent(genreSlug)}`, {
-      next: { revalidate: REVALIDATE_TIME }
+  return fetchKomikApi<MangaResponse>(`genre/${encodeURIComponent(genreSlug)}`, {
+    next: { revalidate: REVALIDATE_TIME },
   });
 }
 
 export async function fetchKomikGenrePage(genreSlug: string, page: number): Promise<MangaResponse> {
-  return await fetchApi<MangaResponse>(`/komik/genre/${encodeURIComponent(genreSlug)}/${page}`, {
-      next: { revalidate: REVALIDATE_TIME }
+  return fetchKomikApi<MangaResponse>(`genre/${encodeURIComponent(genreSlug)}/${page}`, {
+    next: { revalidate: REVALIDATE_TIME },
   });
 }
 
 export async function fetchKomikGenreList(): Promise<MangaResponse> {
-  return await fetchApi<MangaResponse>(`/komik/genre_list`, {
-      next: { revalidate: REVALIDATE_TIME }
+  return fetchKomikApi<MangaResponse>(`genre_list`, {
+    next: { revalidate: REVALIDATE_TIME },
   });
 }
 
 export async function fetchKomikPopular(slug: string): Promise<MangaResponse> {
-  return await fetchApi<MangaResponse>(`/komik/popular/${encodeURIComponent(slug)}`, {
-      next: { revalidate: REVALIDATE_TIME }
+  return fetchKomikApi<MangaResponse>(`popular/${encodeURIComponent(slug)}`, {
+    next: { revalidate: REVALIDATE_TIME },
   });
 }
 
