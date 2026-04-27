@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { NoSSR } from "@/components/ui/no-ssr";
 import { Section } from "@/components/ui/section";
+import githubStats from "@/lib/data/github-stats.json";
 import { useGitHubStats } from "@/lib/hooks/use-github-stats";
 import {
   IconCode,
@@ -181,6 +182,8 @@ const ActivityHeatmap = dynamic(
 );
 
 function HeroSection() {
+  const totalContributions = githubStats.totalContributions ?? githubStats.contributions?.reduce((sum, item) => sum + item.count, 0) ?? 0;
+
   return (
     <section className="pb-20 pt-36 min-h-[90vh] w-full flex flex-col items-center justify-center relative transition-all duration-700">
       <Spotlight className="top-10 left-full h-[80vh] w-[50vw]" fill="var(--color-accent)" />
@@ -189,11 +192,11 @@ function HeroSection() {
         <div className="max-w-xl sm:max-w-4xl flex flex-col items-center">
           <div className="mb-8 px-4 py-1.5 uppercase tracking-[0.3em] font-black glass rounded-full shadow-sm">Software Engineering</div>
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance">
-            Beginner Web Portfolio <br />
-            <span className="gradient-text">Learning Frontend & Simple UI</span>
+            Web Portfolio Asep <br />
+            <span className="gradient-text">Aktif di GitHub dengan {totalContributions.toLocaleString()}+ kontribusi</span>
           </h1>
           <p className="max-w-2xl text-muted-foreground text-lg md:text-xl lg:text-2xl mb-12 font-medium leading-relaxed">
-            Hi, I’m <span className="text-foreground border-b-2 border-primary/30 font-bold">Asep Haryana Saputra</span>. I build projects with React, Tailwind, and Next.js to gain practical experience and showcase fundamental skills.
+            Halo, saya <span className="text-foreground border-b-2 border-primary/30 font-bold">Asep Haryana Saputra</span>. Saya membuat proyek dengan React, Tailwind, dan Next.js untuk mengasah kemampuan frontend dan memperlihatkan hasil kerja.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6">
