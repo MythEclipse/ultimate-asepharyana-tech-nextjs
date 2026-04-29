@@ -25,7 +25,7 @@ export const Section = React.forwardRef<HTMLElement, SectionProps>(
       <section
         ref={ref}
         className={cn(
-          "py-16 sm:py-20 md:py-28 lg:py-40 px-4 sm:px-6 lg:px-8 relative overflow-visible",
+          "py-12 sm:py-16 md:py-20 lg:py-28 px-4 sm:px-6 lg:px-8 relative overflow-visible",
           className
         )}
       >

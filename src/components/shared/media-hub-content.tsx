@@ -38,7 +38,7 @@ export function MediaHubContent<T extends { slug?: string }>({ sections, isLoadi
 
   return (
     <TracingBeam className="px-6">
-      <div className="space-y-32 py-10">
+      <div className="space-y-24 py-8">
         {sections.map((section) => (
           <MediaHubSection
             key={section.id}

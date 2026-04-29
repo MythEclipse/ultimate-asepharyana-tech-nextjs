@@ -14,7 +14,7 @@ interface SectionHeaderProps {
 
 export function SectionHeader({ title, icon: Icon, color, link }: SectionHeaderProps) {
   return (
-    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 px-4">
+    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 px-4">
       <div className="flex items-center gap-4">
         <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center text-white shadow-lg", color)}>
           <Icon size={24} />
