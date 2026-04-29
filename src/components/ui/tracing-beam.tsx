@@ -27,7 +27,7 @@ export const TracingBeam = ({
   return (
     <div ref={ref} className={cn("relative w-full max-w-7xl mx-auto h-full", className)}>
       <div className="absolute -left-4 md:-left-20 top-3">
-        <div className="ml-[27px] h-4 w-4 rounded-full border border-neutral-200 dark:border-neutral-700 shadow-sm bg-white" />
+        <div className="ml-6.75 h-4 w-4 rounded-full border border-neutral-200 dark:border-neutral-700 shadow-sm bg-white" />
         <svg viewBox={`0 0 20 ${svgHeight}`} width="20" height={svgHeight} className="ml-4 block" aria-hidden="true">
           <path d={`M 1 0 V ${svgHeight * 0.8} l 18 24 V ${svgHeight}`} fill="none" stroke="#9091A0" strokeOpacity="0.16" />
           <path d={`M 1 0 V ${svgHeight * 0.8} l 18 24 V ${svgHeight}`} fill="none" stroke="url(#gradient)" strokeWidth="1.25" className="hidden motion-reduce:block" />
