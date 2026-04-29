@@ -90,7 +90,7 @@ export function MediaListPage<T>({
 
   return (
     <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
-      <div className="relative h-[30rem] w-full flex flex-col items-center justify-center overflow-hidden">
+      <div className="relative h-120 w-full flex flex-col items-center justify-center overflow-hidden">
         <SparklesCore
           background="transparent"
           minSize={0.6}
