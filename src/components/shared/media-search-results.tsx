@@ -1,10 +1,12 @@
 "use client"
 
-import { Heading } from "@/components/ui/heading"
-import { Badge } from "@/components/ui/badge"
-import { SkeletonGrid } from "@/components/ui/skeleton"
-import { Button } from "@/components/ui/button"
 import { IconArrowLeft, IconMoodSad } from "@tabler/icons-react"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Heading } from "@/components/ui/heading"
+import { SkeletonGrid } from "@/components/ui/skeleton"
+
 
 interface MediaSearchResultsProps<T> {
   query: string

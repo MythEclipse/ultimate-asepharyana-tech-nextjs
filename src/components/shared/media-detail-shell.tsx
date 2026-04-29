@@ -2,12 +2,13 @@
 
 import Link from "next/link"
 import { ReactNode } from "react"
+
+import { DetailInfo } from "@/components/shared/detail-info"
 import { Badge } from "@/components/ui/badge"
+import { CachedImage } from "@/components/ui/cached-image"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
 import { TracingBeam } from "@/components/ui/tracing-beam"
-import { CachedImage } from "@/components/ui/cached-image"
-import { DetailInfo } from "@/components/shared/detail-info"
 
 export interface MediaDetailMetaItem {
   icon: React.ElementType

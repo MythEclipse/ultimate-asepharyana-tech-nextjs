@@ -1,13 +1,5 @@
 "use client"
 
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { type AnimeDetailData } from "@/lib/api/anime"
-import { useAnimeDetail } from "@/components/anime/use-anime"
-import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
-import { animeHubRoute, animeWatchRoute } from "@/lib/utils/routes"
-import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
-
 import { 
   IconPlayerPlay, 
   IconStar, 
@@ -16,7 +8,15 @@ import {
   IconBuildingSkyscraper,
   IconClock
 } from "@tabler/icons-react"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+
+import { useAnimeDetail } from "@/components/anime/use-anime"
+import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
 import { MediaDetailShell, type MediaDetailEntry } from "@/components/shared/media-detail-shell"
+import { type AnimeDetailData } from "@/lib/api/anime"
+import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
+import { animeHubRoute, animeWatchRoute } from "@/lib/utils/routes"
 
 
 function AnimeDetailContent({ data, source }: { data: AnimeDetailData; source: 1 | 2 }) {

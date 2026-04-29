@@ -1,6 +1,6 @@
 import { fetchApi } from "./config";
-import { ApiResponse, Pagination } from "./types";
 import { fetchMediaList, fetchMediaDetail, fetchMediaStream, searchMedia } from "./media";
+import { ApiResponse, Pagination } from "./types";
 
 export interface Anime1OngoingItem {
   title: string;

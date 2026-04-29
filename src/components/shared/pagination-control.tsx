@@ -1,8 +1,9 @@
 "use client"
 
-import { type Pagination } from "@/lib/api/types"
-import { Button } from "@/components/ui/button"
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react"
+
+import { Button } from "@/components/ui/button"
+import { type Pagination } from "@/lib/api/types"
 
 interface SharedPaginationControlProps {
   pagination: Pagination

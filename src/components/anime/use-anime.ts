@@ -1,6 +1,8 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
+
+import { useMediaListData } from "@/components/shared/use-media"
 import { fetchAnimeOngoing, fetchAnimeComplete, fetchAnimeDetail, fetchAnimeStream, searchAnime, type AnimeSource, type Anime1OngoingItem, type Anime2OngoingItem, type Anime2CompleteItem } from "@/lib/api/anime"
 
 export type AnimeListType = "ongoing" | "complete"
@@ -18,8 +20,6 @@ export function useAnimeHubData(source: AnimeSource) {
 
   return { ongoingQuery, completeQuery }
 }
-
-import { useMediaListData } from "@/components/shared/use-media"
 
 export function useAnimeListData(source: AnimeSource, page: number, type: AnimeListType) {
   const queryKey = `${type}-${source}`

@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils/index"
+
 import { GlitchText } from "./glitch-text"
 
 interface HeadingProps {

@@ -1,9 +1,10 @@
 "use client"
 
-import { useAuth } from "@/lib/store/auth"
 import { useRouter } from "next/navigation"
 import { useTheme } from "next-themes"
 import { useEffect } from "react"
+
+import { useAuth } from "@/lib/store/auth"
 
 export default function SettingsPage() {
   const { user, setUser } = useAuth()

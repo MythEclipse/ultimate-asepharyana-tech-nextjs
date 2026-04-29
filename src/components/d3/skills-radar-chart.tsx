@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useRef } from "react"
 import * as d3 from "d3"
+import { useEffect, useRef } from "react"
+
 import { type SkillMetric } from "@/lib/data/skill-metrics"
 
 const NUM_LEVELS = 5

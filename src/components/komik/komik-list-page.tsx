@@ -1,10 +1,11 @@
 "use client"
 
-import { type MangaResponse } from "@/lib/api/komik"
 import { MediaListPage, type HeroConfig } from "@/components/shared/media-list-page"
-import { KomikCard } from "./komik-card"
 import { useMediaListData } from "@/components/shared/use-media"
+import { type MangaResponse } from "@/lib/api/komik"
 import { komikHubRoute } from "@/lib/utils/routes"
+
+import { KomikCard } from "./komik-card"
 
 interface KomikListPageProps {
   page: number

@@ -1,15 +1,17 @@
 "use client"
 
-import { useAuth } from "@/lib/store/auth"
+import { IconSettings, IconLogout, IconDeviceTv, IconBook, IconBriefcase, IconExternalLink, IconBrandGithub } from "@tabler/icons-react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import Link from "next/link"
+
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
-import { Button } from "@/components/ui/button"
 import { Spotlight } from "@/components/ui/spotlight"
-import { IconSettings, IconLogout, IconDeviceTv, IconBook, IconBriefcase, IconExternalLink, IconBrandGithub } from "@tabler/icons-react"
+import { useAuth } from "@/lib/store/auth"
+
 
 export default function DashboardPage() {
   const { user, setUser } = useAuth()

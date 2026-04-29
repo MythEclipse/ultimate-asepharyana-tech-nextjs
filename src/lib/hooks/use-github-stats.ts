@@ -1,6 +1,7 @@
 "use client"
 
 import { useQuery } from "@tanstack/react-query"
+
 import { type GitHubStatsResponse } from "@/lib/api/github"
 
 const GITHUB_STATS_API = "/api/github/stats"

@@ -1,9 +1,10 @@
 "use client"
 
 import { ReactNode } from "react"
-import { TracingBeam } from "@/components/ui/tracing-beam"
-import { SkeletonGrid } from "@/components/ui/skeleton"
+
 import { MediaHubSection } from "@/components/shared/media-hub-section"
+import { SkeletonGrid } from "@/components/ui/skeleton"
+import { TracingBeam } from "@/components/ui/tracing-beam"
 
 export interface SharedHubSection<T extends { slug?: string }> {
   id: string

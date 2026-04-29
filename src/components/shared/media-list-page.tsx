@@ -1,14 +1,15 @@
 "use client"
 
-import { ReactNode } from "react"
+import { IconArrowLeft } from "@tabler/icons-react"
 import Link from "next/link"
-import { Section } from "@/components/ui/section"
-import { SkeletonGrid } from "@/components/ui/skeleton"
+import { ReactNode } from "react"
+
+import { PaginationControl } from "@/components/shared/pagination-control"
 import { EmptyState } from "@/components/ui/empty-state"
 import { Heading } from "@/components/ui/heading"
+import { Section } from "@/components/ui/section"
+import { SkeletonGrid } from "@/components/ui/skeleton"
 import { SparklesCore } from "@/components/ui/sparkles"
-import { IconArrowLeft } from "@tabler/icons-react"
-import { PaginationControl } from "@/components/shared/pagination-control"
 import { Pagination } from "@/lib/api/types"
 
 export interface HeroConfig {

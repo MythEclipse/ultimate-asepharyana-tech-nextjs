@@ -1,11 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { IconSun, IconMoon, IconDeviceDesktop } from "@tabler/icons-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
+import { useState, useEffect } from "react"
+
 import { useAuth } from "@/lib/store/auth"
-import { IconSun, IconMoon, IconDeviceDesktop } from "@tabler/icons-react"
+
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)

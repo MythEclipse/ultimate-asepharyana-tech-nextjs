@@ -1,6 +1,6 @@
 import { fetchApi } from "./config";
-import { Pagination } from "./types";
 import { fetchMediaList, fetchMediaDetail, searchMedia } from "./media";
+import { Pagination } from "./types";
 
 export interface MangaItem {
   title: string;

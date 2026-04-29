@@ -1,13 +1,5 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { fetchKomikDetail, type KomikDetailData } from "@/lib/api/komik"
-import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
-import { komikChapterRoute, komikHubRoute } from "@/lib/utils/routes"
-import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
-
 import { 
   IconCalendar, 
   IconUsers, 
@@ -15,7 +7,16 @@ import {
   IconClock,
   IconPlayerPlay
 } from "@tabler/icons-react"
+import { useQuery } from "@tanstack/react-query"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+
+import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
 import { MediaDetailShell, type MediaDetailEntry } from "@/components/shared/media-detail-shell"
+import { fetchKomikDetail, type KomikDetailData } from "@/lib/api/komik"
+import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
+import { komikChapterRoute, komikHubRoute } from "@/lib/utils/routes"
+
 
 
 function KomikDetailContentBody({ data }: { data: KomikDetailData }) {

@@ -1,10 +1,12 @@
 "use client"
 
-import { EmptyState } from "@/components/ui/empty-state"
 import { IconBook, IconDiamond, IconBarbell } from "@tabler/icons-react"
-import { KomikCard } from "./komik-card"
+
 import { MediaHubContent, type SharedHubSection } from "@/components/shared/media-hub-content"
+import { EmptyState } from "@/components/ui/empty-state"
 import { komikListRoute } from "@/lib/utils/routes"
+
+import { KomikCard } from "./komik-card"
 import { useKomikHubData } from "./use-komik"
 
 export function KomikHubContent() {

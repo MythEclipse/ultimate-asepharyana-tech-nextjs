@@ -1,11 +1,14 @@
 "use client"
 
 import { IconFlame, IconChecklist } from "@tabler/icons-react"
-import { AnimeCard, type AnimeItem } from "./anime-card"
-import { type AnimeSource } from "@/lib/api/anime"
-import { useAnimeHubData } from "./use-anime"
+
 import { MediaHubContent, type SharedHubSection } from "@/components/shared/media-hub-content"
+import { type AnimeSource } from "@/lib/api/anime"
 import { animeListRoute } from "@/lib/utils/routes"
+
+import { AnimeCard, type AnimeItem } from "./anime-card"
+import { useAnimeHubData } from "./use-anime"
+
 
 export function AnimeHubContent({ source }: { source: AnimeSource }) {
   const { ongoingQuery, completeQuery } = useAnimeHubData(source)

@@ -1,7 +1,7 @@
 "use client"
 
-import { MangaItem } from "@/lib/api/komik"
 import { MediaCard } from "@/components/shared/media-card"
+import { MangaItem } from "@/lib/api/komik"
 import { komikDetailRoute } from "@/lib/utils/routes"
 
 interface KomikCardProps {

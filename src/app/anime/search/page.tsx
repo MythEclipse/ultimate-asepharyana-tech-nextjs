@@ -1,16 +1,16 @@
 "use client"
 
-import { use } from "react"
+import { IconArrowLeft } from "@tabler/icons-react"
 import Link from "next/link"
-import { searchAnime, type SearchAnimeItem } from "@/lib/api/anime"
-import { useMediaSearch } from "@/components/shared/use-media"
-import { CachedImage } from "@/components/ui/cached-image"
+import { use } from "react"
 
-// UI
+import { MediaSearchResults } from "@/components/shared/media-search-results"
+import { useMediaSearch } from "@/components/shared/use-media"
 import { Badge } from "@/components/ui/badge"
+import { CachedImage } from "@/components/ui/cached-image"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
-import { IconArrowLeft } from "@tabler/icons-react"
+import { searchAnime, type SearchAnimeItem } from "@/lib/api/anime"
 import { animeDetailRoute, animeHubRoute } from "@/lib/utils/routes"
 
 function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, source: 1 | 2, index: number }) {
@@ -45,7 +45,6 @@ function AnimeSearchCard({ item, source, index }: { item: SearchAnimeItem, sourc
   )
 }
 
-import { MediaSearchResults } from "@/components/shared/media-search-results"
 
 function SearchResults({ query, source }: { query: string; source: 1 | 2 }) {
   const { data, isLoading, error } = useMediaSearch<SearchAnimeItem[]>(["anime-search", source, query], () => searchAnime(source, query), query.trim().length > 0)

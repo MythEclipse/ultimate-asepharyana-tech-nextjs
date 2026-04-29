@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
 
 export function ErrorFallback({ error, reset }: { error: Error; reset?: () => void }) {
   const [countdown, setCountdown] = useState(5)

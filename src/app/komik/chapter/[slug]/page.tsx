@@ -2,11 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query"
 import { notFound } from "next/navigation"
-import { fetchChapter, type ChapterData } from "@/lib/api/komik"
+
+import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
 import { MediaChapterShell } from "@/components/shared/media-chapter-shell"
+import { fetchChapter, type ChapterData } from "@/lib/api/komik"
 import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
 import { komikChapterRoute, komikDetailRoute } from "@/lib/utils/routes"
-import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
 
 function KomikChapterView({ data }: { data: ChapterData }) {
   let listSlug = data.list_chapter

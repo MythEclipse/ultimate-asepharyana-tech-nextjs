@@ -1,10 +1,12 @@
 "use client"
 
-import { type AnimeSource } from "@/lib/api/anime"
 import { MediaListPage } from "@/components/shared/media-list-page"
+import { type AnimeSource } from "@/lib/api/anime"
+import { animeHubRoute, animeListBaseRoute } from "@/lib/utils/routes"
+
 import { AnimeCard, type AnimeItem } from "./anime-card"
 import { useAnimeListData, type AnimeListType } from "./use-anime"
-import { animeHubRoute, animeListBaseRoute } from "@/lib/utils/routes"
+
 
 interface AnimeListPageProps {
   source: AnimeSource

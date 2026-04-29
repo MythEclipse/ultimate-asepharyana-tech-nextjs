@@ -2,11 +2,13 @@
 
 import dynamic from "next/dynamic"
 import { usePathname } from "next/navigation"
-import { Navbar } from "./navbar"
-import { Footer } from "./footer"
 import { ThemeProvider } from "next-themes"
-import { PageLoadingOverlay } from "@/components/ui/page-loading-overlay"
+
 import { useLoadingOverlayState } from "@/components/providers/loading-provider"
+import { PageLoadingOverlay } from "@/components/ui/page-loading-overlay"
+
+import { Footer } from "./footer"
+import { Navbar } from "./navbar"
 
 const WebGLBackground = dynamic(
   () => import("@/components/three/webgl-background").then((m) => ({ default: m.WebGLBackground })),

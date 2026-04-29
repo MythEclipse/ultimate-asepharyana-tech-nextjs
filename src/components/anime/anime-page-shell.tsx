@@ -1,13 +1,15 @@
 "use client"
 
+import { IconPlayerPlay } from "@tabler/icons-react"
 import { Suspense } from "react"
-import { AnimeHubContent } from "./anime-hub-content"
+
 import { Badge } from "@/components/ui/badge"
 import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
 import { SparklesCore } from "@/components/ui/sparkles"
-import { IconPlayerPlay } from "@tabler/icons-react"
 import { animePrefix, animeSearchRoute } from "@/lib/utils/routes"
+
+import { AnimeHubContent } from "./anime-hub-content"
 
 type AnimePageShellProps = {
   source: 1 | 2

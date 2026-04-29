@@ -1,16 +1,16 @@
 "use client"
 
-import { use } from "react"
+import { IconArrowLeft } from "@tabler/icons-react"
 import Link from "next/link"
-import { searchKomik, type MangaItem } from "@/lib/api/komik"
-import { useMediaSearch } from "@/components/shared/use-media"
+import { use } from "react"
 
-// UI
+import { MediaSearchResults } from "@/components/shared/media-search-results"
+import { useMediaSearch } from "@/components/shared/use-media"
+import { Badge } from "@/components/ui/badge"
 import { CachedImage } from "@/components/ui/cached-image"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
-import { Badge } from "@/components/ui/badge"
-import { IconArrowLeft } from "@tabler/icons-react"
+import { searchKomik, type MangaItem } from "@/lib/api/komik"
 import { komikDetailRoute, komikHubRoute } from "@/lib/utils/routes"
 
 
@@ -51,7 +51,6 @@ function KomikSearchCard({ item, index }: { item: MangaItem; index: number }) {
   )
 }
 
-import { MediaSearchResults } from "@/components/shared/media-search-results"
 
 function KomikSearchResults({ query }: { query: string }) {
   const { data, isLoading, error } = useMediaSearch<{ data: MangaItem[]; pagination: import("@/lib/api/types").Pagination }>(["komik-search", query], () => searchKomik(query, 1), !!query)

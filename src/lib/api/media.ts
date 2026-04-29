@@ -1,14 +1,14 @@
-import { fetchApi } from "./config"
-import { ApiResponse, Pagination } from "./types"
 import type {
   AnimeDetailData,
   AnimeFullData,
   SearchAnimeItem,
 } from "./anime"
+import { fetchApi } from "./config"
 import type {
   MangaResponse,
   KomikDetailData,
 } from "./komik"
+import { ApiResponse, Pagination } from "./types"
 
 const REVALIDATE_TIME = 3600
 

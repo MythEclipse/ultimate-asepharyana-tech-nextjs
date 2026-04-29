@@ -1,9 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import { Heading } from "@/components/ui/heading"
+
 import { Button } from "@/components/ui/button"
 import { CachedImage } from "@/components/ui/cached-image"
+import { Heading } from "@/components/ui/heading"
 
 interface MediaChapterShellProps {
   title: string

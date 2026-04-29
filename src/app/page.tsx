@@ -1,16 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import Image from "next/image";
-import { useRef, useEffect, useState } from "react";
-import { FloatingNav } from "@/components/ui/floating-navbar";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { NoSSR } from "@/components/ui/no-ssr";
-import { Section } from "@/components/ui/section";
-import githubStats from "@/lib/data/github-stats.json";
-import { useGitHubStats } from "@/lib/hooks/use-github-stats";
 import {
   IconCode,
   IconCpu,
@@ -21,6 +10,18 @@ import {
   IconBrandLinkedin,
   IconBrandInstagram,
 } from "@tabler/icons-react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useRef, useEffect, useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { FloatingNav } from "@/components/ui/floating-navbar";
+import { NoSSR } from "@/components/ui/no-ssr";
+import { Section } from "@/components/ui/section";
+import githubStats from "@/lib/data/github-stats.json";
+import { useGitHubStats } from "@/lib/hooks/use-github-stats";
 
 const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -151,7 +152,7 @@ const TECH_STACK: TechIcon[] = [
 ];
 
 const ActivityLoader = () => (
-  <Card className="col-span-1 lg:col-span-2 w-full p-8 flex flex-col items-center justify-center min-h-[360px] border border-border/10 bg-background">
+  <Card className="col-span-1 lg:col-span-2 w-full p-8 flex flex-col items-center justify-center min-h-90 border border-border/10 bg-background">
     <div className="flex flex-col items-center gap-4 text-center">
       <div className="h-10 w-10 rounded-full border-2 border-primary/20 border-t-primary animate-spin" />
       <p className="text-base font-medium text-foreground">Loading activity...</p>
@@ -160,7 +161,7 @@ const ActivityLoader = () => (
 );
 
 const ChartSkeleton = () => (
-  <div className="h-[400px] w-full flex items-center justify-center opacity-50">
+  <div className="h-100 w-full flex items-center justify-center opacity-50">
     <div className="w-8 h-8 rounded-full border-2 border-primary/20 border-t-primary/80 animate-spin" />
   </div>
 );
@@ -212,7 +213,7 @@ function HeroSection() {
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent" />
+        <div className="w-px h-12 bg-linear-to-b from-primary to-transparent" />
       </div>
     </section>
   );
@@ -221,7 +222,7 @@ function HeroSection() {
 function Spotlight({ className, fill }: { className?: string; fill?: string }) {
   return (
     <svg
-      className={"animate-spotlight pointer-events-none absolute z-[1] h-[169%] w-[138%] lg:w-[84%] opacity-0 " + (className ?? "")}
+      className={"animate-spotlight pointer-events-none absolute z-1 h-[169%] w-[138%] lg:w-[84%] opacity-0 " + (className ?? "")}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 3787 2842"
       fill="none"
@@ -267,9 +268,9 @@ function TechArsenal() {
 
       <div className="grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
         {TECH_STACK.slice(0, 6).map((item, index) => (
-          <div key={item.name} className={"row-span-1 rounded-3xl group/bento hover:shadow-xl transition duration-500 shadow-input dark:shadow-none p-4 bg-card border border-border/10 dark:border-white/[0.05] justify-between flex flex-col space-y-4 hover:border-primary/20 " + (index === 0 || index === 3 ? "md:col-span-2" : "")}>
-            <div className="group/header h-full min-h-[10rem] rounded-2xl glass border-hairline flex items-center justify-center p-8 transition-all hover:bg-foreground/5 overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover/header:opacity-100 transition-opacity" />
+          <div key={item.name} className={"row-span-1 rounded-3xl group/bento hover:shadow-xl transition duration-500 shadow-input dark:shadow-none p-4 bg-card border border-border/10 dark:border-white/5 justify-between flex flex-col space-y-4 hover:border-primary/20 " + (index === 0 || index === 3 ? "md:col-span-2" : "")}>
+            <div className="group/header h-full min-h-40 rounded-2xl glass border-hairline flex items-center justify-center p-8 transition-all hover:bg-foreground/5 overflow-hidden relative">
+              <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover/header:opacity-100 transition-opacity" />
               <Image src={item.image} alt={item.name} width={56} height={56} className="w-14 h-14 object-contain filter drop-shadow-2xl group-hover:scale-125 transition-transform duration-500" />
             </div>
             <div className="group-hover/bento:translate-x-2 transition duration-200">
@@ -305,7 +306,7 @@ function ActivitySection() {
                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Intelligence Radar</span>
                 <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">Core Expertise</h3>
               </div>
-              <div className="min-h-[400px] w-full flex items-center justify-center">
+              <div className="min-h-100 w-full flex items-center justify-center">
                 {languages.length ? <SkillsRadarChart data={languages} /> : (<div className="text-center space-y-2"><p className="text-muted-foreground text-sm font-medium italic">Live statistics currently unavailable. Please try again later.</p><Badge variant="outline" className="text-[10px] opacity-50">Public API Fallback Active</Badge></div>)}
               </div>
             </Card>
@@ -315,7 +316,7 @@ function ActivitySection() {
                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-foreground">Development Pulse</span>
                 <h3 className="text-3xl font-black text-foreground mt-2 tracking-tight">Technical Consistency</h3>
               </div>
-              <div className="min-h-[400px] w-full flex items-center justify-center">
+              <div className="min-h-100 w-full flex items-center justify-center">
                 {contributions.length ? <ActivityHeatmap data={contributions} /> : (<div className="text-center space-y-2"><p className="text-muted-foreground text-sm font-medium italic">No contribution data detected in public manifest.</p><Badge variant="outline" className="text-[10px] opacity-50">1-Year Scraper Syncing...</Badge></div>)}
               </div>
             </Card>

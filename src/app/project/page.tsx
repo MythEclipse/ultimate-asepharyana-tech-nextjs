@@ -1,15 +1,17 @@
 "use client"
 
-import { FEATURED_PROJECTS } from "@/lib/data/projects"
-import { useIsMounted } from "@/lib/hooks/use-mounted"
-import { GlitchText } from "@/components/ui/glitch-text"
-import { CachedImage } from "@/components/ui/cached-image"
-import { Heading } from "@/components/ui/heading"
+import Link from "next/link"
+
 import { Badge } from "@/components/ui/badge"
+import { CachedImage } from "@/components/ui/cached-image"
 import { Card } from "@/components/ui/card"
+import { GlitchText } from "@/components/ui/glitch-text"
+import { Heading } from "@/components/ui/heading"
 import { Section } from "@/components/ui/section"
 import { Skeleton } from "@/components/ui/skeleton"
-import Link from "next/link"
+import { FEATURED_PROJECTS } from "@/lib/data/projects"
+import { useIsMounted } from "@/lib/hooks/use-mounted"
+
 
 export default function ProjectPage() {
   const mounted = useIsMounted()

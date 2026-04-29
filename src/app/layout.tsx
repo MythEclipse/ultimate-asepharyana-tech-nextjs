@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+
 import { ClientLayout } from "@/components/layout/client-layout";
 import { LoadingProvider } from "@/components/providers/loading-provider";
 import { QueryProvider } from "@/components/providers/query-provider";

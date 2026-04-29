@@ -1,10 +1,11 @@
 "use client"
 
-import Link from "next/link"
-import { Badge } from "@/components/ui/badge"
-import { Card } from "@/components/ui/card"
-import { CachedImage } from "@/components/ui/cached-image"
 import { IconPlayerPlay } from "@tabler/icons-react"
+import Link from "next/link"
+
+import { Badge } from "@/components/ui/badge"
+import { CachedImage } from "@/components/ui/cached-image"
+import { Card } from "@/components/ui/card"
 
 export type MediaCardVariant = "primary" | "indigo" | "red" | "manga" | "manhwa" | "manhua"
 

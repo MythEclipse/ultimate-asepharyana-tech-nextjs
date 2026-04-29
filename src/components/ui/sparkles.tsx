@@ -1,8 +1,9 @@
 "use client";
-import React, { useId } from "react";
-import { useEffect, useState, type ComponentType } from "react";
 import type { Engine } from "@tsparticles/engine";
 import type { IParticlesProps } from "@tsparticles/react";
+import React, { useId } from "react";
+import { useEffect, useState, type ComponentType } from "react";
+
 import { cn } from "@/lib/utils/index";
 
 type ParticlesProps = {

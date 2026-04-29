@@ -1,6 +1,6 @@
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 import { defineConfig } from "eslint/config";
 import nextConfig from "eslint-config-next";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
 
 export default defineConfig([
   ...nextConfig,

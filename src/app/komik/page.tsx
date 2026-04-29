@@ -1,11 +1,12 @@
 "use client"
 
 
+import { IconBook } from "@tabler/icons-react"
+
+import { KomikHubContent } from "@/components/komik/komik-hub-content"
+import { Badge } from "@/components/ui/badge"
 import { Section } from "@/components/ui/section"
 import { SparklesCore } from "@/components/ui/sparkles"
-import { Badge } from "@/components/ui/badge"
-import { IconBook } from "@tabler/icons-react"
-import { KomikHubContent } from "@/components/komik/komik-hub-content"
 import { komikSearchRoute } from "@/lib/utils/routes"
 
 export default function KomikPage() {

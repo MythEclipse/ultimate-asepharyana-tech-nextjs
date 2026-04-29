@@ -1,4 +1,5 @@
 import { IconMoodSad, IconSearch } from "@tabler/icons-react"
+
 import { Button } from "./button"
 
 interface EmptyStateProps {

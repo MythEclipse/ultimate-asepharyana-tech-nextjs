@@ -1,17 +1,18 @@
 "use client"
 
 import { notFound } from "next/navigation"
+
+import { useAnimeStream } from "@/components/anime/use-anime"
+import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card } from "@/components/ui/card"
 import { GlitchText } from "@/components/ui/glitch-text"
 import { Heading } from "@/components/ui/heading"
-import { Badge } from "@/components/ui/badge"
-import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
-import { Button } from "@/components/ui/button"
 import { type AnimeFullData } from "@/lib/api/anime"
-import { useAnimeStream } from "@/components/anime/use-anime"
 import { parseSlugParam, useRouteParam } from "@/lib/utils/route-params"
 import { animeWatchRoute } from "@/lib/utils/routes"
-import { usePageLoadingOverlay } from "@/components/providers/loading-provider"
 
 function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 }) {
   return (
