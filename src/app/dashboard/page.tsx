@@ -1,34 +1,15 @@
 "use client"
 
-import { IconSettings, IconLogout, IconDeviceTv, IconBook, IconBriefcase, IconExternalLink, IconBrandGithub } from "@tabler/icons-react"
+import { IconDeviceTv, IconBook, IconBriefcase, IconExternalLink, IconBrandGithub } from "@tabler/icons-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
 import { Spotlight } from "@/components/ui/spotlight"
-import { useAuth } from "@/lib/store/auth"
 
 
 export default function DashboardPage() {
-  const { user, setUser } = useAuth()
-  const router = useRouter()
-
-  useEffect(() => {
-    if (!user) {
-      router.push("/login")
-    }
-  }, [user, router])
-
-  if (!user) return null 
-
-  const userName = user.name || "System Administrator"
-  const handleLogout = () => {
-    setUser(null)
-  }
 
   return (
     <main className="min-h-screen relative overflow-hidden">
@@ -47,21 +28,8 @@ export default function DashboardPage() {
                </div>
             </div>
             <h1 className="text-5xl md:text-7xl font-black tracking-tightest text-foreground leading-[0.9]">
-              WELCOME <br /> <span className="text-gradient uppercase">{userName}</span>
+              WELCOME <br /> <span className="text-gradient uppercase">Admin</span>
             </h1>
-          </div>
-
-          <div className="flex items-center gap-4">
-             <Button href="/settings" variant="outline" className="glass border-hairline rounded-2xl h-12 px-6 font-bold">
-                <IconSettings size={20} className="mr-2 opacity-70" /> Settings
-             </Button>
-             <Button
-                onClick={handleLogout}
-                variant="destructive"
-                className="rounded-2xl h-12 px-6 shadow-2xl shadow-destructive/20 font-bold"
-             >
-                <IconLogout size={20} className="mr-2" /> Logout
-             </Button>
           </div>
         </header>
 

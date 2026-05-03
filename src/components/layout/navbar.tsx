@@ -6,14 +6,11 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { useState, useEffect } from "react"
 
-import { useAuth } from "@/lib/store/auth"
-
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
   const { theme, setTheme } = useTheme()
-  const { user } = useAuth()
   const pathname = usePathname()
 
   useEffect(() => {
@@ -76,23 +73,13 @@ export function Navbar() {
                 ) : (
                   <div className="w-5 h-5 rounded-full bg-border/20 animate-pulse" />
                 )}
-             </div>
-             <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-           </button>
-           
-           {/* Security Handshake */}
-           {user ? (
-             <div className="flex items-center gap-4 ml-4">
-                <Link href="/dashboard" className="px-8 py-3.5 text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl glass border border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 transition-all active:scale-95">
-                   Dashboard
-                </Link>
-             </div>
-           ) : (
-             <Link href="/login" className="ml-4 px-8 py-3.5 text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl bg-foreground text-background hover:scale-105 active:scale-95 transition-all shadow-2xl relative group overflow-hidden border border-border/20">
-                <span className="relative z-10">Login</span>
-                <div className="absolute inset-0 bg-linear-to-r from-primary to-accent opacity-0 group-hover:opacity-20 transition-opacity" />
-             </Link>
-           )}
+</div>
+              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+
+            <Link href="/dashboard" className="px-8 py-3.5 text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl glass border border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 transition-all active:scale-95 ml-4">
+               Dashboard
+            </Link>
         </div>
 
         {/* Mobile Navigation Trigger */}
@@ -121,7 +108,7 @@ export function Navbar() {
                   onClick={() => setIsOpen(false)} 
                 />
                 
-                <div className="pt-8 mt-8 border-t border-border/20 flex items-center justify-between">
+<div className="pt-8 mt-8 border-t border-border/20 flex items-center justify-between">
                    <button
                      onClick={cycleTheme}
                      className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-5 py-3 rounded-2xl glass border border-border/20 hover:border-border/40 transition-all"
@@ -131,11 +118,11 @@ export function Navbar() {
                      </span>
                      {theme}
                    </button>
-                   
-                   <Link href="/login" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-2xl bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[0.3em] shadow-2xl hover:scale-105 transition-transform active:scale-95">
-                     Login
+
+                   <Link href="/dashboard" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-2xl bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[0.3em] shadow-2xl hover:scale-105 transition-transform active:scale-95">
+                     Dashboard
                    </Link>
-                </div>
+               </div>
             </div>
          </div>
       )}
