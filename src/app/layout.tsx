@@ -26,10 +26,10 @@ export default function RootLayout({
         "--font-geist-sans": fontStack,
         "--font-geist-mono": monoStack,
       } as React.CSSProperties}
-      className="h-full antialiased"
+      className="min-h-screen antialiased"
       suppressHydrationWarning // Used by next-themes
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen antialiased bg-slate-950" suppressHydrationWarning>
         <LoadingProvider>
           <ClientLayout>
             <QueryProvider>

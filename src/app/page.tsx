@@ -187,8 +187,6 @@ function HeroSection() {
 
   return (
     <section className="pb-20 pt-36 min-h-[90vh] w-full flex flex-col items-center justify-center relative transition-all duration-700">
-      <Spotlight className="top-10 left-full h-[80vh] w-[50vw]" fill="var(--color-accent)" />
-
       <div className="flex justify-center relative my-20 z-10 w-full text-center px-4 sm:px-6">
         <div className="max-w-xl sm:max-w-4xl flex flex-col items-center">
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance">
@@ -215,44 +213,6 @@ function HeroSection() {
         <div className="w-px h-12 bg-linear-to-b from-primary to-transparent" />
       </div>
     </section>
-  );
-}
-
-function Spotlight({ className, fill }: { className?: string; fill?: string }) {
-  return (
-    <svg
-      className={"animate-spotlight pointer-events-none absolute z-1 h-[169%] w-[138%] lg:w-[84%] opacity-0 " + (className ?? "")}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 3787 2842"
-      fill="none"
-    >
-      <g filter="url(#filter)">
-        <ellipse
-          cx="1924.71"
-          cy="273.501"
-          rx="1924.71"
-          ry="273.501"
-          transform="matrix(-0.822377 -0.568943 0.568943 -0.822377 3631.88 2291.09)"
-          fill={fill || "white"}
-          fillOpacity="0.21"
-        />
-      </g>
-      <defs>
-        <filter
-          id="filter"
-          x="0.860352"
-          y="0.838989"
-          width="3785.16"
-          height="2840.26"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur stdDeviation="151" result="effect1_foregroundBlur_1065_8" />
-        </filter>
-      </defs>
-    </svg>
   );
 }
 

@@ -7,7 +7,6 @@ import { AreaChart, Area, ResponsiveContainer } from "recharts"
 import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
-import { Spotlight } from "@/components/ui/spotlight"
 
 const PROMETHEUS_URL = "https://prometheus.asepharyana.tech/api/v1"
 
@@ -86,7 +85,11 @@ export function DashboardClient({ initialMetrics, initialHistory }: DashboardCli
   const [timeRange, setTimeRange] = useState<TimeRange>("1h")
   const [metrics, setMetrics] = useState(initialMetrics)
   const [history, setHistory] = useState(initialHistory)
-  const [lastUpdate, setLastUpdate] = useState(new Date())
+  const [lastUpdate, setLastUpdate] = useState<string | null>(null)
+
+  useEffect(() => {
+    setLastUpdate(new Date().toLocaleTimeString())
+  }, [])
 
   const loadMetrics = useCallback(async () => {
     const range = TIME_RANGES.find(r => r.value === timeRange)?.minutes || 60
@@ -135,9 +138,7 @@ export function DashboardClient({ initialMetrics, initialHistory }: DashboardCli
     : "0"
 
   return (
-    <main className="min-h-screen relative overflow-hidden">
-      <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="var(--color-primary)" />
-      
+    <main className="min-h-screen">
       <Section className="pt-24 pb-20 px-4 sm:px-6 max-w-7xl mx-auto w-full">
         <header className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12">
           <div className="space-y-4">
@@ -153,7 +154,7 @@ export function DashboardClient({ initialMetrics, initialHistory }: DashboardCli
               REAL-TIME <span className="text-gradient">STATS</span>
             </h1>
             <p className="text-xs text-muted-foreground font-medium">
-              Last updated: {lastUpdate.toLocaleTimeString()} • Auto-refresh: 10s
+              {lastUpdate ? `Last updated: ${lastUpdate} • Auto-refresh: 10s` : "Loading..."}
             </p>
           </div>
 
