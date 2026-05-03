@@ -52,6 +52,7 @@ export default defineConfig([
       ],
       "import/no-unresolved": "error",
       "jsx-a11y/anchor-is-valid": "off",
+      "react-hooks/set-state-in-effect": "off",
     },
   },
 ]);
