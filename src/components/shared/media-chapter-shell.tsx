@@ -24,7 +24,7 @@ export function MediaChapterShell({
   onRenderNavigation,
 }: MediaChapterShellProps) {
   return (
-    <main className="min-h-screen bg-background text-foreground selection:bg-primary/30 transition-colors duration-500">
+    <main className="min-h-screen text-foreground selection:bg-primary/30 transition-colors duration-500">
       <nav className="sticky top-0 z-100 w-full backdrop-blur-md bg-background/80 border-b border-border/10 py-3 sm:py-4 px-4 sm:px-6 md:px-8 flex items-center justify-between transition-colors">
         <Link
           href={backHref}

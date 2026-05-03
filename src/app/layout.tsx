@@ -29,7 +29,7 @@ export default function RootLayout({
       className="min-h-screen antialiased"
       suppressHydrationWarning // Used by next-themes
     >
-      <body className="min-h-screen antialiased bg-slate-950" suppressHydrationWarning>
+      <body className="min-h-screen antialiased" suppressHydrationWarning>
         <LoadingProvider>
           <ClientLayout>
             <QueryProvider>

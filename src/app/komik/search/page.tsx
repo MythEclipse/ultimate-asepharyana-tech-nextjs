@@ -80,7 +80,7 @@ export default function KomikSearchPage({
   const q = use(searchParams).q || ""
 
   return (
-    <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
+    <main className="min-h-screen text-foreground transition-colors duration-500 pb-40">
        <Section className="pt-32 px-6">
           <div className="mb-12">
              <Link 

@@ -9,7 +9,6 @@ import { EmptyState } from "@/components/ui/empty-state"
 import { Heading } from "@/components/ui/heading"
 import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
-import { SparklesCore } from "@/components/ui/sparkles"
 import { Pagination } from "@/lib/api/types"
 
 export interface HeroConfig {
@@ -48,7 +47,7 @@ export function MediaListPage<T>({
 }: MediaListPageProps<T>) {
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
+      <main className="min-h-screen text-foreground transition-colors duration-500 pb-40">
         <Section className="pt-32 pb-16" />
         <div className="px-6 py-12">
           <SkeletonGrid count={10} />
@@ -59,7 +58,7 @@ export function MediaListPage<T>({
 
   if (error || !data) {
     return (
-      <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
+      <main className="min-h-screen text-foreground transition-colors duration-500 pb-40">
         <Section className="pt-24 pb-12" glow>
           <div className="glass rounded-3xl border border-border/20 p-10"> 
             <Heading as="h3">Failed to Load Data</Heading>
@@ -72,7 +71,7 @@ export function MediaListPage<T>({
 
   if (data.data.length === 0) {
     return (
-      <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
+      <main className="min-h-screen text-foreground transition-colors duration-500 pb-40">
         <Section className="pt-24 pb-12" glow>
           <div className="mx-auto w-full max-w-4xl">
             <EmptyState
@@ -89,16 +88,8 @@ export function MediaListPage<T>({
   }
 
   return (
-    <main className="min-h-screen bg-background text-foreground transition-colors duration-500 pb-40">
+    <main className="min-h-screen text-foreground transition-colors duration-500 pb-40">
       <div className="relative h-120 w-full flex flex-col items-center justify-center overflow-hidden">
-        <SparklesCore
-          background="transparent"
-          minSize={0.6}
-          maxSize={1.4}
-          particleDensity={100}
-          className="w-full h-full absolute inset-0 -z-10"
-          particleColor="var(--color-primary)"
-        />
         <div className="relative z-20 text-center px-4 space-y-6">
           <div className={`inline-flex items-center gap-3 px-4 py-1.5 rounded-full ${hero.tagClass} backdrop-blur-md border ${hero.colorClass} text-[10px] font-black uppercase tracking-[0.4em]`}>
             <IconArrowLeft size={14} className="animate-pulse" /> {hero.introText}

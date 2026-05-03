@@ -6,7 +6,6 @@ import { Suspense } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
-import { SparklesCore } from "@/components/ui/sparkles"
 import { animePrefix, animeSearchRoute } from "@/lib/utils/routes"
 
 import { AnimeHubContent } from "./anime-hub-content"
@@ -20,20 +19,8 @@ export function AnimePageShell({ source }: AnimePageShellProps) {
   const searchRoute = animeSearchRoute(source)
 
   return (
-    <main className="min-h-screen bg-background text-foreground selection:bg-primary/30 transition-colors duration-500 pb-20">
+    <main className="min-h-screen text-foreground selection:bg-primary/30 transition-colors duration-500 pb-20">
       <div className="relative h-160 w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
-        <div className="w-full absolute inset-0 h-screen">
-          <SparklesCore
-            id={`particles-${sourcePrefix}`}
-            background="transparent"
-            minSize={0.4}
-            maxSize={1.2}
-            particleDensity={120}
-            className="w-full h-full"
-            particleColor="#ffffff"
-          />
-        </div>
-
         <div className="relative z-20 text-center px-4">
           <Badge variant="outline" className="mb-4 text-primary border-primary/50 bg-primary/5 px-4 py-1 animate-pulse">
             Anime List

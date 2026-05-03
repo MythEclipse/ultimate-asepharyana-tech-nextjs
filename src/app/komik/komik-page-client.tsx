@@ -5,27 +5,14 @@ import { IconBook } from "@tabler/icons-react"
 import { KomikHubContent } from "@/components/komik/komik-hub-content"
 import { Badge } from "@/components/ui/badge"
 import { Section } from "@/components/ui/section"
-import { SparklesCore } from "@/components/ui/sparkles"
 import { komikSearchRoute } from "@/lib/utils/routes"
 
 export function KomikPageClient() {
   const searchRoute = komikSearchRoute()
 
   return (
-    <main className="min-h-screen bg-background text-foreground selection:bg-orange-500/30 transition-colors duration-500">
+    <main className="min-h-screen text-foreground selection:bg-orange-500/30 transition-colors duration-500">
       <Section className="relative overflow-hidden py-28 md:py-32">
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <SparklesCore
-            id="particles-komik"
-            background="transparent"
-            minSize={0.6}
-            maxSize={1.4}
-            particleDensity={100}
-            className="w-full h-full"
-            particleColor="#f97316"
-          />
-        </div>
-
         <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
           <Badge variant="outline" className="mb-4 text-orange-500 border-orange-500/50 bg-orange-500/5 px-4 py-1">
             Komik Library

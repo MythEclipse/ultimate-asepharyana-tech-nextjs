@@ -16,7 +16,7 @@ export function ProjectPageClient() {
   const mounted = useIsMounted()
 
   return (
-    <main className="min-h-screen bg-background text-foreground relative overflow-hidden transition-colors duration-500">
+    <main className="min-h-screen text-foreground relative overflow-hidden transition-colors duration-500">
       <Section glow glowVariant="both" className="pb-40 max-w-6xl mx-auto">
         <header className="flex flex-col items-center text-center space-y-8 mb-24">
           <Badge variant="glass">Featured Projects</Badge>
@@ -48,21 +48,21 @@ export function ProjectPageClient() {
         </header>
 
         {!mounted ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
-                <Card key={i} interactive={false} className="h-[400px]">
-                    <Skeleton className="h-52 w-full rounded-xl mb-6" />
-                    <Skeleton className="h-8 w-3/4 mb-4" />
-                    <Skeleton className="h-4 w-full mb-2" />
-                    <Skeleton className="h-4 w-5/6" />
-                </Card>
+              <Card key={i} interactive={false} className="h-[380px]">
+                <Skeleton className="h-44 w-full rounded-xl mb-4" />
+                <Skeleton className="h-7 w-3/4 mb-3" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-5/6" />
+              </Card>
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {FEATURED_PROJECTS.map((project, i) => {
               const isExternal = project.link.startsWith("http")
-              const delay = `${i * 120}ms`
+              const delay = `${i * 100}ms`
 
               return (
                 <Link 
@@ -70,55 +70,49 @@ export function ProjectPageClient() {
                     href={project.link} 
                     target={isExternal ? "_blank" : undefined}
                     rel={isExternal ? "noopener noreferrer" : undefined}
-                    className="group h-full animate-slide-up"
+                    className="group animate-slide-up"
                     style={{ animationDelay: delay }}
                 >
-                  <Card className="h-full flex flex-col p-0 overflow-hidden bg-gradient-to-b from-card/80 via-card/60 to-card/40 backdrop-blur-xl border-border/20 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-[0_0_40px_-10px_rgba(6,182,212,0.3)]">
-                    <div className="relative h-52 shrink-0 overflow-hidden">
+                  <Card className="group-hover:border-primary/60 h-full flex flex-col overflow-hidden !bg-card/60 !backdrop-blur-md border-border/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/15 hover:-translate-y-1">
+                    <div className="relative h-44 overflow-hidden">
                       <CachedImage
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 opacity-85 group-hover:opacity-100"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent pointer-events-none" />
-                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-cyan-500/5 to-cyan-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                      <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-background/60 backdrop-blur-lg border border-primary/30 shadow-lg shadow-primary/10 text-[10px] font-black uppercase tracking-widest text-primary">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary shadow-[0_0_8px_rgba(6,182,212,0.8)] animate-pulse" />
-                        {project.category}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                      
+                      <div className="absolute top-3 right-3">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md border border-white/10 text-[10px] font-bold uppercase tracking-wider text-white/90">
+                          {project.category}
+                        </span>
                       </div>
 
-                      <div className="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-cyan-500/20 backdrop-blur-sm border border-cyan-500/30 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
-                        <svg className="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                        </svg>
+                      <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                        <div className="w-8 h-8 rounded-full bg-primary/20 backdrop-blur-md border border-primary/30 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300">
+                          <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="flex flex-col flex-1 p-6 gap-4 relative">
-                      <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/0 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-b-3xl" />
-                      
-                      <div className="flex flex-col gap-1.5 flex-1 relative z-10">
-                        <Heading as="h3" className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/80 group-hover:bg-gradient-to-r group-hover:from-cyan-300 group-hover:to-white bg-clip-text group-hover:text-transparent transition-all duration-500">
-                          {project.title}
-                        </Heading>
-                        <p className="text-sm text-muted-foreground/70 leading-relaxed group-hover:text-muted-foreground/85 transition-colors">
-                          {project.description}
-                        </p>
-                      </div>
+                    <div className="flex flex-col flex-1 p-4 gap-2">
+                      <Heading as="h3" className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-1">
+                        {project.title}
+                      </Heading>
+                      <p className="text-sm text-muted-foreground/70 leading-relaxed line-clamp-2">
+                        {project.description}
+                      </p>
 
-                      <div className="relative flex items-center justify-between pt-4 mt-auto relative z-10">
-                        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="mt-auto pt-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50 group-hover:text-cyan-400 transition-colors duration-300">
-                              {isExternal ? "Visit" : "View"}
+                          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/50 group-hover:text-primary/80 transition-colors">
+                            {isExternal ? "Visit" : "View"}
                           </span>
-                          <svg className="w-4 h-4 text-primary/60 group-hover:text-cyan-400 transition-all duration-300 group-hover:translate-x-1.5 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          <svg className="w-3.5 h-3.5 text-muted-foreground/40 group-hover:text-primary transition-colors group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                           </svg>
-                        </div>
-                        <div className="text-[9px] font-bold text-muted-foreground/30 group-hover:text-cyan-500/70 transition-colors">
-                          →
                         </div>
                       </div>
                     </div>

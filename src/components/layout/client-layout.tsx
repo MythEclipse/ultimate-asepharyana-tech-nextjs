@@ -19,7 +19,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <GlobalBackground />
-      <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/30 selection:text-foreground relative z-10">
+      <div className="min-h-screen flex flex-col text-foreground selection:bg-primary/30 selection:text-foreground relative z-10">
         <Navbar />
 
         <main key={mounted ? pathname : ""} className="relative flex-1 flex flex-col w-full">

@@ -6,13 +6,7 @@ export default function SettingsPage() {
   const { theme, setTheme } = useTheme()
 
   return (
-    <main className="min-h-screen bg-background text-foreground relative overflow-hidden pb-40 transition-colors duration-500">
-      {/* Background Ambient Systems */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[20%] right-[10%] w-[40rem] h-[40rem] bg-primary/5 rounded-full blur-[120px] animate-tilt-slow" />
-        <div className="absolute bottom-[10%] left-[5%] w-[35rem] h-[35rem] bg-accent/5 rounded-full blur-[120px] animate-tilt-reverse-slow" />
-      </div>
-
+    <main className="min-h-screen text-foreground relative overflow-hidden pb-40 transition-colors duration-500">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 pt-24 space-y-16 relative z-10">
         {/* Cinematic Settings Header */}
         <header className="text-center space-y-6 animate-fade-in">

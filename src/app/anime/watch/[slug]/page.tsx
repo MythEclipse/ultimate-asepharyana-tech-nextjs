@@ -16,14 +16,7 @@ import { animeWatchRoute } from "@/lib/utils/routes"
 
 function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 }) {
   return (
-    <main className="min-h-screen bg-background text-foreground dark:bg-slate-950 dark:text-slate-100 relative selection:bg-primary/30 transition-colors duration-300">
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-3xl opacity-15"
-          style={{ backgroundImage: `url(${data.image_url})` }}
-        />
-        <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/80 to-transparent dark:from-slate-950/95 dark:via-slate-950/80" />
-      </div>
+    <main className="min-h-screen text-foreground relative selection:bg-primary/30">
       <Section className="relative z-10 pt-4 pb-4">
         <div className="mx-auto w-full max-w-5xl px-4 sm:px-6">
           <div className="glass rounded-3xl border border-border/20 p-4 md:p-6 shadow-xl">
@@ -45,9 +38,9 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
           </div>
 
           {/* Video Player Caore */}
-          <div className="mt-3 w-full bg-card/95 dark:bg-slate-900/85 rounded-3xl overflow-hidden shadow-2xl dark:shadow-black/40 border border-border/20 dark:border-slate-700 relative group transition-all duration-500 hover:-translate-y-0.5">
+          <div className="mt-3 w-full bg-card/95 rounded-xl overflow-hidden shadow-xl border border-border/20 relative group transition-all duration-500 hover:-translate-y-0.5">
             <div className="absolute inset-0 bg-linear-to-r from-primary/10 via-accent/10 to-primary/10 opacity-0 group-hover:opacity-100 blur-lg transition-opacity duration-700" />
-            <div className="relative aspect-video w-full z-10 bg-card/95 dark:bg-slate-950/95">
+            <div className="relative aspect-video w-full z-10 bg-card/95">
               {data.stream_url ? (
                 <iframe
                   src={data.stream_url}
@@ -57,7 +50,7 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
                   loading="lazy"
                 />
               ) : (
-                <div className="min-h-100 flex items-center justify-center text-center text-muted-foreground/70 dark:text-slate-400 font-black tracking-widest uppercase">
+                <div className="min-h-100 flex items-center justify-center text-center text-muted-foreground/70 font-black tracking-widest uppercase">
                   Stream URL Unavailable
                 </div>
               )}
@@ -71,14 +64,14 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
             <Button
               href={animeWatchRoute(source, data.previous_episode.slug)}
               variant="outline"
-              className="flex items-center justify-center gap-3 px-4 py-4 text-xs md:text-sm font-black uppercase tracking-wider rounded-2xl border border-border/20 dark:border-slate-600"
+              className="flex items-center justify-center gap-3 px-4 py-3.5 text-xs md:text-sm font-black uppercase tracking-wider rounded-lg"
             >
               ←
               <span className="hidden sm:inline">Previous Episode</span>
               <span className="sm:hidden">Prev</span>
             </Button>
           ) : (
-            <span className="flex items-center justify-center gap-3 px-4 py-4 border border-border/20 rounded-2xl bg-muted/20 dark:bg-slate-800 dark:border-slate-700 text-muted-foreground dark:text-slate-400 text-xs md:text-sm font-black uppercase tracking-wider opacity-70">
+            <span className="flex items-center justify-center gap-3 px-4 py-3.5 border border-border/20 rounded-lg bg-muted/20 text-muted-foreground text-xs md:text-sm font-black uppercase tracking-wider opacity-70">
               ←
               <span className="hidden sm:inline">Previous Episode</span>
               <span className="sm:hidden">Prev</span>
@@ -89,14 +82,14 @@ function AnimeStreamView({ data, source }: { data: AnimeFullData, source: 1 | 2 
             <Button
               href={animeWatchRoute(source, data.next_episode.slug)}
               variant="premium"
-              className="flex items-center justify-center gap-3 px-4 py-4 text-xs md:text-sm font-black uppercase tracking-wider rounded-2xl"
+              className="flex items-center justify-center gap-3 px-4 py-3.5 text-xs md:text-sm font-black uppercase tracking-wider rounded-lg"
             >
               <span className="hidden sm:inline">Next Episode</span>
               <span className="sm:hidden">Next</span>
               →
             </Button>
           ) : (
-            <span className="flex items-center justify-center gap-3 px-4 py-4 border border-border/20 rounded-2xl bg-muted/20 dark:bg-slate-800 dark:border-slate-700 text-muted-foreground dark:text-slate-400 text-xs md:text-sm font-black uppercase tracking-wider opacity-70">
+            <span className="flex items-center justify-center gap-3 px-4 py-3.5 border border-border/20 rounded-lg bg-muted/20 text-muted-foreground text-xs md:text-sm font-black uppercase tracking-wider opacity-70">
               <span className="hidden sm:inline">Next Episode</span>
               <span className="text-muted-foreground/50">→</span>
             </span>

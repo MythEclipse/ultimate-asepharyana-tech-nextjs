@@ -20,11 +20,14 @@ import { animeHubRoute, animeWatchRoute } from "@/lib/utils/routes"
 
 
 function AnimeDetailContent({ data, source }: { data: AnimeDetailData; source: 1 | 2 }) {
-  const entries: MediaDetailEntry[] = (data.episode_lists ?? []).map((ep) => ({
-    id: ep.slug,
-    label: ep.episode,
-    href: animeWatchRoute(source, ep.slug),
-  }))
+  const entries: MediaDetailEntry[] = (data.episode_lists ?? []).map((ep) => {
+    const num = ep.episode.replace(/\D/g, "")
+    return {
+      id: ep.slug,
+      label: num || ep.episode,
+      href: animeWatchRoute(source, ep.slug),
+    }
+  })
 
   return (
     <MediaDetailShell
