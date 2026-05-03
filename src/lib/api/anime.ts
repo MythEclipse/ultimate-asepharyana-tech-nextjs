@@ -142,6 +142,7 @@ export async function fetchAnimeIndex(source: AnimeSource): Promise<Anime1Data |
 
 export function fetchAnimeOngoing(source: 1, page: number): Promise<{ data: Anime1OngoingItem[]; pagination: Pagination }>
 export function fetchAnimeOngoing(source: 2, page: number): Promise<{ data: Anime2OngoingItem[]; pagination: Pagination }>
+export function fetchAnimeOngoing(source: AnimeSource, page: number): Promise<{ data: (Anime1OngoingItem | Anime2OngoingItem)[]; pagination: Pagination }>
 export async function fetchAnimeOngoing(
   source: AnimeSource,
   page: number,

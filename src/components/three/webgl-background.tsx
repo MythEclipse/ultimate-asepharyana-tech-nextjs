@@ -1,23 +1,28 @@
 "use client"
 
+import { useTheme } from "next-themes"
 import { useEffect, useRef } from "react"
 import * as THREE from "three"
 
 import { useParticleField } from "./particle-field"
 
-function getPrimaryColor(): string {
+function getPrimaryColor(theme?: string): string {
   if (typeof window === "undefined") return "#7c3aed"
   const style = getComputedStyle(document.documentElement)
   const hslStr = style.getPropertyValue("--primary").trim()
-  if (!hslStr) return "#7c3aed"
+  if (!hslStr) {
+    return theme === "dark" ? "#7c3aed" : "#6366f1"
+  }
   return `hsl(${hslStr})`
 }
 
-function getAccentColor(): string {
+function getAccentColor(theme?: string): string {
   if (typeof window === "undefined") return "#a855f7"
   const style = getComputedStyle(document.documentElement)
   const hslStr = style.getPropertyValue("--accent").trim()
-  if (!hslStr) return "#a855f7"
+  if (!hslStr) {
+    return theme === "dark" ? "#a855f7" : "#8b5cf6"
+  }
   return `hsl(${hslStr})`
 }
 
@@ -44,10 +49,11 @@ export function WebGLBackground() {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
   const frameRef = useRef<number>(0)
   const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
+  const { theme } = useTheme()
 
   const particleCount = typeof window !== "undefined" ? getParticleCount() : 800
-  const primaryColor = typeof window !== "undefined" ? getPrimaryColor() : "#7c3aed"
-  const accentColor = typeof window !== "undefined" ? getAccentColor() : "#a855f7"
+  const primaryColor = typeof window !== "undefined" ? getPrimaryColor(theme) : "#7c3aed"
+  const accentColor = typeof window !== "undefined" ? getAccentColor(theme) : "#a855f7"
 
   const particlesRef = useParticleField({
     sceneRef: sceneRef,

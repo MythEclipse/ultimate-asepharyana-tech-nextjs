@@ -50,3 +50,47 @@ export function SkeletonIndex() {
     </div>
   )
 }
+
+export function SkeletonText({ lines = 3, className }: { lines?: number; className?: string }) {
+  return (
+    <div className={cn("space-y-2", className)}>
+      {Array.from({ length: lines }).map((_, i) => (
+        <Skeleton
+          key={i}
+          className={cn(
+            "h-4",
+            i === lines - 1 ? "w-2/3" : "w-full"
+          )}
+        />
+      ))}
+    </div>
+  )
+}
+
+export function SkeletonDetail({ className }: SkeletonProps) {
+  return (
+    <div className={cn("flex flex-col md:flex-row gap-8", className)}>
+      <Skeleton className="w-full md:w-80 aspect-[3/4] rounded-2xl" />
+      <div className="flex-1 space-y-6">
+        <Skeleton className="h-10 w-3/4" />
+        <SkeletonText lines={4} />
+        <div className="flex gap-2">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <Skeleton key={i} className="h-6 w-20 rounded-full" />
+          ))}
+        </div>
+        <Skeleton className="h-64 w-full rounded-xl" />
+      </div>
+    </div>
+  )
+}
+
+export function SkeletonEpisodeList({ count = 12, className }: { count?: number; className?: string }) {
+  return (
+    <div className={cn("grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3", className)}>
+      {Array.from({ length: count }).map((_, i) => (
+        <Skeleton key={i} className="aspect-video rounded-lg" />
+      ))}
+    </div>
+  )
+}

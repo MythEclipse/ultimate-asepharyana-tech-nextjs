@@ -12,6 +12,7 @@ interface CachedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   fill?: boolean
   retryEnabled?: boolean
   maxAttempts?: number
+  placeholderBlur?: string
 }
 
 const FALLBACK_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900' viewBox='0 0 1200 900'%3E%3Crect width='1200' height='900' fill='%23e5e7eb'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%236b7280' font-family='Arial,Helvetica,sans-serif' font-size='42'%3EImage unavailable%3C/text%3E%3C/svg%3E"
@@ -40,6 +41,7 @@ export function CachedImage({
   fill = false,
   retryEnabled = true,
   maxAttempts = 2,
+  placeholderBlur,
   ...props
 }: CachedImageProps) {
   const normalizedSrc = !src || String(src).trim().length === 0 ? fallbackSrc : normalizeImageUrl(String(src))
@@ -50,7 +52,8 @@ export function CachedImage({
   const [isAuditing, setIsAuditing] = useState(false)
   const [hasAudited, setHasAudited] = useState(false)
 
-  useEffect(() => {
+useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setResolvedSrc(normalizedSrc)
     setLoadState("loading")
     setAttempt(0)
@@ -122,7 +125,13 @@ export function CachedImage({
 
   return (
     <div className={wrapperClass}>
-      {loadState !== "loaded" && loadState !== "error" && (
+      {loadState !== "loaded" && loadState !== "error" && placeholderBlur && (
+        <div 
+          className={cn("absolute inset-0 bg-cover bg-center blur-xl scale-110", fallbackCls)}
+          style={{ backgroundImage: `url(${placeholderBlur})` }}
+        />
+      )}
+      {loadState !== "loaded" && loadState !== "error" && !placeholderBlur && (
         <div className={cn("absolute inset-0", fallbackCls)} />
       )}
 
