@@ -73,23 +73,24 @@ export function ProjectPageClient() {
                     className="group animate-slide-up"
                     style={{ animationDelay: delay }}
                 >
-                  <Card className="group-hover:border-primary/60 h-full flex flex-col overflow-hidden !bg-card/60 !backdrop-blur-md border-border/30 transition-all duration-300 hover:shadow-lg hover:shadow-primary/15 hover:-translate-y-1">
+                  <Card className="group-hover:border-primary/60 h-full flex flex-col overflow-hidden border-border/40 shadow-sm hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1.5 transition-all duration-300">
                     <div className="relative h-44 overflow-hidden">
                       <CachedImage
                         src={project.image}
                         alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-purple-500/10 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                       
                       <div className="absolute top-3 right-3">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-black/50 backdrop-blur-md border border-white/10 text-[10px] font-bold uppercase tracking-wider text-white/90">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-gradient-to-r from-blue-600 to-cyan-600 text-[10px] font-bold uppercase tracking-wider text-white shadow-md">
                           {project.category}
                         </span>
                       </div>
 
                       <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                        <div className="w-8 h-8 rounded-full bg-primary/20 backdrop-blur-md border border-primary/30 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300">
+                        <div className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border-2 border-primary flex items-center justify-center opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 shadow-lg shadow-primary/30">
                           <svg className="w-4 h-4 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
@@ -98,19 +99,19 @@ export function ProjectPageClient() {
                     </div>
 
                     <div className="flex flex-col flex-1 p-4 gap-2">
-                      <Heading as="h3" className="text-lg font-bold text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-1">
+                      <Heading as="h3" className="text-lg font-bold text-foreground group-hover:text-blue-600 transition-colors duration-200 line-clamp-1">
                         {project.title}
                       </Heading>
-                      <p className="text-sm text-muted-foreground/70 leading-relaxed line-clamp-2">
+                      <p className="text-sm text-muted-foreground/80 leading-relaxed line-clamp-2">
                         {project.description}
                       </p>
 
                       <div className="mt-auto pt-3 flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/50 group-hover:text-primary/80 transition-colors">
+                          <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60 group-hover:text-blue-600 transition-colors">
                             {isExternal ? "Visit" : "View"}
                           </span>
-                          <svg className="w-3.5 h-3.5 text-muted-foreground/40 group-hover:text-primary transition-colors group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-3.5 h-3.5 text-muted-foreground/50 group-hover:text-blue-600 transition-colors group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                           </svg>
                         </div>
