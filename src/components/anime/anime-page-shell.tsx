@@ -6,7 +6,7 @@ import { Suspense } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Section } from "@/components/ui/section"
 import { SkeletonGrid } from "@/components/ui/skeleton"
-import { animePrefix, animeSearchRoute } from "@/lib/utils/routes"
+import { animeSearchRoute } from "@/lib/utils/routes"
 
 import { AnimeHubContent } from "./anime-hub-content"
 
@@ -15,7 +15,6 @@ type AnimePageShellProps = {
 }
 
 export function AnimePageShell({ source }: AnimePageShellProps) {
-  const sourcePrefix = animePrefix(source)
   const searchRoute = animeSearchRoute(source)
 
   return (
