@@ -3,15 +3,18 @@ import { defineConfig } from "eslint/config";
 import nextConfig from "eslint-config-next";
 
 export default defineConfig([
-  ...nextConfig,
   {
     ignores: [
+      ".opencode/**",
       ".next/**",
       "out/**",
       "build/**",
       "node_modules/**",
       "next-env.d.ts",
     ],
+  },
+  ...nextConfig,
+  {
     plugins: {
       "@typescript-eslint": tsPlugin,
     },
