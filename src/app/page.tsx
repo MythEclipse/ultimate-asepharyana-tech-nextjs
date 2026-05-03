@@ -193,8 +193,8 @@ function HeroSection() {
         <div className="max-w-xl sm:max-w-4xl flex flex-col items-center">
           <div className="mb-8 px-4 py-1.5 uppercase tracking-[0.3em] font-black glass rounded-full shadow-sm">Software Engineering</div>
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance">
-            Web Portfolio Asep <br />
-            <span className="gradient-text">Aktif di GitHub dengan {totalContributions.toLocaleString()}+ kontribusi</span>
+            Web Portfolio Asep Haryana Saputra<br />
+            <span className="gradient-text">Aktif di GitHub dengan {totalContributions.toLocaleString()} kontribusi</span>
           </h1>
           <p className="max-w-2xl text-muted-foreground text-lg md:text-xl lg:text-2xl mb-12 font-medium leading-relaxed">
             Halo, saya <span className="text-foreground border-b-2 border-primary/30 font-bold">Asep Haryana Saputra</span>. Saya membuat proyek dengan React, Tailwind, dan Next.js untuk mengasah kemampuan frontend dan memperlihatkan hasil kerja.
