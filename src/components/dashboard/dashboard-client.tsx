@@ -124,7 +124,7 @@ export function DashboardClient({ initialMetrics, initialHistory }: DashboardCli
       rustActive,
     })
     setHistory({ load: loadHistory, memory: memHistory })
-    setLastUpdate(new Date())
+    setLastUpdate(new Date().toLocaleTimeString())
   }, [timeRange])
 
   useEffect(function loadData() {
