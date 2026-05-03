@@ -227,8 +227,8 @@ function TechArsenal() {
 
       <div className="grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-4 max-w-7xl mx-auto">
         {TECH_STACK.slice(0, 6).map((item, index) => (
-          <div key={item.name} className={"row-span-1 rounded-3xl group/bento hover:shadow-xl transition duration-500 shadow-input dark:shadow-none p-4 bg-card border border-border/10 dark:border-white/5 justify-between flex flex-col space-y-4 hover:border-primary/20 " + (index === 0 || index === 3 ? "md:col-span-2" : "")}>
-            <div className="group/header h-full min-h-40 rounded-2xl glass border-hairline flex items-center justify-center p-8 transition-all hover:bg-foreground/5 overflow-hidden relative">
+          <div key={item.name} className={"row-span-1 rounded-xl group/bento hover:shadow-lg hover:shadow-primary/5 transition duration-300 p-4 bg-card border border-border/10 dark:border-white/5 justify-between flex flex-col space-y-3 hover:border-primary/30 hover:-translate-y-0.5 " + (index === 0 || index === 3 ? "md:col-span-2" : "")}>
+            <div className="group/header h-full min-h-36 rounded-lg glass border-hairline/50 flex items-center justify-center p-6 transition-all hover:bg-foreground/5 overflow-hidden relative">
               <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover/header:opacity-100 transition-opacity" />
               <Image src={item.image} alt={item.name} width={56} height={56} className="w-14 h-14 object-contain filter drop-shadow-2xl group-hover:scale-125 transition-transform duration-500" />
             </div>
@@ -315,7 +315,7 @@ function CallToActionSection() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-14 h-14 glass rounded-2xl flex items-center justify-center hover:border-primary/50 hover:bg-primary/10 transition-all hover:-translate-y-2 border-hairline"
+              className="w-12 h-12 glass rounded-lg flex items-center justify-center hover:border-primary/50 hover:bg-primary/10 transition-all hover:-translate-y-1 border-hairline/50"
               aria-label={`Visit ${label}`}
             >
               <Icon size={24} className="text-foreground" />

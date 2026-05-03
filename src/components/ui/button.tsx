@@ -6,29 +6,29 @@ import * as React from "react"
 import { cn } from "@/lib/utils/index"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-95 hover-lift",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90",
+          "bg-primary text-primary-foreground shadow-md shadow-primary/15 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 active:shadow-sm",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
         outline:
-          "border border-input bg-background/50 backdrop-blur-sm shadow-sm hover:bg-accent hover:text-accent-foreground",
+          "border border-border/60 bg-background/40 backdrop-blur-sm hover:bg-accent/60 hover:border-primary/40 hover:text-accent-foreground",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+          "bg-secondary/80 text-secondary-foreground hover:bg-secondary",
+        ghost: "hover:bg-accent/60 hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        premium: "bg-linear-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-gradient-x text-primary-foreground shadow-xl shadow-primary/20",
-        shiny: "relative overflow-hidden bg-primary text-primary-foreground shadow-lg before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-linear-to-r before:from-transparent before:via-white/20 before:to-transparent hover:shadow-primary/40",
+        premium: "bg-linear-to-r from-primary via-accent to-primary bg-[length:200%_auto] animate-gradient-x text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-xl",
+        shiny: "relative overflow-hidden bg-primary text-primary-foreground shadow-md before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-linear-to-r before:from-transparent before:via-white/20 before:to-transparent hover:shadow-primary/30",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-8 rounded-lg px-3 text-xs",
-        lg: "h-12 rounded-xl px-8 text-base",
-        icon: "h-10 w-10",
-        xl: "h-14 rounded-2xl px-12 text-lg font-semibold",
+        default: "h-10 px-5 py-2",
+        sm: "h-8 px-3 text-xs rounded-md",
+        lg: "h-11 px-6 text-base rounded-lg",
+        icon: "h-10 w-10 rounded-lg",
+        xl: "h-12 px-8 text-base font-semibold rounded-lg",
       },
     },
     defaultVariants: {

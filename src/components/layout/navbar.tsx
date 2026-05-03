@@ -36,7 +36,7 @@ export function Navbar() {
         <Link href="/" className="flex items-center space-x-6 group">
           <div className="relative">
             <div className="absolute -inset-4 bg-primary/20 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse" />
-            <div className="w-12 h-12 rounded-2xl bg-foreground flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-500 relative z-10">
+            <div className="w-11 h-11 rounded-lg bg-foreground flex items-center justify-center shadow-xl group-hover:scale-105 transition-transform duration-300 relative z-10">
               <span className="text-background font-black text-xl italic tracking-tighter">A</span>
             </div>
           </div>
@@ -55,12 +55,12 @@ export function Navbar() {
            <div className="w-8 h-px bg-border/50 mx-4" />
 
            {/* Theme Engine */}
-           <button
-             onClick={cycleTheme}
-             aria-label="Toggle theme mode"
-             className="p-4 rounded-2xl hover:bg-muted/50 transition-all group relative overflow-hidden active:scale-95"
-             title={mounted ? `Theme: ${theme}` : "Theme: loading"}
-           >
+<button
+              onClick={cycleTheme}
+              aria-label="Toggle theme mode"
+              className="p-3.5 rounded-lg hover:bg-muted/50 transition-all group relative overflow-hidden active:scale-95"
+              title={mounted ? `Theme: ${theme}` : "Theme: loading"}
+            >
              <div className="relative z-10 w-5 h-5 flex items-center justify-center">
                 {mounted ? (
                   theme === "light" ? (
@@ -77,14 +77,14 @@ export function Navbar() {
               <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
 
-            <Link href="/dashboard" className="px-8 py-3.5 text-[10px] font-black uppercase tracking-[0.3em] rounded-2xl glass border border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 transition-all active:scale-95 ml-4">
+            <Link href="/dashboard" className="px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.25em] rounded-lg glass border border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 transition-all active:scale-95 ml-3">
                Dashboard
             </Link>
         </div>
 
         {/* Mobile Navigation Trigger */}
         <button
-          className="md:hidden p-4 rounded-2xl hover:bg-muted/50 transition-all active:scale-95 group"
+          className="md:hidden p-3 rounded-lg hover:bg-muted/50 transition-all active:scale-95 group"
           onClick={toggleMenu}
           aria-label={isOpen ? "Close mobile menu" : "Open mobile menu"}
           aria-expanded={isOpen}
@@ -109,19 +109,19 @@ export function Navbar() {
                 />
                 
 <div className="pt-8 mt-8 border-t border-border/20 flex items-center justify-between">
-                   <button
-                     onClick={cycleTheme}
-                     className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-5 py-3 rounded-2xl glass border border-border/20 hover:border-border/40 transition-all"
-                   > 
-                     <span className="text-lg">
-                       {theme === "light" ? "☀️" : theme === "dark" ? "🌙" : "💻"}
-                     </span>
-                     {theme}
-                   </button>
+<button
+                      onClick={cycleTheme}
+                      className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-4 py-2.5 rounded-lg glass border border-border/20 hover:border-border/40 transition-all"
+                    > 
+                      <span className="text-lg">
+                        {theme === "light" ? "☀️" : theme === "dark" ? "🌙" : "💻"}
+                      </span>
+                      {theme}
+                    </button>
 
-                   <Link href="/dashboard" onClick={() => setIsOpen(false)} className="px-5 py-3 rounded-2xl bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[0.3em] shadow-2xl hover:scale-105 transition-transform active:scale-95">
-                     Dashboard
-                   </Link>
+                    <Link href="/dashboard" onClick={() => setIsOpen(false)} className="px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[0.25em] shadow-lg hover:scale-105 transition-transform active:scale-95">
+                      Dashboard
+                    </Link>
                </div>
             </div>
          </div>
@@ -157,7 +157,7 @@ function MobileNavLink({ href, label, isActive, onClick }: { href: string; label
     <Link 
       href={href} 
       onClick={onClick}
-      className={`block py-5 px-8 text-lg font-black italic uppercase tracking-tighter border rounded-3xl transition-all duration-500 active:scale-95 ${
+      className={`block py-4 px-6 text-lg font-black italic uppercase tracking-tighter border rounded-xl transition-all duration-300 active:scale-95 ${
           isActive ? "bg-primary/10 border-primary/20 text-primary" : "border-white/5 hover:bg-white/5 hover:border-white/10 text-muted-foreground hover:text-foreground"
       }`}
     >
