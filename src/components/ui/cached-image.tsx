@@ -53,7 +53,6 @@ export function CachedImage({
   const [hasAudited, setHasAudited] = useState(false)
 
 useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setResolvedSrc(normalizedSrc)
     setLoadState("loading")
     setAttempt(0)
