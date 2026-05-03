@@ -191,7 +191,6 @@ function HeroSection() {
 
       <div className="flex justify-center relative my-20 z-10 w-full text-center px-4 sm:px-6">
         <div className="max-w-xl sm:max-w-4xl flex flex-col items-center">
-          <div className="mb-8 px-4 py-1.5 uppercase tracking-[0.3em] font-black glass rounded-full shadow-sm">Software Engineering</div>
           <h1 className="text-[clamp(2.5rem,8vw,5.5rem)] font-black leading-[0.95] tracking-tightest mb-8 text-foreground text-balance">
             Web Portfolio Asep Haryana Saputra<br />
             <span className="gradient-text">Aktif di GitHub dengan {totalContributions.toLocaleString()} kontribusi</span>
