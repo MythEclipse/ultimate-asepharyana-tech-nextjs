@@ -117,8 +117,9 @@ function buildAnime2DownloadUrls(detail: Anime2DetailWithBatch, episode: string)
 
   for (const group of groups) {
     const label = group.resolution ?? ""
-    const cleaned = label.replace(/Episode/i, "").trim()
-    const isMatching = parseInt(cleaned) === parseInt(episode) || cleaned === episode
+    const epMatch = label.match(/(?:Episode\s*[:\s-]*|Ep\s*[:\s-]*|Eps\s*[:\s-]*)(\d+(\.\d+)?)/i)
+    const epNum = epMatch ? epMatch[1] : label.match(/\d+(\.\d+)?/g)?.pop()
+    const isMatching = epNum && (parseInt(epNum) === parseInt(episode) || epNum === episode)
 
     if (!isMatching || !group.links) {
       continue

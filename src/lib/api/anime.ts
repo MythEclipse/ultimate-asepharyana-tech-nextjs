@@ -180,13 +180,13 @@ export async function fetchAnimeDetail(source: AnimeSource, slug: string): Promi
 
     for (const group of allGroups) {
       const resStr = group.resolution || ""
-      const epMatch = resStr.match(/(?:Episode\s*)?(\d+)/i)
+      const epMatch = resStr.match(/(?:Episode\s*[:\s-]*|Ep\s*[:\s-]*|Eps\s*[:\s-]*)(\d+(\.\d+)?)/i)
+      const epNum = epMatch ? epMatch[1] : resStr.match(/\d+(\.\d+)?/g)?.pop()
 
-      if (!epMatch || resStr.toLowerCase().includes("batch") || resStr.toLowerCase().includes("per episode")) {
+      if (!epNum || resStr.toLowerCase().includes("batch") || resStr.toLowerCase().includes("per episode")) {
         continue
       }
 
-      const epNum = epMatch[1]
       const episodeSlug = `${slug}-episode-${epNum}`
 
       if (!data.episode_lists.find((episode) => episode.slug === episodeSlug)) {

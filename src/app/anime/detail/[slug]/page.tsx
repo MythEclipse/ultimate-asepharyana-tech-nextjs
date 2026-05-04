@@ -21,7 +21,10 @@ import { animeHubRoute, animeWatchRoute } from "@/lib/utils/routes"
 
 function AnimeDetailContent({ data, source }: { data: AnimeDetailData; source: 1 | 2 }) {
   const entries: MediaDetailEntry[] = (data.episode_lists ?? []).map((ep) => {
-    const num = ep.episode.replace(/\D/g, "")
+    // Robust episode number extraction
+    const epMatch = ep.episode.match(/(?:Episode|Ep|Eps)\s*[:\s-]*(\d+(\.\d+)?)/i)
+    const num = epMatch ? epMatch[1] : ep.episode.match(/\d+(\.\d+)?/g)?.pop() || ""
+    
     return {
       id: ep.slug,
       label: num || ep.episode,
