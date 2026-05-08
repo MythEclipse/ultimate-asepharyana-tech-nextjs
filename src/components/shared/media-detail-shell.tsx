@@ -9,6 +9,7 @@ import { CachedImage } from "@/components/ui/cached-image"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
 import { TracingBeam } from "@/components/ui/tracing-beam"
+import { textToBgClass } from "@/lib/utils"
 
 export interface MediaDetailMetaItem {
   icon: React.ElementType
@@ -130,7 +131,7 @@ export function MediaDetailShell({
               <div className="space-y-10">
                 <div className="space-y-4">
                   <h3 className="text-xl font-black uppercase tracking-widest flex items-center gap-2">
-                    <div className={`w-6 h-1 ${variantColor.replace("text-", "bg-") || "bg-primary"} rounded-full`} />
+                    <div className={`w-6 h-1 ${textToBgClass(variantColor)} rounded-full`} />
                     Synopsis
                   </h3>
                   <p className="text-lg text-muted-foreground leading-relaxed font-medium">{description}</p>
