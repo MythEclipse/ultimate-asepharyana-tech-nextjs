@@ -12,7 +12,7 @@
 .opencode/
 # testing
 /coverage
-
+.superpowers/
 # next.js
 /.next/
 /out/
