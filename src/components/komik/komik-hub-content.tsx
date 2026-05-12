@@ -1,5 +1,6 @@
 "use client"
 
+
 import { IconBook, IconDiamond, IconBarbell } from "@tabler/icons-react"
 
 import { MediaHubContent, type SharedHubSection } from "@/components/shared/media-hub-content"

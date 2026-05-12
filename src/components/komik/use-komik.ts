@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 
 import { fetchManga, fetchManhua, fetchManhwa } from "@/lib/api/komik"
 
+
 export function useKomikHubData() {
   const mangaQuery = useQuery({
     queryKey: ["komik-hub", "manga"],

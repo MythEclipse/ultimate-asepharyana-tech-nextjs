@@ -4,6 +4,7 @@ import { IconArrowRight, IconBrandGithub, IconBrandLinkedin, IconBrandInstagram 
 
 import { Button } from "@/components/ui/button";
 
+
 export function CallToActionSection() {
   return (
     <section className="w-full py-48 relative flex flex-col items-center justify-center text-center px-4 transition-all duration-500">

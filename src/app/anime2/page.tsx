@@ -1,7 +1,5 @@
-"use client"
-
-import { AnimePageShell } from "@/components/anime/anime-page-shell"
+import { redirect } from "next/navigation"
 
 export default function Anime2Page() {
-  return <AnimePageShell source={2} />
+  redirect("/anime/source-2")
 }

@@ -1,5 +1,6 @@
 "use client"
 
+
 import { ReactNode } from "react"
 
 import { MediaHubSection } from "@/components/shared/media-hub-section"
@@ -37,8 +38,8 @@ export function MediaHubContent<T extends { slug?: string }>({ sections, isLoadi
   }
 
   return (
-    <TracingBeam className="px-6">
-      <div className="space-y-24 py-8">
+    <TracingBeam className="px-4 md:px-6">
+      <div className="space-y-20 md:space-y-24 py-8">
         {sections.map((section) => (
           <MediaHubSection
             key={section.id}

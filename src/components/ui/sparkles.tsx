@@ -6,6 +6,7 @@ import { useEffect, useState, type ComponentType } from "react";
 
 import { cn } from "@/lib/utils/index";
 
+
 type ParticlesProps = {
   id?: string;
   className?: string;

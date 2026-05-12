@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 
 import { ClientLayout } from "@/components/layout/client-layout";

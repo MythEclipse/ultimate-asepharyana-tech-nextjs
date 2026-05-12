@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react"
 
 import { type GitHubContribution } from "@/lib/api/github"
 
+
 const CELL_SIZE = 11
 const CELL_PAD = 2
 const WEEK_DAYS = 7

@@ -1,30 +1,16 @@
 "use client"
 
-import { IconSun, IconMoon, IconDeviceDesktop } from "@tabler/icons-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useTheme } from "next-themes"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-import { siteConfig } from "@/config/site"
+import { DesktopNav } from "./navbar/desktop-nav"
+import { MobileNav } from "./navbar/mobile-nav"
+import { ThemeToggle } from "./navbar/theme-toggle"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const { theme, setTheme } = useTheme()
-  const pathname = usePathname()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   const toggleMenu = () => setIsOpen(!isOpen)
-
-  const cycleTheme = () => {
-    const themes = ["light", "dark", "system"]
-    const nextIndex = (themes.indexOf(theme || "system") + 1) % themes.length
-    setTheme(themes[nextIndex])
-  }
 
   return (
     <nav
@@ -41,115 +27,38 @@ export function Navbar() {
             </div>
           </div>
           <div className="hidden sm:block space-y-0.5">
-             <span className="text-xl font-black italic tracking-tighter uppercase leading-none block group-hover:text-primary transition-colors">
-               Asep <span className="text-primary group-hover:text-foreground transition-colors">Haryana</span>
-             </span>
-             <span className="text-[8px] font-black uppercase tracking-[0.5em] text-muted-foreground/40 block">Personal Portfolio</span>
+            <span className="text-xl font-black italic tracking-tighter uppercase leading-none block group-hover:text-primary transition-colors">
+              Asep <span className="text-primary group-hover:text-foreground transition-colors">Haryana</span>
+            </span>
+            <span className="text-[8px] font-black uppercase tracking-[0.5em] text-muted-foreground/40 block">
+              Personal Portfolio
+            </span>
           </div>
         </Link>
 
-        <div className="hidden md:flex items-center space-x-2">
-           {siteConfig.mainNav.map((item) => (
-             <NavLink key={item.link} href={item.link} label={item.name} currentPath={pathname} />
-           ))}
-
-           <div className="w-8 h-px bg-border/50 mx-4" />
-
-           <button
-              onClick={cycleTheme}
-              aria-label="Toggle theme mode"
-              className="p-3.5 rounded-lg hover:bg-muted/50 transition-all group relative overflow-hidden active:scale-95"
-              title={mounted ? `Theme: ${theme}` : "Theme: loading"}
-            >
-             <div className="relative z-10 w-5 h-5 flex items-center justify-center">
-                {!mounted ? (
-                  <div className="w-5 h-5 rounded-full bg-border/20 animate-pulse" />
-                ) : theme === "light" ? (
-                  <IconSun className="w-5 h-5 text-amber-500 transition-transform duration-700 group-hover:rotate-12" />
-                ) : theme === "dark" ? (
-                  <IconMoon className="w-5 h-5 text-indigo-400 transition-transform duration-700 group-hover:-rotate-12" />
-                ) : (
-                  <IconDeviceDesktop className="w-5 h-5 text-cyan-400 transition-transform duration-700 group-hover:scale-125 animate-pulse" />
-                )}
-             </div>
-             <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-           </button>
-        </div>
+        <DesktopNav themeToggle={<ThemeToggle mode="icon" />} />
 
         <button
           className="md:hidden p-3 rounded-lg hover:bg-muted/50 transition-all active:scale-95 group"
           onClick={toggleMenu}
+          aria-expanded={isOpen}
+          aria-label="Toggle menu"
         >
           <div className="space-y-1.5 w-6">
-             <div className={`h-0.5 bg-foreground rounded-full transition-all duration-500 ${isOpen ? "rotate-45 translate-y-2" : "w-full"}`} />
-             <div className={`h-0.5 bg-foreground rounded-full transition-all duration-500 ${isOpen ? "opacity-0" : "w-2/3"}`} />
-             <div className={`h-0.5 bg-foreground rounded-full transition-all duration-500 ${isOpen ? "-rotate-45 -translate-y-2" : "w-full"}`} />
+            <div
+              className={`h-0.5 bg-foreground rounded-full transition-all duration-500 ${isOpen ? "rotate-45 translate-y-2" : "w-full"}`}
+            />
+            <div
+              className={`h-0.5 bg-foreground rounded-full transition-all duration-500 ${isOpen ? "opacity-0" : "w-2/3"}`}
+            />
+            <div
+              className={`h-0.5 bg-foreground rounded-full transition-all duration-500 ${isOpen ? "-rotate-45 -translate-y-2" : "w-full"}`}
+            />
           </div>
         </button>
       </div>
 
-      {isOpen && (
-         <div className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-3xl animate-fade-in overflow-hidden">
-            <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-4">
-                {siteConfig.mainNav.map((item) => (
-                  <MobileNavLink
-                    key={item.link}
-                    href={item.link}
-                    label={item.name}
-                    isActive={pathname === item.link || pathname.startsWith(item.link + "/")}
-                    onClick={() => setIsOpen(false)}
-                  />
-                ))}
-
-                <div className="pt-8 mt-8 border-t border-border/20 flex items-center justify-between">
-                  <button
-                    onClick={cycleTheme}
-                    className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-muted-foreground px-4 py-2.5 rounded-lg glass border border-border/20 hover:border-border/40 transition-all"
-                  >
-                    <span className="text-lg">
-                      {theme === "light" ? "☀️" : theme === "dark" ? "🌙" : "💻"}
-                    </span>
-                    {theme}
-                  </button>
-                </div>
-            </div>
-         </div>
-      )}
+      {isOpen && <MobileNav themeToggle={<ThemeToggle mode="label" />} onClose={() => setIsOpen(false)} />}
     </nav>
-  )
-}
-
-function NavLink({ href, label, currentPath }: { href: string; label: string; currentPath: string }) {
-  const isActive = currentPath === href || (href !== "/" && currentPath.startsWith(`${href}/`))
-
-  return (
-    <Link
-      href={href}
-      className={`px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 rounded-xl relative group/link ${
-        isActive ? "text-primary" : "text-muted-foreground hover:text-foreground hover:bg-white/5"
-      }`}
-    >
-      <span className="relative z-10">{label}</span>
-      {isActive && (
-        <>
-          <div className="absolute inset-0 bg-primary/5 rounded-xl border border-primary/10" />
-          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-primary rounded-full blur-[2px] animate-pulse" />
-        </>
-      )}
-    </Link>
-  )
-}
-
-function MobileNavLink({ href, label, isActive, onClick }: { href: string; label: string; isActive: boolean; onClick: () => void }) {
-  return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className={`block py-4 px-6 text-lg font-black italic uppercase tracking-tighter border rounded-xl transition-all duration-300 active:scale-95 ${
-          isActive ? "bg-primary/10 border-primary/20 text-primary" : "border-white/5 hover:bg-white/5 hover:border-white/10 text-muted-foreground hover:text-foreground"
-      }`}
-    >
-        {label}
-    </Link>
   )
 }

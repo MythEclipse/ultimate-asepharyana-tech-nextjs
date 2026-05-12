@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest"
 
 import { cn } from "@/lib/utils"
 
+
 describe("cn utility", () => {
   it("should combine class names", () => {
     expect(cn("foo", "bar")).toBe("foo bar")

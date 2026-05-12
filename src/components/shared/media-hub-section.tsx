@@ -2,7 +2,9 @@
 
 import { ReactNode } from "react"
 
+import { ContentGrid } from "@/components/layout/content-grid"
 import { SectionHeader } from "@/components/shared/section-header"
+
 
 interface MediaHubSectionProps<T> {
   id: string
@@ -28,11 +30,11 @@ export function MediaHubSection<T extends { slug?: string }>({
   return (
     <section id={id}>
       <SectionHeader title={title} icon={icon} color={color} link={link} />
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 gap-y-10">
+      <ContentGrid variant="media">
         {items.slice(0, maxItems).map((item, index) => (
           <div key={item.slug ?? index}>{renderItem(item, index)}</div>
         ))}
-      </div>
+      </ContentGrid>
     </section>
   )
 }

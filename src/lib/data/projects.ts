@@ -41,7 +41,7 @@ export const MEDIA_PROJECTS: Project[] = [
     image: '/project-anime.png',
     category: 'Otakudesu',
     tags: ['Video', 'Streaming', 'Scraper'],
-    link: '/anime',
+    link: '/anime/source-1',
   },
   {
     id: 'media-02',
@@ -51,7 +51,7 @@ export const MEDIA_PROJECTS: Project[] = [
     image: '/project-anime2.png',
     category: 'Alqanime',
     tags: ['Archive', 'Search', 'Index'],
-    link: '/anime2',
+    link: '/anime/source-2',
   },
   {
     id: 'media-03',
