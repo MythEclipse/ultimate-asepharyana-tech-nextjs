@@ -2,20 +2,24 @@ export type AnimeSource = 1 | 2
 export type AnimeListType = "ongoing" | "complete"
 export type KomikCategory = "manga" | "manhwa" | "manhua"
 
+export function animeCanonicalPrefix(source: AnimeSource): string {
+  return `/anime/source-${source}`
+}
+
 export function animePrefix(source: AnimeSource): "anime" | "anime2" {
   return source === 2 ? "anime2" : "anime"
 }
 
 export function animeHubRoute(source: AnimeSource): string {
-  return `/${animePrefix(source)}`
+  return animeCanonicalPrefix(source)
 }
 
 export function animeSearchRoute(source: AnimeSource): string {
-  return `${animeHubRoute(source)}/search`
+  return `${animeCanonicalPrefix(source)}/search`
 }
 
 export function animeListBaseRoute(source: AnimeSource, type: AnimeListType): string {
-  return `${animeHubRoute(source)}/${type}-anime`
+  return `${animeCanonicalPrefix(source)}/${type}-anime`
 }
 
 export function animeListRoute(source: AnimeSource, type: AnimeListType, page: number): string {
@@ -23,11 +27,17 @@ export function animeListRoute(source: AnimeSource, type: AnimeListType, page: n
 }
 
 export function animeDetailRoute(source: AnimeSource, slug: string): string {
-  return `${animeHubRoute(source)}/detail/${encodeURIComponent(slug)}`
+  return `${animeCanonicalPrefix(source)}/detail/${encodeURIComponent(slug)}`
 }
 
 export function animeWatchRoute(source: AnimeSource, slug: string): string {
-  return `${animeHubRoute(source)}/watch/${encodeURIComponent(slug)}`
+  return `${animeCanonicalPrefix(source)}/watch/${encodeURIComponent(slug)}`
+}
+
+export function parseAnimeSourceParam(param: string | undefined): 1 | 2 | null {
+  if (param === "source-1") return 1
+  if (param === "source-2") return 2
+  return null
 }
 
 export function komikHubRoute(): string {

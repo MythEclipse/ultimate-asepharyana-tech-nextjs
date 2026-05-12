@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card } from "@/components/ui/card"
 import { Section } from "@/components/ui/section"
 
+
 const PROMETHEUS_URL = "https://prometheus.asepharyana.tech/api/v1"
 
 async function fetchMetric(query: string): Promise<number> {

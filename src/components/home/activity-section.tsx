@@ -1,5 +1,6 @@
 "use client";
 
+
 import dynamic from "next/dynamic";
 
 import { Badge } from "@/components/ui/badge";

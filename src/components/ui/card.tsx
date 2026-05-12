@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils/index";
 
+
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   interactive?: boolean;
   children?: React.ReactNode;

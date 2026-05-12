@@ -1,5 +1,6 @@
 "use client"
 
+
 import { IconBook } from "@tabler/icons-react"
 
 import { KomikHubContent } from "@/components/komik/komik-hub-content"

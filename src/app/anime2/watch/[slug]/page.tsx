@@ -1,5 +1,7 @@
-import AnimeWatchRoute from "../../../anime/watch/[slug]/page"
+import { redirect } from "next/navigation"
 
-export default function Page() {
-  return <AnimeWatchRoute source={2} />
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+
+  redirect(`/anime/source-2/watch/${encodeURIComponent(slug)}`)
 }

@@ -1,9 +1,5 @@
-import AnimeSearchPage from "../../anime/search/page"
+import { redirect } from "next/navigation"
 
-export default function Page({ 
-  searchParams 
-}: { 
-  searchParams: Promise<{ q?: string }> 
-}) {
-  return <AnimeSearchPage searchParams={searchParams} source={2} />
+export default function Page() {
+  redirect("/anime/source-2/search")
 }

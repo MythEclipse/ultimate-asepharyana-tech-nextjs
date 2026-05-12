@@ -10,6 +10,8 @@
 !.yarn/releases
 !.yarn/versions
 .opencode/
+.claude/
+docs/superpowers/
 # testing
 /coverage
 .superpowers/

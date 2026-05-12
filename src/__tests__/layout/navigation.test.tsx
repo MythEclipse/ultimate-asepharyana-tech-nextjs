@@ -1,5 +1,8 @@
+
+import { render, screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 
+import { ProjectPageClient } from "@/app/project/project-page-client"
 import { siteConfig } from "@/config/site"
 import { MEDIA_PROJECTS } from "@/lib/data/projects"
 
@@ -19,6 +22,16 @@ describe("site navigation", () => {
   })
 
   it("exposes media routes from the project hub", () => {
-    expect(MEDIA_PROJECTS.map((project) => project.link)).toEqual(["/anime", "/anime2", "/komik"])
+    expect(MEDIA_PROJECTS.map((project) => project.link)).toEqual(["/anime/source-1", "/anime/source-2", "/komik"])
+  })
+
+  it("keeps project hub media cards without a small section title", () => {
+    render(<ProjectPageClient />)
+
+    expect(screen.queryByText("Media Apps")).not.toBeInTheDocument()
+    expect(screen.queryByText("Explore Anime and Komik")).not.toBeInTheDocument()
+    expect(screen.getByText("Anime Streaming")).toBeInTheDocument()
+    expect(screen.getByText("Anime Archive")).toBeInTheDocument()
+    expect(screen.getByText("Komik Reader")).toBeInTheDocument()
   })
 })

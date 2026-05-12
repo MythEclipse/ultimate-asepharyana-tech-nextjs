@@ -2,6 +2,7 @@ import { NextResponse } from "next/server"
 
 import { fetchGitHubStats } from "@/lib/api/github"
 
+
 /**
  * Next.js API route to fetch real-time stats from GitHub.
  * Protects the GITHUB_TOKEN and performs backend data aggregation.

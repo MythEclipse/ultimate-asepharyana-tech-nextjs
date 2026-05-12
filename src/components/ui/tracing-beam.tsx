@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils/index";
 
+
 export const TracingBeam = ({
   children,
   className,

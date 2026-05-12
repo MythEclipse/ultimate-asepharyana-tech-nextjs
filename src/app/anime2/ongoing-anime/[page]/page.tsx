@@ -1,10 +1,7 @@
-"use client"
+import { redirect } from "next/navigation"
 
-import { AnimeListPage } from "@/components/anime/anime-list-page"
-import { parsePageParam, useRouteParam } from "@/lib/utils/route-params"
+export default async function Page({ params }: { params: Promise<{ page: string }> }) {
+  const { page } = await params
 
-export default function Page() {
-  const page = parsePageParam(useRouteParam("page"))
-
-  return <AnimeListPage source={2} page={page} type="ongoing" />
+  redirect(`/anime/source-2/ongoing-anime/${page}`)
 }
