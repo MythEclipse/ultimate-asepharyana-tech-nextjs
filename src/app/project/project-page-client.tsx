@@ -9,7 +9,7 @@ import { GlitchText } from "@/components/ui/glitch-text"
 import { Heading } from "@/components/ui/heading"
 import { Section } from "@/components/ui/section"
 import { Skeleton } from "@/components/ui/skeleton"
-import { FEATURED_PROJECTS } from "@/lib/data/projects"
+import { FEATURED_PROJECTS, MEDIA_PROJECTS } from "@/lib/data/projects"
 import { useIsMounted } from "@/lib/hooks/use-mounted"
 
 export function ProjectPageClient() {
@@ -46,6 +46,50 @@ export function ProjectPageClient() {
             <div className="h-px w-16 bg-gradient-to-l from-transparent to-border/50" />
           </div>
         </header>
+
+        <section className="mb-20 space-y-6">
+          <div className="flex flex-col gap-2 text-center md:text-left">
+            <Badge variant="glass">Media Apps</Badge>
+            <Heading as="h2" className="text-3xl md:text-5xl">
+              Explore Anime and Komik
+            </Heading>
+            <p className="max-w-2xl text-sm text-muted-foreground/70 leading-relaxed">
+              Media readers live under Projects so primary navigation stays focused.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {MEDIA_PROJECTS.map((project) => (
+              <Link key={project.id} href={project.link} className="group">
+                <Card className="h-full overflow-hidden border-border/40 hover:border-primary/50 hover:-translate-y-1 transition-all duration-300">
+                  <div className="relative h-36 overflow-hidden">
+                    <CachedImage
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    <span className="absolute top-3 right-3 rounded-md bg-background/80 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-foreground backdrop-blur-md">
+                      {project.category}
+                    </span>
+                  </div>
+
+                  <div className="p-4 space-y-2">
+                    <Heading as="h3" className="text-lg font-bold group-hover:text-primary transition-colors">
+                      {project.title}
+                    </Heading>
+                    <p className="text-sm text-muted-foreground/80 leading-relaxed line-clamp-2">
+                      {project.description}
+                    </p>
+                    <div className="pt-2 text-[10px] font-black uppercase tracking-[0.25em] text-primary">
+                      Open
+                    </div>
+                  </div>
+                </Card>
+              </Link>
+            ))}
+          </div>
+        </section>
 
         {!mounted ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

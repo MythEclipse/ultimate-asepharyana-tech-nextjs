@@ -1,5 +1,3 @@
-import { IconCpu, IconDatabase, IconGlobe } from "@tabler/icons-react";
-
 export const siteConfig = {
   name: "Asep Haryana Saputra",
   url: "https://ultimate-asepharyana.tech",
@@ -12,9 +10,9 @@ export const siteConfig = {
     email: "superaseph@gmail.com",
   },
   mainNav: [
-    { name: "Projects", link: "/project", icon: IconGlobe },
-    { name: "Anime", link: "/anime", icon: IconCpu },
-    { name: "Dashboard", link: "/dashboard", icon: IconDatabase },
+    { name: "Home", link: "/" },
+    { name: "Projects", link: "/project" },
+    { name: "Dashboard", link: "/dashboard" },
   ],
 };
 

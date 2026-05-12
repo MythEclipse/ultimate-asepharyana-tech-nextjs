@@ -6,7 +6,6 @@ export interface Project {
   category: string;
   tags: string[];
   link: string;
-  colorClass: string;
 }
 
 export const FEATURED_PROJECTS: Project[] = [
@@ -19,7 +18,6 @@ export const FEATURED_PROJECTS: Project[] = [
     category: 'Backend',
     tags: ['Rust', 'Axum', 'SeaORM'],
     link: 'https://rust.asepharyana.tech/docs/',
-    colorClass: 'text-primary',
   },
   {
     id: '02',
@@ -30,40 +28,39 @@ export const FEATURED_PROJECTS: Project[] = [
     category: 'API',
     tags: ['Bun', 'ElysiaJS', 'OpenAPI'],
     link: 'https://elysia.asepharyana.tech/docs/',
-    colorClass: 'text-accent',
   },
 
+];
+
+export const MEDIA_PROJECTS: Project[] = [
   {
-    id: '04',
+    id: 'media-01',
     title: 'Anime Streaming',
     description:
-      'Aplikasi penampil video anime yang mengambil (scrape) data rilis terbaru dari Otakudesu.',
+      'Aplikasi penampil video anime yang mengambil data rilis terbaru dari Otakudesu.',
     image: '/project-anime.png',
     category: 'Otakudesu',
     tags: ['Video', 'Streaming', 'Scraper'],
     link: '/anime',
-    colorClass: 'text-blue-400',
   },
   {
-    id: '05',
+    id: 'media-02',
     title: 'Anime Archive',
     description:
-      'Situs arsip dan pencarian database anime yang memanfaatkan parsing dari situs Alqanime.',
-    image: '/project-anime2.png', // NOTE: update image path if needed
+      'Situs arsip dan pencarian database anime yang memanfaatkan parsing dari Alqanime.',
+    image: '/project-anime2.png',
     category: 'Alqanime',
     tags: ['Archive', 'Search', 'Index'],
     link: '/anime2',
-    colorClass: 'text-cyan-400',
   },
   {
-    id: '06',
+    id: 'media-03',
     title: 'Komik Reader',
     description:
-      'Aplikasi baca komik dan manga berbasis web yang membaca chapter terindeks dari Komiku.',
+      'Aplikasi baca komik dan manga berbasis web untuk chapter terindeks dari Komiku.',
     image: '/project-komik.png',
     category: 'Komiku',
     tags: ['Manga', 'Reader', 'High-Res'],
     link: '/komik',
-    colorClass: 'text-orange-400',
   },
 ];

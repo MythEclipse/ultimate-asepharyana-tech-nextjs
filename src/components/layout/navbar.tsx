@@ -74,10 +74,6 @@ export function Navbar() {
              </div>
              <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity" />
            </button>
-
-           <Link href="/dashboard" className="px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.25em] rounded-lg glass border border-primary/20 text-primary hover:bg-primary/5 hover:border-primary/40 transition-all active:scale-95 ml-3">
-              Dashboard
-           </Link>
         </div>
 
         <button
@@ -115,10 +111,6 @@ export function Navbar() {
                     </span>
                     {theme}
                   </button>
-
-                  <Link href="/dashboard" onClick={() => setIsOpen(false)} className="px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-[0.25em] shadow-lg hover:scale-105 transition-transform active:scale-95">
-                    Dashboard
-                  </Link>
                 </div>
             </div>
          </div>
@@ -128,7 +120,7 @@ export function Navbar() {
 }
 
 function NavLink({ href, label, currentPath }: { href: string; label: string; currentPath: string }) {
-  const isActive = currentPath === href || (href !== "/" && currentPath.startsWith(href))
+  const isActive = currentPath === href || (href !== "/" && currentPath.startsWith(`${href}/`))
 
   return (
     <Link
