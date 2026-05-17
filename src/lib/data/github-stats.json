@@ -1,14 +1,6 @@
 {
   "contributions": [
     {
-      "date": "2025-05-16",
-      "count": 0
-    },
-    {
-      "date": "2025-05-17",
-      "count": 2
-    },
-    {
       "date": "2025-05-18",
       "count": 0
     },
@@ -1463,9 +1455,13 @@
     {
       "date": "2026-05-16",
       "count": 5
+    },
+    {
+      "date": "2026-05-17",
+      "count": 3
     }
   ],
-  "totalContributions": 6362,
+  "totalContributions": 6365,
   "languages": [
     {
       "axis": "TypeScript",
@@ -1475,7 +1471,7 @@
     {
       "axis": "Jupyter Notebook",
       "value": 0.74,
-      "label": "21%"
+      "label": "22%"
     },
     {
       "axis": "Java",
@@ -1488,14 +1484,14 @@
       "label": "13%"
     },
     {
-      "axis": "JavaScript",
-      "value": 0.23,
-      "label": "7%"
-    },
-    {
       "axis": "Rust",
       "value": 0.2,
       "label": "6%"
+    },
+    {
+      "axis": "JavaScript",
+      "value": 0.19,
+      "label": "5%"
     },
     {
       "axis": "Kotlin",
@@ -1508,5 +1504,5 @@
       "label": "1%"
     }
   ],
-  "updatedAt": "2026-05-16T13:09:02.345Z"
+  "updatedAt": "2026-05-17T02:34:43.748Z"
 }
